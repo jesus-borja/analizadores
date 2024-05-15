@@ -127,13 +127,15 @@ fun factorial() -> void {
 
 # Tipos de datos
 
-| Tipos de datos | Token        | Lexema | Función                   | Expresión Regular |
-| -------------- | ------------ | ------ | ------------------------- | ----------------- |
-| Tipos          | TYPE_INTEGER | int    | Valores enteros           | int               |
-|                | TYPE_STRING  | str    | Valores de texto          | str               |
-|                | TYPE_FLOAT   | float  | Valores decimales simples | float             |
-|                | TYPE_DOUBLE  | double | Valores decimales         | double            |
-|                | TYPE_BOOL    | bool   | Valores boleanos          | bool              |
+| Tipos de datos | Token        | Lexema | Función                         | Expresión Regular |
+| -------------- | ------------ | ------ | ------------------------------- | ----------------- |
+| Tipos          | TYPE_INTEGER | int    | Valores enteros                 | int               |
+|                | TYPE_STRING  | str    | Valores de texto                | str               |
+|                | TYPE_FLOAT   | float  | Valores decimales simples       | float             |
+|                | TYPE_DOUBLE  | double | Valores decimales               | double            |
+|                | TYPE_BOOL    | bool   | Valores boleanos                | bool              |
+|                | TYPE_VOID    | void   | Indicar funciones sin retorno   | void              |
+|                | TYPE_NULL    | null   | Representa la ausencia de valor | null              |
 
 # Literales de tipos de datos
 
