@@ -1,7 +1,7 @@
 # Ejemplo del lenguaje:
 
 ```
-fun factorial() -> void {
+fun factorial() returns void {
 	x: int = 25;
 	y: float = 2.3f;
 	str := "cadena";
