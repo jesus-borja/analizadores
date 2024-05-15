@@ -48,7 +48,7 @@ fun factorial() -> void {
 -   true
 -   false
 
-# Operadores asignacion
+# Operadores de asignacion
 
 -   id : tipo = valor
 -   id := valor
@@ -83,63 +83,64 @@ fun factorial() -> void {
 
 # Tabla de tokens
 
-| Tipo                           | Token         | Lexema | Función                             |
-| ------------------------------ | ------------- | ------ | ----------------------------------- |
-|                                | IDENTIFIER    |        | Identificador                       |
-| Operadores matemáticos         | PLUS          | +      | Operador de suma                    |
-|                                | MINUS         | -      | Operador de resta                   |
-|                                | TIMES         | \*     | Operador de multiplicación          |
-|                                | DIVIDE        | /      | Operador de división                |
-|                                | MODULO        | %      | Operador de módulo                  |
-|                                | POWER         | \*\*   | Operador de potencia                |
-|                                | ASSIGN_OP     | :=     | Operador de asignación              |
-| Operadores logicos             | COMPARISON    | =      | Operador de comparación             |
-|                                | LESS_THAN     | <      | Operador menor que                  |
-|                                | GREATER_THAN  | >      | Operador mayor que                  |
-|                                | GREATER_EQUAL | >=     | Operador mayor o igual que          |
-|                                | LESS_EQUAL    | <=     | Operador menor o igual que          |
-|                                | NOT_EQUAL     | !=     | Operador de desigualdad             |
-|                                | NOT           | !      | Operador de negación                |
-|                                | AND           | &&     | Operador lógico AND                 |
-|                                | OR            | \|\|   | Operador lógico OR                  |
-| Inicio de comentario de bloque | COMMENT_START | \/?    | Inicio de comentario                |
-| Fin de comentario de bloque    | COMMENT_END   | ?\/    | Fin de comentario                   |
-| Paréntesis                     | LEFT_PAREN    | (      | Paréntesis izquierdo                |
-|                                | RIGHT_PAREN   | )      | Paréntesis derecho                  |
-| Corchetes                      | LEFT_BRACKET  | [      | Corchete izquierdo                  |
-|                                | RIGHT_BRACKET | ]      | Corchete derecho                    |
-| Llaves                         | LEFT_BRACE    | {      | Llave izquierda (llave de apertura) |
-|                                | RIGHT_BRACE   | }      | Llave derecha (llave de cierre)     |
-|                                | SEMICOLO      | ;      | Fin de instruccion                  |
+| Tipo                           | Token            | Lexema   | Función                             | Expresión Regular      |
+| ------------------------------ | ---------------- | -------- | ----------------------------------- | ---------------------- |
+| Identificador                  | IDENTIFIER       | abc123\_ | Identificador                       | [a-zA-Z\_][a-zA-Z0-9_] |
+| Operadores matemáticos         | PLUS             | +        | Operador de suma                    | \\\+                   |
+|                                | MINUS            | -        | Operador de resta                   | \\\-                   |
+|                                | TIMES            | \*       | Operador de multiplicación          | \\\*                   |
+|                                | DIVIDE           | /        | Operador de división                | /                      |
+|                                | MODULO           | %        | Operador de módulo                  | %                      |
+|                                | POWER            | \*\*     | Operador de potencia                | \*\*                   |
+|                                | ASSIGN_OP        | :=       | Operador de asignación implícita    | :=                     |
+|                                | TYPE_DECLARATION | :        | Operador de asignación explícita    | :                      |
+| Operadores logicos             | COMPARISON       | =        | Operador de comparación             | =                      |
+|                                | LESS_THAN        | <        | Operador menor que                  | <                      |
+|                                | GREATER_THAN     | >        | Operador mayor que                  | >                      |
+|                                | GREATER_EQUAL    | >=       | Operador mayor o igual que          | >=                     |
+|                                | LESS_EQUAL       | <=       | Operador menor o igual que          | <=                     |
+|                                | NOT_EQUAL        | !=       | Operador de desigualdad             | !=                     |
+|                                | NOT              | !        | Operador de negación                | !                      |
+|                                | AND              | &&       | Operador lógico AND                 | &&                     |
+|                                | OR               | \|\|     | Operador lógico OR                  | \|\|                   |
+| Inicio de comentario de bloque | COMMENT_START    | \/?      | Inicio de comentario                | \/\?                   |
+| Fin de comentario de bloque    | COMMENT_END      | ?\/      | Fin de comentario                   | \?\/                   |
+| Paréntesis                     | LEFT_PAREN       | (        | Paréntesis izquierdo                | \(                     |
+|                                | RIGHT_PAREN      | )        | Paréntesis derecho                  | \)                     |
+| Corchetes                      | LEFT_BRACKET     | [        | Corchete izquierdo                  | \[                     |
+|                                | RIGHT_BRACKET    | ]        | Corchete derecho                    | \]                     |
+| Llaves                         | LEFT_BRACE       | {        | Llave izquierda (llave de apertura) | \{                     |
+|                                | RIGHT_BRACE      | }        | Llave derecha (llave de cierre)     | \}                     |
+|                                | SEMICOLO         | ;        | Fin de instruccion                  | ;                      |
 
 # Palabras reservadas
 
-| Tipo                   | Token    | Lexema | Función                      |
-| ---------------------- | -------- | ------ | ---------------------------- |
-| Funcion                | FUNCTION | fun    | Define una función           |
-|                        | RETURNS  | return | Indica un retorno            |
-| Estructuras de control | IF       | if     | Estructura de control 'if'   |
-|                        | ELSE     | else   | Estructura de control 'else' |
-|                        | FOR      | for    | Bucle 'for'                  |
-|                        | IN       | in     | Operador de pertenencia      |
-|                        | WHILE    | while  | Bucle 'while'                |
+| Tipo                   | Token    | Lexema | Función                      | Expresión Regular |
+| ---------------------- | -------- | ------ | ---------------------------- | ----------------- |
+| Funcion                | FUNCTION | fun    | Define una función           | fun               |
+|                        | RETURNS  | ->     | Indica un retorno            | ->                |
+| Estructuras de control | IF       | if     | Estructura de control 'if'   | if                |
+|                        | ELSE     | else   | Estructura de control 'else' | else              |
+|                        | FOR      | for    | Bucle 'for'                  | for               |
+|                        | IN       | in     | Operador de pertenencia      | in                |
+|                        | WHILE    | while  | Bucle 'while'                | while             |
 
 # Tipos de datos
 
-| Tipos de datos | Token        | Lexema | Función                   |
-| -------------- | ------------ | ------ | ------------------------- |
-| Tipos          | TYPE_INTEGER | int    | Valores enteros           |
-|                | TYPE_STRING  | str    | Valores de texto          |
-|                | TYPE_FLOAT   | float  | Valores decimales simples |
-|                | TYPE_DOUBLE  | double | Valores decimales         |
-|                | TYPE_BOOL    | bool   | Valores boleanos          |
+| Tipos de datos | Token        | Lexema | Función                   | Expresión Regular |
+| -------------- | ------------ | ------ | ------------------------- | ----------------- |
+| Tipos          | TYPE_INTEGER | int    | Valores enteros           | int               |
+|                | TYPE_STRING  | str    | Valores de texto          | str               |
+|                | TYPE_FLOAT   | float  | Valores decimales simples | float             |
+|                | TYPE_DOUBLE  | double | Valores decimales         | double            |
+|                | TYPE_BOOL    | bool   | Valores boleanos          | bool              |
 
 # Literales de tipos de datos
 
-| Literales | Token  | Lexema      | Función                             |
-| --------- | ------ | ----------- | ----------------------------------- |
-|           | STRING | "any"       | Literal de texto                    |
-|           | INT    | 0-9         | Número literal                      |
-|           | FLOAT  | 0-9.0-9f    | Literal número coma flotante simple |
-|           | DOUBLE | 0-9.0-9     | Literal número coma flotante doble  |
-|           | BOOL   | true\|false | Literal de valor boleano            |
+| Literales | Token  | Lexema      | Función                             | Expresión Regular |
+| --------- | ------ | ----------- | ----------------------------------- | ----------------- |
+|           | STRING | "any"       | Literal de texto                    | "[^\s\"]"         |
+|           | INT    | 0-9         | Número literal                      | [0-9]+            |
+|           | FLOAT  | 0-9.0-9f    | Literal número coma flotante simple | [0-9]+\.[0-9]+f   |
+|           | DOUBLE | 0-9.0-9     | Literal número coma flotante doble  | [0-9]+\.[0-9]+    |
+|           | BOOL   | true\|false | Literal de valor boleano            | (true\|false)     |
