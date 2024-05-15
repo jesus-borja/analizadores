@@ -102,15 +102,15 @@ fun factorial() -> void {
 |                                | NOT_EQUAL        | !=       | Operador de desigualdad             | !=                     |
 |                                | NOT              | !        | Operador de negación                | !                      |
 |                                | AND              | &&       | Operador lógico AND                 | &&                     |
-|                                | OR               | \|\|     | Operador lógico OR                  | \|\|                   |
-| Inicio de comentario de bloque | COMMENT_START    | \/?      | Inicio de comentario                | \/\?                   |
-| Fin de comentario de bloque    | COMMENT_END      | ?\/      | Fin de comentario                   | \?\/                   |
-| Paréntesis                     | LEFT_PAREN       | (        | Paréntesis izquierdo                | \(                     |
-|                                | RIGHT_PAREN      | )        | Paréntesis derecho                  | \)                     |
-| Corchetes                      | LEFT_BRACKET     | [        | Corchete izquierdo                  | \[                     |
-|                                | RIGHT_BRACKET    | ]        | Corchete derecho                    | \]                     |
-| Llaves                         | LEFT_BRACE       | {        | Llave izquierda (llave de apertura) | \{                     |
-|                                | RIGHT_BRACE      | }        | Llave derecha (llave de cierre)     | \}                     |
+|                                | OR               | \|\|     | Operador lógico OR                  | \\\|\\\|               |
+| Inicio de comentario de bloque | COMMENT_START    | \/?      | Inicio de comentario                | \/\\?                  |
+| Fin de comentario de bloque    | COMMENT_END      | ?\/      | Fin de comentario                   | \\?\/                  |
+| Paréntesis                     | LEFT_PAREN       | (        | Paréntesis izquierdo                | \\\(                   |
+|                                | RIGHT_PAREN      | )        | Paréntesis derecho                  | \\\)                   |
+| Corchetes                      | LEFT_BRACKET     | [        | Corchete izquierdo                  | \\\[                   |
+|                                | RIGHT_BRACKET    | ]        | Corchete derecho                    | \\\]                   |
+| Llaves                         | LEFT_BRACE       | {        | Llave izquierda (llave de apertura) | \\\{                   |
+|                                | RIGHT_BRACE      | }        | Llave derecha (llave de cierre)     | \\\}                   |
 |                                | SEMICOLO         | ;        | Fin de instruccion                  | ;                      |
 
 # Palabras reservadas
