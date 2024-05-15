@@ -6,3 +6,10 @@ Este lenguaje de programación incluye una variedad de características comunes 
 El objetivo de este analizador léxico es escanear y analizar el código fuente escrito en nuestro lenguaje de programación, identificando y clasificando cada elemento léxico, como identificadores, números, operadores, paréntesis, etc.
 
 En este repositorio, presentamos la especificación de los tokens y las reglas de análisis utilizadas, detallando una tabla de tokens y los patrones de coincidencia utilizados para identificarlos en el código fuente. Además, proporcionamos documentación e implementación del analizador lexico.
+
+# Integrantes del equipo
+- Barrios Yáñez Angel Rodrigo  - 21200581
+- Borja Hernández Jesús - 21200584
+- Christopher Vladimir Moreno Hernández - 21200620
+- Ochoa Gonzáles Jhonathan Emir - 21200988
+- Téllez Pérez Agustín Ezequiel - 21200633
