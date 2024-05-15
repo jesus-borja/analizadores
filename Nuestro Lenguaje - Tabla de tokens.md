@@ -31,9 +31,8 @@ fun factorial() returns void {
 
 # Identificador
 
--   puede tener números pero debe empezar con una letra
--   letras
--   guiones bajos
+-   Puede tener números, pero debe empezar con una letra
+-   Después puede contener varias letras, números y guiones bajos
 
 # Palabras Clave
 
@@ -83,35 +82,35 @@ fun factorial() returns void {
 
 # Tabla de tokens
 
-| Tipo                           | Token            | Lexema   | Función                             | Expresión Regular      |
-| ------------------------------ | ---------------- | -------- | ----------------------------------- | ---------------------- |
-| Identificador                  | IDENTIFIER       | abc123\_ | Identificador                       | [a-zA-Z\_][a-zA-Z0-9_] |
-| Operadores matemáticos         | PLUS             | +        | Operador de suma                    | \\\+                   |
-|                                | MINUS            | -        | Operador de resta                   | \\\-                   |
-|                                | TIMES            | \*       | Operador de multiplicación          | \\\*                   |
-|                                | DIVIDE           | /        | Operador de división                | /                      |
-|                                | MODULO           | %        | Operador de módulo                  | %                      |
-|                                | POWER            | \*\*     | Operador de potencia                | \*\*                   |
-|                                | ASSIGN_OP        | :=       | Operador de asignación implícita    | :=                     |
-|                                | TYPE_DECLARATION | :        | Operador de asignación explícita    | :                      |
-| Operadores logicos             | COMPARISON       | =        | Operador de comparación             | =                      |
-|                                | LESS_THAN        | <        | Operador menor que                  | <                      |
-|                                | GREATER_THAN     | >        | Operador mayor que                  | >                      |
-|                                | GREATER_EQUAL    | >=       | Operador mayor o igual que          | >=                     |
-|                                | LESS_EQUAL       | <=       | Operador menor o igual que          | <=                     |
-|                                | NOT_EQUAL        | !=       | Operador de desigualdad             | !=                     |
-|                                | NOT              | !        | Operador de negación                | !                      |
-|                                | AND              | &&       | Operador lógico AND                 | &&                     |
-|                                | OR               | \|\|     | Operador lógico OR                  | \\\|\\\|               |
-| Inicio de comentario de bloque | COMMENT_START    | \/?      | Inicio de comentario                | \/\\?                  |
-| Fin de comentario de bloque    | COMMENT_END      | ?\/      | Fin de comentario                   | \\?\/                  |
-| Paréntesis                     | LEFT_PAREN       | (        | Paréntesis izquierdo                | \\\(                   |
-|                                | RIGHT_PAREN      | )        | Paréntesis derecho                  | \\\)                   |
-| Corchetes                      | LEFT_BRACKET     | [        | Corchete izquierdo                  | \\\[                   |
-|                                | RIGHT_BRACKET    | ]        | Corchete derecho                    | \\\]                   |
-| Llaves                         | LEFT_BRACE       | {        | Llave izquierda (llave de apertura) | \\\{                   |
-|                                | RIGHT_BRACE      | }        | Llave derecha (llave de cierre)     | \\\}                   |
-|                                | SEMICOLO         | ;        | Fin de instruccion                  | ;                      |
+| Tipo                           | Token            | Lexema   | Función                             | Expresión Regular    |
+| ------------------------------ | ---------------- | -------- | ----------------------------------- | -------------------- |
+| Identificador                  | IDENTIFIER       | abc123\_ | Identificador                       | [a-zA-Z][a-zA-Z0-9_] |
+| Operadores matemáticos         | PLUS             | +        | Operador de suma                    | \\\+                 |
+|                                | MINUS            | -        | Operador de resta                   | \\\-                 |
+|                                | TIMES            | \*       | Operador de multiplicación          | \\\*                 |
+|                                | DIVIDE           | /        | Operador de división                | /                    |
+|                                | MODULO           | %        | Operador de módulo                  | %                    |
+|                                | POWER            | \*\*     | Operador de potencia                | \*\*                 |
+|                                | ASSIGN_OP        | :=       | Operador de asignación implícita    | :=                   |
+|                                | TYPE_DECLARATION | :        | Operador de asignación explícita    | :                    |
+| Operadores logicos             | COMPARISON       | =        | Operador de comparación             | =                    |
+|                                | LESS_THAN        | <        | Operador menor que                  | <                    |
+|                                | GREATER_THAN     | >        | Operador mayor que                  | >                    |
+|                                | GREATER_EQUAL    | >=       | Operador mayor o igual que          | >=                   |
+|                                | LESS_EQUAL       | <=       | Operador menor o igual que          | <=                   |
+|                                | NOT_EQUAL        | !=       | Operador de desigualdad             | !=                   |
+|                                | NOT              | !        | Operador de negación                | !                    |
+|                                | AND              | &&       | Operador lógico AND                 | &&                   |
+|                                | OR               | \|\|     | Operador lógico OR                  | \\\|\\\|             |
+| Inicio de comentario de bloque | COMMENT_START    | \/?      | Inicio de comentario                | \/\\?                |
+| Fin de comentario de bloque    | COMMENT_END      | ?\/      | Fin de comentario                   | \\?\/                |
+| Paréntesis                     | LEFT_PAREN       | (        | Paréntesis izquierdo                | \\\(                 |
+|                                | RIGHT_PAREN      | )        | Paréntesis derecho                  | \\\)                 |
+| Corchetes                      | LEFT_BRACKET     | [        | Corchete izquierdo                  | \\\[                 |
+|                                | RIGHT_BRACKET    | ]        | Corchete derecho                    | \\\]                 |
+| Llaves                         | LEFT_BRACE       | {        | Llave izquierda (llave de apertura) | \\\{                 |
+|                                | RIGHT_BRACE      | }        | Llave derecha (llave de cierre)     | \\\}                 |
+|                                | SEMICOLO         | ;        | Fin de instruccion                  | ;                    |
 
 # Palabras reservadas
 
