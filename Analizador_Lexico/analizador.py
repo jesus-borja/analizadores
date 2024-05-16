@@ -2,22 +2,40 @@ import re
 from ply import lex
 from ply.lex import Token
 
-resultado_lexema = []
+# Lista para almacenar los tokens no reconocidos
+errores = []
 
-palabras_reservadas = {
-    # Funciones
-    'fun': 'FUNCTION',
-    # Símbolos
-    'returns': 'RETURN',
-    # Estructuras de control
-    'if': 'IF',
-    'else': 'ELSE',
-    'for': 'FOR',
-    'in': 'IN',
-    'while': 'WHILE',
+# Palabras reservadas
+keywords = [
+    "FUNCTION",
+    "ARROW", # nombre para "->"
+    "IF",
+    "ELSE",
+    "FOR",
+    "IN",
+    "WHILE",
+]
+
+# Tipos de datos y literales
+datatypes = [
     # Tipos de datos
-}
+    "TYPE_INTEGER",
+    "TYPE_STRING",
+    "TYPE_FLOAT",
+    "TYPE_DOUBLE",
+    "TYPE_BOOL",
+    "TYPE_VOID",
+    "TYPE_NULL",
 
+    # Literales de datos
+    "STRING",
+    "INT",
+    "FLOAT",
+    "DOUBLE",
+    "BOOL",
+]
+
+# Tabla de tokens
 tokens = [
     "IDENTIFIER",
 
@@ -27,11 +45,11 @@ tokens = [
     "TIMES",
     "DIVIDE",
     "MODULO",
+    "POWER",
 
     # Operadores lógicos
-    "EQUAL",
+    # "EQUAL", # no se usa creo
     "ASSIGN_OP",
-    "ASSIGN_OP_SHORT",
     "COMPARISON",
     "LESS_THAN",
     "GREATER_THAN",
@@ -41,6 +59,10 @@ tokens = [
     "NOT",
     "AND",
     "OR",
+    
+    # Comentarios
+    "COMMENT_START",
+    "COMMENT_END",
 
     # Caracteres
     "LEFT_PAREN",
@@ -49,17 +71,20 @@ tokens = [
     "RIGHT_BRACKET",
     "LEFT_BRACE",
     "RIGHT_BRACE",
+    "SEMICOLON",
+    "COMMA",
+    "DOT",
+    "COLON",
 
-    #Valores
-    "INTEGER",
-    "STRING",
     # Otros
-    "COMMMENT",
     "SPACE",
     "NEWLINE"
-
 ]
-tokens = tokens + list(palabras_reservadas.values())
+
+# Todos los tokens aceptados por el lexer
+tokens = tokens + keywords + datatypes
+
+# ****** Expresiones regulares para los tokens simples ****** #
 
 # Operadores matemáticos
 t_PLUS = r'\+'
@@ -70,7 +95,10 @@ t_MODULO = r'%'
 
 # Operadores de asignación y comparación
 t_ASSIGN_OP = r':='
-t_ASSIGN_OP_SHORT = r':'
+t_COLON = r':'
+t_SEMICOLON = r';'
+t_COMMA = r','
+t_DOT = r'\.'
 t_COMPARISON = r'='
 
 # Operadores de comparación
@@ -93,18 +121,62 @@ t_RIGHT_BRACKET = r'\]'
 t_LEFT_BRACE = r'\{'
 t_RIGHT_BRACE = r'\}'
 
-def t_RETURNS(t):
-    r'returns'
+# ****** Expresiones regulares para las palabras reservadas y literales ****** #
+
+# Tipos de datos
+def t_TYPE_INTEGER(t):
+    r'int'
     return t
 
-def t_INTEGER(t):
+def t_TYPE_STRING(t):
+    r'str'
+    return t
+def t_TYPE_FLOAT(t):
+    r'float'
+    return t
+
+def t_TYPE_DOUBLE(t):
+    r'double'
+    return t
+
+def t_TYPE_BOOL(t):
+    r'bool'
+    return t
+
+def t_TYPE_VOID(t):
+    r'void'
+    return t
+
+def t_TYPE_NULL(t):
+    r'null'
+    return t
+
+def t_ARROW(t):
+    r'->'
+    return t
+
+def t_FLOAT(t):
+    r'\d+\.\d+f'
+    t.value = float(t.value[:-1])
+    return t
+
+def t_DOUBLE(t):
+    r'\d+\.\d+'
+    return t
+
+def t_INT(t):
     r'\d+'
-    t.value = int(t.value)  # Convertir el valor del token a un entero
+    t.value = int(t.value) # Convertir el valor del token a un entero
     return t
 
 def t_STRING(t):
     r'\'[^\']*\''
-    t.value = t.value[1:-1]  # Eliminar las comillas del principio y del final
+    t.value = t.value[1:-1] # Eliminar las comillas del principio y del final
+    return t
+
+def t_BOOL(t):
+    r'(true|false)'
+    t.value = bool(t.value)
     return t
 
 def t_FUNCTION(t):
@@ -128,15 +200,15 @@ def t_WHILE(t):
     return t
 
 def t_IDENTIFIER(t):
-    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    r'[a-zA-Z][a-zA-Z0-9_]*'
     return t
 
 def t_COMMENT(t):
-    r'\?.*'
+    r'/\?.*'
     pass
 
 def t_SPACE(t):
-    r'\t+'
+    r'[^\S\n]'
     pass
 
 def t_NEWLINE(t):
@@ -144,24 +216,42 @@ def t_NEWLINE(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-    global resultado_lexema
-    estado = "** El token no es válido en la línea {:4} Valor {:16} Posición {:4}".format(str(t.lineno), str(t.value), str(t.lexpos))
-    resultado_lexema.append(estado)
+    global errores
+    estado = "** El token no es válido en la línea {:4} Valor `{:16}` Posición {:4} Len: {:5}".format(str(t.lineno), str(t.value), str(t.lexpos), str(len(t.value)))
+    errores.append(estado)
     t.lexer.skip(1)
 
 
 lexer = lex.lex()
 
 # Prueba del lexer
-lexer.input("""Mensaje: string = 'Hola' 
-            if(Mensaje = 'Adios'){
-            /? asfd
-           Numero: int = 1
-           }else {
-            Numero.value: int = 2
-           }
-            """)
+lexer.input("""
+fun factorial() -> void {
+	x: int = 25;
+	y: float = 2.3f;
+	str := 'cadena';
 
+	if (y >= x) {
+		print('Hola');
+		return;
+	} else {
+		read(x);
+		print(x);
+	}
+
+	/? comentario de bloque ?/
+	xs := {21, 22, 23,}
+
+	for x_ in xs {
+		print(x_)
+	}
+	while true {
+		print('a')
+	}
+}
+""")
+
+# Lee la entrada del lexer e imprime los tokens encontrados
 while True:
     tok = lexer.token()
     if not tok:
@@ -169,3 +259,7 @@ while True:
     estado = "Linea {:4} Tipo {:16} Valor {:16} Posicion {:4}".format(
         str(tok.lineno), str(tok.type), str(tok.value), str(tok.lexpos))
     print(estado)
+
+# Se imprimen los errores encontrados (caracteres no reconocidos)
+for e in errores:
+    print(e)
