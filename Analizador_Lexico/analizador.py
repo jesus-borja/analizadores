@@ -1,6 +1,9 @@
+# ----------------- Librerias Usadas ----------------- #
 import re
 from ply import lex
 from ply.lex import Token
+
+# ---------------------- TOKENS ---------------------- #
 
 # Lista para almacenar los tokens no reconocidos
 errores = []
@@ -14,6 +17,7 @@ keywords = [
     "FOR",
     "IN",
     "WHILE",
+    "RETURN",
 ]
 
 # Tipos de datos y literales
@@ -84,7 +88,7 @@ tokens = [
 # Todos los tokens aceptados por el lexer
 tokens = tokens + keywords + datatypes
 
-# ****** Expresiones regulares para los tokens simples ****** #
+# ---------------------- Expresiones Regulares "simples" ---------------------- #
 
 # Operadores matemáticos
 t_PLUS = r'\+'
@@ -121,7 +125,7 @@ t_RIGHT_BRACKET = r'\]'
 t_LEFT_BRACE = r'\{'
 t_RIGHT_BRACE = r'\}'
 
-# ****** Expresiones regulares para las palabras reservadas y literales ****** #
+# ----- Expresiones Regulares para tokens con mayor funcionalidad ----- #
 
 # Tipos de datos
 def t_TYPE_INTEGER(t):
@@ -157,7 +161,7 @@ def t_ARROW(t):
 
 def t_FLOAT(t):
     r'\d+\.\d+f'
-    t.value = float(t.value[:-1])
+    t.value = float(t.value[:-1]) # elimina la 'f' del final para tomar el valor del decimal
     return t
 
 def t_DOUBLE(t):
@@ -181,6 +185,10 @@ def t_BOOL(t):
 
 def t_FUNCTION(t):
     r'fun'
+    return t
+
+def t_RETURN(t):
+    r'return'
     return t
 
 def t_IF(t):
@@ -215,13 +223,17 @@ def t_NEWLINE(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+# Se invoca la funcion cuando se da un caracter no reconocido
 def t_error(t):
     global errores
     estado = "** El token no es válido en la línea {:4} Valor `{:16}` Posición {:4} Len: {:5}".format(str(t.lineno), str(t.value), str(t.lexpos), str(len(t.value)))
     errores.append(estado)
+    # Salta el token y sigue con el resto de la entrada
     t.lexer.skip(1)
 
+# ----- Funcionamiento del analizador léxico ----- #
 
+# Creamos un lexer con la información de los tokens y expresiones regulares antes definidas
 lexer = lex.lex()
 
 # Prueba del lexer
@@ -229,7 +241,7 @@ lexer.input("""
 fun factorial() -> void {
 	x: int = 25;
 	y: float = 2.3f;
-	str := 'cadena';
+	texto := 'cadena';
 
 	if (y >= x) {
 		print('Hola');
@@ -253,9 +265,12 @@ fun factorial() -> void {
 
 # Lee la entrada del lexer e imprime los tokens encontrados
 while True:
+    # Obtiene el siguiente token
     tok = lexer.token()
+    # Cuando ya se consumió toda la entrada, se sale del ciclo
     if not tok:
         break
+    # Prepara la linea con la informacion del token encontrado
     estado = "Linea {:4} Tipo {:16} Valor {:16} Posicion {:4}".format(
         str(tok.lineno), str(tok.type), str(tok.value), str(tok.lexpos))
     print(estado)
