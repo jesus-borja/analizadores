@@ -41,7 +41,7 @@ datatypes = [
 
 # Tabla de tokens
 tokens = [
-    "IDENTIFIER",
+    "IDENTIFIER", # Nombres de variables o funciones
 
     # Operadores matemáticos
     "PLUS",
@@ -82,7 +82,7 @@ tokens = [
 
     # Otros
     "SPACE",
-    "NEWLINE"
+    "NEWLINE",
 ]
 
 # Todos los tokens aceptados por el lexer
@@ -252,14 +252,15 @@ fun factorial() -> void {
 	}
 
 	/? comentario de bloque ?/
-	xs := {21, 22, 23,}
+	xs := {21, 22, 23,};
 
 	for x_ in xs {
-		print(x_)
+		print(x_);
 	}
-	while true {
-		print('a')
+	while (true) {
+		print('a');
 	}
+    ~
 }
 """)
 
