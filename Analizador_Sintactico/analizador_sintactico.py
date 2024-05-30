@@ -1,161 +1,183 @@
 import ply.yacc as yacc
 from analizador_lexico import tokens, analizador
 
-# Definir las reglas de precedencia
+variables = {}
+errores_gramatica = []
+
+# Precedencia y asociatividad de operadores
 precedence = (
+    ('left', 'OR'),
+    ('left', 'AND'),
+    ('left', 'LESS_THAN', 'GREATER_THAN', 'LESS_EQUAL',
+     'GREATER_EQUAL', 'COMPARISON', 'NOT_EQUAL'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE', 'MODULO'),
     ('right', 'POWER'),
-    ('left', 'COMPARISON', 'LESS_THAN', 'GREATER_THAN', 'GREATER_EQUAL', 'LESS_EQUAL', 'NOT_EQUAL'),
     ('right', 'NOT'),
-    ('left', 'AND', 'OR'),
 )
 
-# Diccionario para almacenar los valores de las variables
-variables = {}
-resultado_gramatica = []
+# Símbolo inicial
 
 
-# Definir las funciones correspondientes a cada regla de producción
+def p_program(p):
+    '''program : statement_list'''
+    p[0] = p[1]
 
-def p_F(p):
-    '''F : LEFT_PAREN E RIGHT_PAREN
-         | IDENTIFIER
-         | INT
-         | FLOAT
-         | DOUBLE
-         | STRING
-         | BOOL
-         | NOT E
-         | E COMPARISON E
-         | E LESS_THAN E
-         | E GREATER_THAN E
-         | E LESS_EQUAL E
-         | E GREATER_EQUAL E
-         | E NOT_EQUAL E
-         | E AND E
-         | E OR E'''
-    if len(p) == 2:  # IDENTIFIER, INT, FLOAT, DOUBLE, STRING, BOOL
-        if isinstance(p[1], str) and p[1] in variables:
-            p[0] = variables[p[1]]
-        else:
-            p[0] = p[1]
-    elif p[1] == '(':
-        p[0] = p[2]
-    elif p[1] == '!':
-        p[0] = not p[2]
+
+def p_data_type(p):
+    '''data_type : TYPE_INTEGER
+                 | TYPE_STRING
+                 | TYPE_FLOAT
+                 | TYPE_DOUBLE
+                 | TYPE_BOOL
+                 | TYPE_VOID
+                 | TYPE_NULL'''
+    p[0] = p[1]
+
+
+def p_factor(p):
+    '''factor : LEFT_PAREN expr RIGHT_PAREN
+              | IDENTIFIER
+              | INT
+              | FLOAT
+              | DOUBLE
+              | STRING
+              | BOOL
+              | NOT expr
+              | expr COMPARISON expr
+              | expr LESS_THAN expr
+              | expr GREATER_THAN expr
+              | expr LESS_EQUAL expr
+              | expr GREATER_EQUAL expr
+              | expr NOT_EQUAL expr
+              | expr AND expr
+              | expr OR expr'''
+    if len(p) == 4:
+        p[0] = (p[2], p[1], p[3])
+    elif len(p) == 3:
+        p[0] = ('not', p[2])
+    else:
+        p[0] = p[1]
+
+
+def p_expr(p):
+    '''expr : expr PLUS factor
+            | expr MINUS factor
+            | expr TIMES factor
+            | expr DIVIDE factor
+            | expr MODULO factor
+            | expr POWER factor
+            | factor'''
+    if len(p) == 4:
+        p[0] = (p[2], p[1], p[3])
+    else:
+        p[0] = p[1]
+
+
+def p_var_decl(p):
+    '''var_decl : IDENTIFIER COLON data_type ASSIGN_OP expr SEMICOLON'''
+    variables[p[1]] = p[5]
+    p[0] = ('var_decl', p[1], p[3], p[5])
+
+
+def p_param_list(p):
+    '''param_list : param_list COMMA IDENTIFIER COLON data_type
+                  | IDENTIFIER COLON data_type
+                  | empty'''
+    if len(p) == 6:
+        p[0] = p[1] + [(p[3], p[5])]
     elif len(p) == 4:
-        if p[2] == '==':
-            p[0] = p[1] == p[3]
-        elif p[2] == '!=':
-            p[0] = p[1] != p[3]
-        elif p[2] == '<':
-            p[0] = p[1] < p[3]
-        elif p[2] == '>':
-            p[0] = p[1] > p[3]
-        elif p[2] == '<=':
-            p[0] = p[1] <= p[3]
-        elif p[2] == '>=':
-            p[0] = p[1] >= p[3]
-        elif p[2] == '&&':
-            p[0] = p[1] and p[3]
-        elif p[2] == '||':
-            p[0] = p[1] or p[3]
+        p[0] = [(p[1], p[3])]
+    else:
+        p[0] = []
 
-def p_E(p):
-    '''E : F'''
+
+def p_statement_list(p):
+    '''statement_list : statement_list statement
+                      | empty'''
+    if len(p) == 3:
+        p[0] = p[1] + [p[2]]
+    else:
+        p[0] = []
+
+
+def p_statement(p):
+    '''statement : expr SEMICOLON
+                 | if_statement
+                 | while_statement
+                 | for_statement
+                 | return_statement
+                 | var_decl SEMICOLON
+                 | block'''
     p[0] = p[1]
 
-def p_expression_plus(p):
-    'E : E PLUS E'
-    p[0] = p[1] + p[3]
 
-def p_expression_minus(p):
-    'E : E MINUS E'
-    p[0] = p[1] - p[3]
-
-def p_expression_times(p):
-    'E : E TIMES E'
-    p[0] = p[1] * p[3]
-
-def p_expression_divide(p):
-    'E : E DIVIDE E'
-    p[0] = p[1] / p[3]
-
-def p_expression_modulo(p):
-    'E : E MODULO E'
-    p[0] = p[1] % p[3]
-
-def p_expression_power(p):
-    'E : E POWER E'
-    p[0] = p[1] ** p[3]
-  
-def p_VD(p):
-    'VD : IDENTIFIER COLON TD ASSIGN_OP E'
-    variables[p[1]] = p[5]  # Almacena el valor de la variable en el diccionario
+def p_block(p):
+    '''block : LEFT_BRACE statement_list RIGHT_BRACE'''
+    p[0] = p[2]
 
 
-def p_TD(p):
-    '''TD : TYPE_BOOL 
-          | TYPE_DOUBLE
-          | TYPE_FLOAT
-          | TYPE_INTEGER
-          | TYPE_NULL
-          | TYPE_STRING
-          | TYPE_VOID'''
-    p[0] = p[1]
+def p_if_statement(p):
+    '''if_statement : IF LEFT_PAREN expr RIGHT_PAREN block
+                    | IF LEFT_PAREN expr RIGHT_PAREN block ELSE block'''
+    if len(p) == 6:
+        p[0] = ('if', p[3], p[5])
+    else:
+        p[0] = ('if_else', p[3], p[5], p[7])
 
-def p_FD(p):
-    'FD : FUNCTION IDENTIFIER LEFT_PAREN PL RIGHT_PAREN ARROW TD B'
-    # Define una función para esta producción
+
+def p_while_statement(p):
+    '''while_statement : WHILE LEFT_PAREN expr RIGHT_PAREN block'''
+    p[0] = ('while', p[3], p[5])
+
+
+def p_for_statement(p):
+    '''for_statement : FOR IDENTIFIER IN IDENTIFIER block'''
+    p[0] = ('for', p[2], p[4], p[5])
+
+
+def p_return_statement(p):
+    '''return_statement : RETURN expr SEMICOLON'''
+    p[0] = ('return', p[2])
+
+
+def p_func_decl(p):
+    '''func_decl : FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block'''
+    p[0] = ('function', p[2], p[4], p[7], p[8])
+
+
+def p_empty(p):
+    '''empty :'''
     pass
 
-def p_S(p):
-    '''S : E SEMICOLON
-         | IfS
-         | WS
-         | FS
-         | RS
-         | VD SEMICOLON'''
 
-def p_B(p):
-    'B : LEFT_BRACKET SL RIGHT_BRACKET'
-
-def p_SL(p):
-    '''SL : S
-          | SL S''' 
-
-def p_PL(p):
-    '''PL : PL COMMA IDENTIFIER COLON TD
-          | IDENTIFIER COLON TD'''       
-
-def p_IfS(p):
-    '''IfS : IF LEFT_PAREN E RIGHT_PAREN B
-           | IF LEFT_PAREN E RIGHT_PAREN B ELSE B'''
-
-def p_WS(p):
-    'WS : WHILE LEFT_PAREN E RIGHT_PAREN B'
-
-def p_FS(p):
-    'FS : FOR IDENTIFIER IN IDENTIFIER LEFT_BRACKET SL RIGHT_BRACKET'
-
-def p_RS(p):
-    'RS : RETURN E SEMICOLON'
-
-def p_error(t):
-    global resultado_gramatica
-    if t:
-        resultado = "Error sintactico de tipo {} en el valor {}".format( str(t.type),str(t.value))
-        print(resultado)
+def p_error(p):
+    if p:
+        error_message = f"Error sintáctico en el token {p.type} ({p.value}) en la línea {p.lineno}"
+        errores_gramatica.append(error_message)
+        print(error_message)
     else:
-        resultado = "Error sintactico {}".format(t)
-        print(resultado)
-    resultado_gramatica.append(resultado)
+        error_message = "Error sintáctico al final de la entrada"
+        errores_gramatica.append(error_message)
+        print(error_message)
+
 
 parser = yacc.yacc()
 
-# Ahora puedes utilizar el parser para analizar tu entrada
-entrada = "x: int = 5;"
-resultado = parser.parse(entrada, lexer=analizador)
-print(resultado)
-print(variables)
+data = """
+
+x int = 5;
+
+if (complex_expr) {
+    return z;
+} else {
+    return y;
+}
+
+"""
+
+result = parser.parse(data)
+if result:
+    print("Parseo exitoso:", result)
+else:
+    print("Errores de gramática:", errores_gramatica)

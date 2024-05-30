@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftTIMESDIVIDEMODULOrightPOWERleftCOMPARISONLESS_THANGREATER_THANGREATER_EQUALLESS_EQUALNOT_EQUALrightNOTleftANDORAND ARROW ASSIGN_OP BOOL COLON COMMA COMMENT_END COMMENT_START COMPARISON DIVIDE DOT DOUBLE ELSE FLOAT FOR FUNCTION GREATER_EQUAL GREATER_THAN IDENTIFIER IF IN INT LEFT_BRACE LEFT_BRACKET LEFT_PAREN LESS_EQUAL LESS_THAN MINUS MODULO NEWLINE NOT NOT_EQUAL OR PLUS POWER RETURN RIGHT_BRACE RIGHT_BRACKET RIGHT_PAREN SEMICOLON SPACE STRING TIMES TYPE_BOOL TYPE_DOUBLE TYPE_FLOAT TYPE_INTEGER TYPE_NULL TYPE_STRING TYPE_VOID WHILEF : LEFT_PAREN E RIGHT_PAREN\n         | IDENTIFIER\n         | INT\n         | FLOAT\n         | DOUBLE\n         | STRING\n         | BOOL\n         | NOT E\n         | E COMPARISON E\n         | E LESS_THAN E\n         | E GREATER_THAN E\n         | E LESS_EQUAL E\n         | E GREATER_EQUAL E\n         | E NOT_EQUAL E\n         | E AND E\n         | E OR EE : FE : E PLUS EE : E MINUS EE : E TIMES EE : E DIVIDE EE : E MODULO EE : E POWER EVD : IDENTIFIER COLON TD ASSIGN_OP ETD : TYPE_BOOL \n          | TYPE_DOUBLE\n          | TYPE_FLOAT\n          | TYPE_INTEGER\n          | TYPE_NULL\n          | TYPE_STRING\n          | TYPE_VOIDFD : FUNCTION IDENTIFIER LEFT_PAREN PL RIGHT_PAREN ARROW TD BS : E SEMICOLON\n         | IfS\n         | WS\n         | FS\n         | RS\n         | VD SEMICOLONB : LEFT_BRACKET SL RIGHT_BRACKETSL : S\n          | SL SPL : PL COMMA IDENTIFIER COLON TD\n          | IDENTIFIER COLON TDIfS : IF LEFT_PAREN E RIGHT_PAREN B\n           | IF LEFT_PAREN E RIGHT_PAREN B ELSE BWS : WHILE LEFT_PAREN E RIGHT_PAREN BFS : FOR IDENTIFIER IN IDENTIFIER LEFT_BRACKET SL RIGHT_BRACKETRS : RETURN E SEMICOLON'
+_lr_signature = 'leftORleftANDleftLESS_THANGREATER_THANLESS_EQUALGREATER_EQUALCOMPARISONNOT_EQUALleftPLUSMINUSleftTIMESDIVIDEMODULOrightPOWERrightNOTAND ARROW ASSIGN_OP BOOL COLON COMMA COMPARISON DIVIDE DOT DOUBLE ELSE FLOAT FOR FUNCTION GREATER_EQUAL GREATER_THAN IDENTIFIER IF IN INT LEFT_BRACE LEFT_BRACKET LEFT_PAREN LESS_EQUAL LESS_THAN MINUS MODULO NOT NOT_EQUAL OR PLUS POWER RETURN RIGHT_BRACE RIGHT_BRACKET RIGHT_PAREN SEMICOLON STRING TIMES TYPE_BOOL TYPE_DOUBLE TYPE_FLOAT TYPE_INTEGER TYPE_NULL TYPE_STRING TYPE_VOID WHILEprogram : statement_listdata_type : TYPE_INTEGER\n                 | TYPE_STRING\n                 | TYPE_FLOAT\n                 | TYPE_DOUBLE\n                 | TYPE_BOOL\n                 | TYPE_VOID\n                 | TYPE_NULLfactor : LEFT_PAREN expr RIGHT_PAREN\n              | IDENTIFIER\n              | INT\n              | FLOAT\n              | DOUBLE\n              | STRING\n              | BOOL\n              | NOT expr\n              | expr COMPARISON expr\n              | expr LESS_THAN expr\n              | expr GREATER_THAN expr\n              | expr LESS_EQUAL expr\n              | expr GREATER_EQUAL expr\n              | expr NOT_EQUAL expr\n              | expr AND expr\n              | expr OR exprexpr : expr PLUS factor\n            | expr MINUS factor\n            | expr TIMES factor\n            | expr DIVIDE factor\n            | expr MODULO factor\n            | expr POWER factor\n            | factorvar_decl : IDENTIFIER COLON data_type ASSIGN_OP expr SEMICOLONparam_list : param_list COMMA IDENTIFIER COLON data_type\n                  | IDENTIFIER COLON data_type\n                  | emptystatement_list : statement_list statement\n                      | emptystatement : expr SEMICOLON\n                 | if_statement\n                 | while_statement\n                 | for_statement\n                 | return_statement\n                 | var_decl SEMICOLON\n                 | blockblock : LEFT_BRACE statement_list RIGHT_BRACEif_statement : IF LEFT_PAREN expr RIGHT_PAREN block\n                    | IF LEFT_PAREN expr RIGHT_PAREN block ELSE blockwhile_statement : WHILE LEFT_PAREN expr RIGHT_PAREN blockfor_statement : FOR IDENTIFIER IN IDENTIFIER blockreturn_statement : RETURN expr SEMICOLONfunc_decl : FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type blockempty :'
     
-_lr_action_items = {'LEFT_PAREN':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,]),'IDENTIFIER':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,]),'INT':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,]),'FLOAT':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,]),'DOUBLE':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,]),'STRING':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,]),'BOOL':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,]),'NOT':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,]),'$end':([1,4,5,6,7,8,9,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[0,-2,-3,-4,-5,-6,-7,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,-18,-19,-20,-21,-22,-23,]),'COMPARISON':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,13,-2,-3,-4,-5,-6,-7,13,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,13,13,13,13,13,13,]),'LESS_THAN':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,14,-2,-3,-4,-5,-6,-7,14,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,14,14,14,14,14,14,]),'GREATER_THAN':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,15,-2,-3,-4,-5,-6,-7,15,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,15,15,15,15,15,15,]),'LESS_EQUAL':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,16,-2,-3,-4,-5,-6,-7,16,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,16,16,16,16,16,16,]),'GREATER_EQUAL':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,17,-2,-3,-4,-5,-6,-7,17,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,17,17,17,17,17,17,]),'NOT_EQUAL':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,18,-2,-3,-4,-5,-6,-7,18,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,18,18,18,18,18,18,]),'AND':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,19,-2,-3,-4,-5,-6,-7,19,-17,19,-1,19,19,19,19,19,19,-15,-16,19,19,19,19,19,19,]),'OR':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,20,-2,-3,-4,-5,-6,-7,20,-17,20,-1,20,20,20,20,20,20,-15,-16,20,20,20,20,20,20,]),'PLUS':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,21,-2,-3,-4,-5,-6,-7,21,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,-18,-19,-20,-21,-22,-23,]),'MINUS':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,22,-2,-3,-4,-5,-6,-7,22,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,-18,-19,-20,-21,-22,-23,]),'TIMES':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,23,-2,-3,-4,-5,-6,-7,23,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,23,23,-20,-21,-22,-23,]),'DIVIDE':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,24,-2,-3,-4,-5,-6,-7,24,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,24,24,-20,-21,-22,-23,]),'MODULO':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,25,-2,-3,-4,-5,-6,-7,25,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,25,25,-20,-21,-22,-23,]),'POWER':([1,3,4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-17,26,-2,-3,-4,-5,-6,-7,26,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,26,26,26,26,26,26,]),'RIGHT_PAREN':([4,5,6,7,8,9,11,12,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,],[-2,-3,-4,-5,-6,-7,28,-17,-8,-1,-9,-10,-11,-12,-13,-14,-15,-16,-18,-19,-20,-21,-22,-23,]),}
+_lr_action_items = {'IF':([0,2,3,4,6,7,8,9,11,19,26,41,49,78,79,84,85,86,90,],[-52,13,-37,-36,-39,-40,-41,-42,-44,-52,-38,-43,13,-50,-45,-46,-48,-49,-47,]),'WHILE':([0,2,3,4,6,7,8,9,11,19,26,41,49,78,79,84,85,86,90,],[-52,15,-37,-36,-39,-40,-41,-42,-44,-52,-38,-43,15,-50,-45,-46,-48,-49,-47,]),'FOR':([0,2,3,4,6,7,8,9,11,19,26,41,49,78,79,84,85,86,90,],[-52,16,-37,-36,-39,-40,-41,-42,-44,-52,-38,-43,16,-50,-45,-46,-48,-49,-47,]),'RETURN':([0,2,3,4,6,7,8,9,11,19,26,41,49,78,79,84,85,86,90,],[-52,18,-37,-36,-39,-40,-41,-42,-44,-52,-38,-43,18,-50,-45,-46,-48,-49,-47,]),'IDENTIFIER':([0,2,3,4,6,7,8,9,11,14,16,18,19,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,45,49,69,78,79,83,84,85,86,90,],[-52,17,-37,-36,-39,-40,-41,-42,-44,44,46,44,-52,44,-38,44,44,44,44,44,44,44,44,44,44,44,44,44,44,-43,44,44,17,82,-50,-45,44,-46,-48,-49,-47,]),'LEFT_BRACE':([0,2,3,4,6,7,8,9,11,19,26,41,49,78,79,80,81,82,84,85,86,88,90,],[-52,19,-37,-36,-39,-40,-41,-42,-44,-52,-38,-43,19,-50,-45,19,19,19,-46,-48,-49,19,-47,]),'LEFT_PAREN':([0,2,3,4,6,7,8,9,11,13,14,15,18,19,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,45,49,78,79,83,84,85,86,90,],[-52,14,-37,-36,-39,-40,-41,-42,-44,42,14,45,14,-52,14,-38,14,14,14,14,14,14,14,14,14,14,14,14,14,14,-43,14,14,14,-50,-45,14,-46,-48,-49,-47,]),'INT':([0,2,3,4,6,7,8,9,11,14,18,19,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,45,49,78,79,83,84,85,86,90,],[-52,20,-37,-36,-39,-40,-41,-42,-44,20,20,-52,20,-38,20,20,20,20,20,20,20,20,20,20,20,20,20,20,-43,20,20,20,-50,-45,20,-46,-48,-49,-47,]),'FLOAT':([0,2,3,4,6,7,8,9,11,14,18,19,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,45,49,78,79,83,84,85,86,90,],[-52,21,-37,-36,-39,-40,-41,-42,-44,21,21,-52,21,-38,21,21,21,21,21,21,21,21,21,21,21,21,21,21,-43,21,21,21,-50,-45,21,-46,-48,-49,-47,]),'DOUBLE':([0,2,3,4,6,7,8,9,11,14,18,19,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,45,49,78,79,83,84,85,86,90,],[-52,22,-37,-36,-39,-40,-41,-42,-44,22,22,-52,22,-38,22,22,22,22,22,22,22,22,22,22,22,22,22,22,-43,22,22,22,-50,-45,22,-46,-48,-49,-47,]),'STRING':([0,2,3,4,6,7,8,9,11,14,18,19,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,45,49,78,79,83,84,85,86,90,],[-52,23,-37,-36,-39,-40,-41,-42,-44,23,23,-52,23,-38,23,23,23,23,23,23,23,23,23,23,23,23,23,23,-43,23,23,23,-50,-45,23,-46,-48,-49,-47,]),'BOOL':([0,2,3,4,6,7,8,9,11,14,18,19,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,45,49,78,79,83,84,85,86,90,],[-52,24,-37,-36,-39,-40,-41,-42,-44,24,24,-52,24,-38,24,24,24,24,24,24,24,24,24,24,24,24,24,24,-43,24,24,24,-50,-45,24,-46,-48,-49,-47,]),'NOT':([0,2,3,4,6,7,8,9,11,14,18,19,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,45,49,78,79,83,84,85,86,90,],[-52,25,-37,-36,-39,-40,-41,-42,-44,25,25,-52,25,-38,25,25,25,25,25,25,25,25,25,25,25,25,25,25,-43,25,25,25,-50,-45,25,-46,-48,-49,-47,]),'$end':([0,1,2,3,4,6,7,8,9,11,26,41,78,79,84,85,86,90,],[-52,0,-1,-37,-36,-39,-40,-41,-42,-44,-38,-43,-50,-45,-46,-48,-49,-47,]),'RIGHT_BRACE':([3,4,6,7,8,9,11,19,26,41,49,78,79,84,85,86,90,],[-37,-36,-39,-40,-41,-42,-44,-52,-38,-43,79,-50,-45,-46,-48,-49,-47,]),'SEMICOLON':([5,10,12,17,20,21,22,23,24,44,48,50,52,53,54,55,56,57,58,59,60,61,62,63,64,65,67,87,89,],[26,41,-31,-10,-11,-12,-13,-14,-15,-10,78,-16,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,-23,-24,-9,89,-32,]),'PLUS':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[27,-31,-10,-11,-12,-13,-14,-15,27,-10,27,-16,27,-25,-26,-27,-28,-29,-30,27,27,27,27,27,27,27,27,27,-9,27,27,]),'MINUS':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[28,-31,-10,-11,-12,-13,-14,-15,28,-10,28,-16,28,-25,-26,-27,-28,-29,-30,28,28,28,28,28,28,28,28,28,-9,28,28,]),'TIMES':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[29,-31,-10,-11,-12,-13,-14,-15,29,-10,29,-16,29,-25,-26,-27,-28,-29,-30,29,29,29,29,29,29,29,29,29,-9,29,29,]),'DIVIDE':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[30,-31,-10,-11,-12,-13,-14,-15,30,-10,30,-16,30,-25,-26,-27,-28,-29,-30,30,30,30,30,30,30,30,30,30,-9,30,30,]),'MODULO':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[31,-31,-10,-11,-12,-13,-14,-15,31,-10,31,-16,31,-25,-26,-27,-28,-29,-30,31,31,31,31,31,31,31,31,31,-9,31,31,]),'POWER':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[32,-31,-10,-11,-12,-13,-14,-15,32,-10,32,-16,32,-25,-26,-27,-28,-29,-30,32,32,32,32,32,32,32,32,32,-9,32,32,]),'COMPARISON':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[33,-31,-10,-11,-12,-13,-14,-15,33,-10,33,-16,33,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,33,33,33,-9,33,33,]),'LESS_THAN':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[34,-31,-10,-11,-12,-13,-14,-15,34,-10,34,-16,34,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,34,34,34,-9,34,34,]),'GREATER_THAN':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[35,-31,-10,-11,-12,-13,-14,-15,35,-10,35,-16,35,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,35,35,35,-9,35,35,]),'LESS_EQUAL':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[36,-31,-10,-11,-12,-13,-14,-15,36,-10,36,-16,36,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,36,36,36,-9,36,36,]),'GREATER_EQUAL':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[37,-31,-10,-11,-12,-13,-14,-15,37,-10,37,-16,37,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,37,37,37,-9,37,37,]),'NOT_EQUAL':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[38,-31,-10,-11,-12,-13,-14,-15,38,-10,38,-16,38,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,38,38,38,-9,38,38,]),'AND':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[39,-31,-10,-11,-12,-13,-14,-15,39,-10,39,-16,39,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,-23,39,39,-9,39,39,]),'OR':([5,12,17,20,21,22,23,24,43,44,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,87,],[40,-31,-10,-11,-12,-13,-14,-15,40,-10,40,-16,40,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,-23,-24,40,-9,40,40,]),'RIGHT_PAREN':([12,20,21,22,23,24,43,44,50,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,],[-31,-11,-12,-13,-14,-15,67,-10,-16,-25,-26,-27,-28,-29,-30,-17,-18,-19,-20,-21,-22,-23,-24,80,-9,81,]),'COLON':([17,],[47,]),'IN':([46,],[69,]),'TYPE_INTEGER':([47,],[71,]),'TYPE_STRING':([47,],[72,]),'TYPE_FLOAT':([47,],[73,]),'TYPE_DOUBLE':([47,],[74,]),'TYPE_BOOL':([47,],[75,]),'TYPE_VOID':([47,],[76,]),'TYPE_NULL':([47,],[77,]),'ASSIGN_OP':([70,71,72,73,74,75,76,77,],[83,-2,-3,-4,-5,-6,-7,-8,]),'ELSE':([79,84,],[-45,88,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'F':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[1,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,]),'E':([0,2,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,],[3,11,27,29,30,31,32,33,34,35,36,37,38,39,40,41,42,]),}
+_lr_goto_items = {'program':([0,],[1,]),'statement_list':([0,19,],[2,49,]),'empty':([0,19,],[3,3,]),'statement':([2,49,],[4,4,]),'expr':([2,14,18,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,42,45,49,83,],[5,43,48,50,51,51,51,51,51,51,58,59,60,61,62,63,64,65,66,68,5,87,]),'if_statement':([2,49,],[6,6,]),'while_statement':([2,49,],[7,7,]),'for_statement':([2,49,],[8,8,]),'return_statement':([2,49,],[9,9,]),'var_decl':([2,49,],[10,10,]),'block':([2,49,80,81,82,88,],[11,11,84,85,86,90,]),'factor':([2,14,18,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,42,45,49,83,],[12,12,12,12,52,53,54,55,56,57,12,12,12,12,12,12,12,12,12,12,12,12,]),'data_type':([47,],[70,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,53 +26,57 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> F","S'",1,None,None,None),
-  ('F -> LEFT_PAREN E RIGHT_PAREN','F',3,'p_F','analizador_sintactico.py',22),
-  ('F -> IDENTIFIER','F',1,'p_F','analizador_sintactico.py',23),
-  ('F -> INT','F',1,'p_F','analizador_sintactico.py',24),
-  ('F -> FLOAT','F',1,'p_F','analizador_sintactico.py',25),
-  ('F -> DOUBLE','F',1,'p_F','analizador_sintactico.py',26),
-  ('F -> STRING','F',1,'p_F','analizador_sintactico.py',27),
-  ('F -> BOOL','F',1,'p_F','analizador_sintactico.py',28),
-  ('F -> NOT E','F',2,'p_F','analizador_sintactico.py',29),
-  ('F -> E COMPARISON E','F',3,'p_F','analizador_sintactico.py',30),
-  ('F -> E LESS_THAN E','F',3,'p_F','analizador_sintactico.py',31),
-  ('F -> E GREATER_THAN E','F',3,'p_F','analizador_sintactico.py',32),
-  ('F -> E LESS_EQUAL E','F',3,'p_F','analizador_sintactico.py',33),
-  ('F -> E GREATER_EQUAL E','F',3,'p_F','analizador_sintactico.py',34),
-  ('F -> E NOT_EQUAL E','F',3,'p_F','analizador_sintactico.py',35),
-  ('F -> E AND E','F',3,'p_F','analizador_sintactico.py',36),
-  ('F -> E OR E','F',3,'p_F','analizador_sintactico.py',37),
-  ('E -> F','E',1,'p_E','analizador_sintactico.py',66),
-  ('E -> E PLUS E','E',3,'p_expression_plus','analizador_sintactico.py',70),
-  ('E -> E MINUS E','E',3,'p_expression_minus','analizador_sintactico.py',74),
-  ('E -> E TIMES E','E',3,'p_expression_times','analizador_sintactico.py',78),
-  ('E -> E DIVIDE E','E',3,'p_expression_divide','analizador_sintactico.py',82),
-  ('E -> E MODULO E','E',3,'p_expression_modulo','analizador_sintactico.py',86),
-  ('E -> E POWER E','E',3,'p_expression_power','analizador_sintactico.py',90),
-  ('VD -> IDENTIFIER COLON TD ASSIGN_OP E','VD',5,'p_VD','analizador_sintactico.py',94),
-  ('TD -> TYPE_BOOL','TD',1,'p_TD','analizador_sintactico.py',99),
-  ('TD -> TYPE_DOUBLE','TD',1,'p_TD','analizador_sintactico.py',100),
-  ('TD -> TYPE_FLOAT','TD',1,'p_TD','analizador_sintactico.py',101),
-  ('TD -> TYPE_INTEGER','TD',1,'p_TD','analizador_sintactico.py',102),
-  ('TD -> TYPE_NULL','TD',1,'p_TD','analizador_sintactico.py',103),
-  ('TD -> TYPE_STRING','TD',1,'p_TD','analizador_sintactico.py',104),
-  ('TD -> TYPE_VOID','TD',1,'p_TD','analizador_sintactico.py',105),
-  ('FD -> FUNCTION IDENTIFIER LEFT_PAREN PL RIGHT_PAREN ARROW TD B','FD',8,'p_FD','analizador_sintactico.py',109),
-  ('S -> E SEMICOLON','S',2,'p_S','analizador_sintactico.py',114),
-  ('S -> IfS','S',1,'p_S','analizador_sintactico.py',115),
-  ('S -> WS','S',1,'p_S','analizador_sintactico.py',116),
-  ('S -> FS','S',1,'p_S','analizador_sintactico.py',117),
-  ('S -> RS','S',1,'p_S','analizador_sintactico.py',118),
-  ('S -> VD SEMICOLON','S',2,'p_S','analizador_sintactico.py',119),
-  ('B -> LEFT_BRACKET SL RIGHT_BRACKET','B',3,'p_B','analizador_sintactico.py',122),
-  ('SL -> S','SL',1,'p_SL','analizador_sintactico.py',125),
-  ('SL -> SL S','SL',2,'p_SL','analizador_sintactico.py',126),
-  ('PL -> PL COMMA IDENTIFIER COLON TD','PL',5,'p_PL','analizador_sintactico.py',129),
-  ('PL -> IDENTIFIER COLON TD','PL',3,'p_PL','analizador_sintactico.py',130),
-  ('IfS -> IF LEFT_PAREN E RIGHT_PAREN B','IfS',5,'p_IfS','analizador_sintactico.py',133),
-  ('IfS -> IF LEFT_PAREN E RIGHT_PAREN B ELSE B','IfS',7,'p_IfS','analizador_sintactico.py',134),
-  ('WS -> WHILE LEFT_PAREN E RIGHT_PAREN B','WS',5,'p_WS','analizador_sintactico.py',137),
-  ('FS -> FOR IDENTIFIER IN IDENTIFIER LEFT_BRACKET SL RIGHT_BRACKET','FS',7,'p_FS','analizador_sintactico.py',140),
-  ('RS -> RETURN E SEMICOLON','RS',3,'p_RS','analizador_sintactico.py',143),
+  ("S' -> program","S'",1,None,None,None),
+  ('program -> statement_list','program',1,'p_program','analizador_sintactico.py',23),
+  ('data_type -> TYPE_INTEGER','data_type',1,'p_data_type','analizador_sintactico.py',28),
+  ('data_type -> TYPE_STRING','data_type',1,'p_data_type','analizador_sintactico.py',29),
+  ('data_type -> TYPE_FLOAT','data_type',1,'p_data_type','analizador_sintactico.py',30),
+  ('data_type -> TYPE_DOUBLE','data_type',1,'p_data_type','analizador_sintactico.py',31),
+  ('data_type -> TYPE_BOOL','data_type',1,'p_data_type','analizador_sintactico.py',32),
+  ('data_type -> TYPE_VOID','data_type',1,'p_data_type','analizador_sintactico.py',33),
+  ('data_type -> TYPE_NULL','data_type',1,'p_data_type','analizador_sintactico.py',34),
+  ('factor -> LEFT_PAREN expr RIGHT_PAREN','factor',3,'p_factor','analizador_sintactico.py',39),
+  ('factor -> IDENTIFIER','factor',1,'p_factor','analizador_sintactico.py',40),
+  ('factor -> INT','factor',1,'p_factor','analizador_sintactico.py',41),
+  ('factor -> FLOAT','factor',1,'p_factor','analizador_sintactico.py',42),
+  ('factor -> DOUBLE','factor',1,'p_factor','analizador_sintactico.py',43),
+  ('factor -> STRING','factor',1,'p_factor','analizador_sintactico.py',44),
+  ('factor -> BOOL','factor',1,'p_factor','analizador_sintactico.py',45),
+  ('factor -> NOT expr','factor',2,'p_factor','analizador_sintactico.py',46),
+  ('factor -> expr COMPARISON expr','factor',3,'p_factor','analizador_sintactico.py',47),
+  ('factor -> expr LESS_THAN expr','factor',3,'p_factor','analizador_sintactico.py',48),
+  ('factor -> expr GREATER_THAN expr','factor',3,'p_factor','analizador_sintactico.py',49),
+  ('factor -> expr LESS_EQUAL expr','factor',3,'p_factor','analizador_sintactico.py',50),
+  ('factor -> expr GREATER_EQUAL expr','factor',3,'p_factor','analizador_sintactico.py',51),
+  ('factor -> expr NOT_EQUAL expr','factor',3,'p_factor','analizador_sintactico.py',52),
+  ('factor -> expr AND expr','factor',3,'p_factor','analizador_sintactico.py',53),
+  ('factor -> expr OR expr','factor',3,'p_factor','analizador_sintactico.py',54),
+  ('expr -> expr PLUS factor','expr',3,'p_expr','analizador_sintactico.py',64),
+  ('expr -> expr MINUS factor','expr',3,'p_expr','analizador_sintactico.py',65),
+  ('expr -> expr TIMES factor','expr',3,'p_expr','analizador_sintactico.py',66),
+  ('expr -> expr DIVIDE factor','expr',3,'p_expr','analizador_sintactico.py',67),
+  ('expr -> expr MODULO factor','expr',3,'p_expr','analizador_sintactico.py',68),
+  ('expr -> expr POWER factor','expr',3,'p_expr','analizador_sintactico.py',69),
+  ('expr -> factor','expr',1,'p_expr','analizador_sintactico.py',70),
+  ('var_decl -> IDENTIFIER COLON data_type ASSIGN_OP expr SEMICOLON','var_decl',6,'p_var_decl','analizador_sintactico.py',78),
+  ('param_list -> param_list COMMA IDENTIFIER COLON data_type','param_list',5,'p_param_list','analizador_sintactico.py',84),
+  ('param_list -> IDENTIFIER COLON data_type','param_list',3,'p_param_list','analizador_sintactico.py',85),
+  ('param_list -> empty','param_list',1,'p_param_list','analizador_sintactico.py',86),
+  ('statement_list -> statement_list statement','statement_list',2,'p_statement_list','analizador_sintactico.py',96),
+  ('statement_list -> empty','statement_list',1,'p_statement_list','analizador_sintactico.py',97),
+  ('statement -> expr SEMICOLON','statement',2,'p_statement','analizador_sintactico.py',105),
+  ('statement -> if_statement','statement',1,'p_statement','analizador_sintactico.py',106),
+  ('statement -> while_statement','statement',1,'p_statement','analizador_sintactico.py',107),
+  ('statement -> for_statement','statement',1,'p_statement','analizador_sintactico.py',108),
+  ('statement -> return_statement','statement',1,'p_statement','analizador_sintactico.py',109),
+  ('statement -> var_decl SEMICOLON','statement',2,'p_statement','analizador_sintactico.py',110),
+  ('statement -> block','statement',1,'p_statement','analizador_sintactico.py',111),
+  ('block -> LEFT_BRACE statement_list RIGHT_BRACE','block',3,'p_block','analizador_sintactico.py',116),
+  ('if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block','if_statement',5,'p_if_statement','analizador_sintactico.py',121),
+  ('if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block','if_statement',7,'p_if_statement','analizador_sintactico.py',122),
+  ('while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block','while_statement',5,'p_while_statement','analizador_sintactico.py',130),
+  ('for_statement -> FOR IDENTIFIER IN IDENTIFIER block','for_statement',5,'p_for_statement','analizador_sintactico.py',135),
+  ('return_statement -> RETURN expr SEMICOLON','return_statement',3,'p_return_statement','analizador_sintactico.py',140),
+  ('func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block','func_decl',8,'p_func_decl','analizador_sintactico.py',145),
+  ('empty -> <empty>','empty',0,'p_empty','analizador_sintactico.py',150),
 ]
