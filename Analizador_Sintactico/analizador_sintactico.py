@@ -16,8 +16,6 @@ precedence = (
     ('right', 'NOT'),
 )
 
-# Símbolo inicial
-
 
 def p_program(p):
     '''program : statement_list'''
@@ -75,8 +73,8 @@ def p_expr(p):
 
 
 def p_var_decl(p):
-    '''var_decl : IDENTIFIER COLON data_type ASSIGN_OP expr SEMICOLON'''
-    variables[p[1]] = p[5]
+    '''var_decl : IDENTIFIER COLON data_type ASSIGN_OP expr'''
+    variables[p[1]] = p[3]
     p[0] = ('var_decl', p[1], p[3], p[5])
 
 
@@ -103,11 +101,13 @@ def p_statement_list(p):
 
 def p_statement(p):
     '''statement : expr SEMICOLON
-                 | if_statement
-                 | while_statement
-                 | for_statement
-                 | return_statement
+                 | return_statement SEMICOLON 
                  | var_decl SEMICOLON
+                 | var_reassign SEMICOLON
+                 | if_statement
+                 | while_statement 
+                 | for_statement
+                 | func_decl
                  | block'''
     p[0] = p[1]
 
@@ -133,11 +133,11 @@ def p_while_statement(p):
 
 def p_for_statement(p):
     '''for_statement : FOR IDENTIFIER IN IDENTIFIER block'''
-    p[0] = ('for', p[2], p[4], p[5])
+    p[0] = ('for', p[5])
 
 
 def p_return_statement(p):
-    '''return_statement : RETURN expr SEMICOLON'''
+    '''return_statement : RETURN expr'''
     p[0] = ('return', p[2])
 
 
@@ -149,6 +149,17 @@ def p_func_decl(p):
 def p_empty(p):
     '''empty :'''
     pass
+
+
+def p_var_reassign(p):
+    '''var_reassign : IDENTIFIER ASSIGN_OP expr'''
+    if p[1] in variables:
+        variables[p[1]] = p[3]
+        p[0] = ('var_reassign', p[1], p[3])
+    else:
+        error_message = f"Error: La variable '{p[1]}' no está declarada."
+        errores_gramatica.append(error_message)
+        print(error_message)
 
 
 def p_error(p):
@@ -165,15 +176,13 @@ def p_error(p):
 parser = yacc.yacc()
 
 data = """
-
-x int = 5;
-
-if (complex_expr) {
-    return z;
-} else {
-    return y;
+fun factorial(x: int) -> int {
+    num: int = 1;
+    for i in x {
+        num = num * 1;
+    }
+    return num;
 }
-
 """
 
 result = parser.parse(data)

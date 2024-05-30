@@ -40,33 +40,36 @@ Rule 28    expr -> expr DIVIDE factor
 Rule 29    expr -> expr MODULO factor
 Rule 30    expr -> expr POWER factor
 Rule 31    expr -> factor
-Rule 32    var_decl -> IDENTIFIER COLON data_type ASSIGN_OP expr SEMICOLON
+Rule 32    var_decl -> IDENTIFIER COLON data_type ASSIGN_OP expr
 Rule 33    param_list -> param_list COMMA IDENTIFIER COLON data_type
 Rule 34    param_list -> IDENTIFIER COLON data_type
 Rule 35    param_list -> empty
 Rule 36    statement_list -> statement_list statement
 Rule 37    statement_list -> empty
 Rule 38    statement -> expr SEMICOLON
-Rule 39    statement -> if_statement
-Rule 40    statement -> while_statement
-Rule 41    statement -> for_statement
-Rule 42    statement -> return_statement
-Rule 43    statement -> var_decl SEMICOLON
-Rule 44    statement -> block
-Rule 45    block -> LEFT_BRACE statement_list RIGHT_BRACE
-Rule 46    if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block
-Rule 47    if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block
-Rule 48    while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block
-Rule 49    for_statement -> FOR IDENTIFIER IN IDENTIFIER block
-Rule 50    return_statement -> RETURN expr SEMICOLON
-Rule 51    func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block
-Rule 52    empty -> <empty>
+Rule 39    statement -> return_statement SEMICOLON
+Rule 40    statement -> var_decl SEMICOLON
+Rule 41    statement -> var_reassign SEMICOLON
+Rule 42    statement -> if_statement
+Rule 43    statement -> while_statement
+Rule 44    statement -> for_statement
+Rule 45    statement -> func_decl
+Rule 46    statement -> block
+Rule 47    block -> LEFT_BRACE statement_list RIGHT_BRACE
+Rule 48    if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block
+Rule 49    if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block
+Rule 50    while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block
+Rule 51    for_statement -> FOR IDENTIFIER IN IDENTIFIER block
+Rule 52    return_statement -> RETURN expr
+Rule 53    func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block
+Rule 54    empty -> <empty>
+Rule 55    var_reassign -> IDENTIFIER ASSIGN_OP expr
 
 Terminals, with rules where they appear
 
 AND                  : 23
-ARROW                : 51
-ASSIGN_OP            : 32
+ARROW                : 53
+ASSIGN_OP            : 32 55
 BOOL                 : 15
 COLON                : 32 33 34
 COMMA                : 33
@@ -74,19 +77,19 @@ COMPARISON           : 17
 DIVIDE               : 28
 DOT                  : 
 DOUBLE               : 13
-ELSE                 : 47
+ELSE                 : 49
 FLOAT                : 12
-FOR                  : 49
-FUNCTION             : 51
+FOR                  : 51
+FUNCTION             : 53
 GREATER_EQUAL        : 21
 GREATER_THAN         : 19
-IDENTIFIER           : 10 32 33 34 49 49 51
-IF                   : 46 47
-IN                   : 49
+IDENTIFIER           : 10 32 33 34 51 51 53 55
+IF                   : 48 49
+IN                   : 51
 INT                  : 11
-LEFT_BRACE           : 45
+LEFT_BRACE           : 47
 LEFT_BRACKET         : 
-LEFT_PAREN           : 9 46 47 48 51
+LEFT_PAREN           : 9 48 49 50 53
 LESS_EQUAL           : 20
 LESS_THAN            : 18
 MINUS                : 26
@@ -96,11 +99,11 @@ NOT_EQUAL            : 22
 OR                   : 24
 PLUS                 : 25
 POWER                : 30
-RETURN               : 50
-RIGHT_BRACE          : 45
+RETURN               : 52
+RIGHT_BRACE          : 47
 RIGHT_BRACKET        : 
-RIGHT_PAREN          : 9 46 47 48 51
-SEMICOLON            : 32 38 43 50
+RIGHT_PAREN          : 9 48 49 50 53
+SEMICOLON            : 38 39 40 41
 STRING               : 14
 TIMES                : 27
 TYPE_BOOL            : 6
@@ -110,26 +113,27 @@ TYPE_INTEGER         : 2
 TYPE_NULL            : 8
 TYPE_STRING          : 3
 TYPE_VOID            : 7
-WHILE                : 48
+WHILE                : 50
 error                : 
 
 Nonterminals, with rules where they appear
 
-block                : 44 46 47 47 48 49 51
-data_type            : 32 33 34 51
+block                : 46 48 49 49 50 51 53
+data_type            : 32 33 34 53
 empty                : 35 37
-expr                 : 9 16 17 17 18 18 19 19 20 20 21 21 22 22 23 23 24 24 25 26 27 28 29 30 32 38 46 47 48 50
+expr                 : 9 16 17 17 18 18 19 19 20 20 21 21 22 22 23 23 24 24 25 26 27 28 29 30 32 38 48 49 50 52 55
 factor               : 25 26 27 28 29 30 31
-for_statement        : 41
-func_decl            : 
-if_statement         : 39
-param_list           : 33 51
+for_statement        : 44
+func_decl            : 45
+if_statement         : 42
+param_list           : 33 53
 program              : 0
-return_statement     : 42
+return_statement     : 39
 statement            : 36
-statement_list       : 1 36 45
-var_decl             : 43
-while_statement      : 40
+statement_list       : 1 36 47
+var_decl             : 40
+var_reassign         : 41
+while_statement      : 43
 
 Parsing method: LALR
 
@@ -139,22 +143,23 @@ state 0
     (1) program -> . statement_list
     (36) statement_list -> . statement_list statement
     (37) statement_list -> . empty
-    (52) empty -> .
+    (54) empty -> .
 
-    IF              reduce using rule 52 (empty -> .)
-    WHILE           reduce using rule 52 (empty -> .)
-    FOR             reduce using rule 52 (empty -> .)
-    RETURN          reduce using rule 52 (empty -> .)
-    IDENTIFIER      reduce using rule 52 (empty -> .)
-    LEFT_BRACE      reduce using rule 52 (empty -> .)
-    LEFT_PAREN      reduce using rule 52 (empty -> .)
-    INT             reduce using rule 52 (empty -> .)
-    FLOAT           reduce using rule 52 (empty -> .)
-    DOUBLE          reduce using rule 52 (empty -> .)
-    STRING          reduce using rule 52 (empty -> .)
-    BOOL            reduce using rule 52 (empty -> .)
-    NOT             reduce using rule 52 (empty -> .)
-    $end            reduce using rule 52 (empty -> .)
+    RETURN          reduce using rule 54 (empty -> .)
+    IDENTIFIER      reduce using rule 54 (empty -> .)
+    IF              reduce using rule 54 (empty -> .)
+    WHILE           reduce using rule 54 (empty -> .)
+    FOR             reduce using rule 54 (empty -> .)
+    FUNCTION        reduce using rule 54 (empty -> .)
+    LEFT_BRACE      reduce using rule 54 (empty -> .)
+    LEFT_PAREN      reduce using rule 54 (empty -> .)
+    INT             reduce using rule 54 (empty -> .)
+    FLOAT           reduce using rule 54 (empty -> .)
+    DOUBLE          reduce using rule 54 (empty -> .)
+    STRING          reduce using rule 54 (empty -> .)
+    BOOL            reduce using rule 54 (empty -> .)
+    NOT             reduce using rule 54 (empty -> .)
+    $end            reduce using rule 54 (empty -> .)
 
     program                        shift and go to state 1
     statement_list                 shift and go to state 2
@@ -171,12 +176,14 @@ state 2
     (1) program -> statement_list .
     (36) statement_list -> statement_list . statement
     (38) statement -> . expr SEMICOLON
-    (39) statement -> . if_statement
-    (40) statement -> . while_statement
-    (41) statement -> . for_statement
-    (42) statement -> . return_statement
-    (43) statement -> . var_decl SEMICOLON
-    (44) statement -> . block
+    (39) statement -> . return_statement SEMICOLON
+    (40) statement -> . var_decl SEMICOLON
+    (41) statement -> . var_reassign SEMICOLON
+    (42) statement -> . if_statement
+    (43) statement -> . while_statement
+    (44) statement -> . for_statement
+    (45) statement -> . func_decl
+    (46) statement -> . block
     (25) expr -> . expr PLUS factor
     (26) expr -> . expr MINUS factor
     (27) expr -> . expr TIMES factor
@@ -184,13 +191,15 @@ state 2
     (29) expr -> . expr MODULO factor
     (30) expr -> . expr POWER factor
     (31) expr -> . factor
-    (46) if_statement -> . IF LEFT_PAREN expr RIGHT_PAREN block
-    (47) if_statement -> . IF LEFT_PAREN expr RIGHT_PAREN block ELSE block
-    (48) while_statement -> . WHILE LEFT_PAREN expr RIGHT_PAREN block
-    (49) for_statement -> . FOR IDENTIFIER IN IDENTIFIER block
-    (50) return_statement -> . RETURN expr SEMICOLON
-    (32) var_decl -> . IDENTIFIER COLON data_type ASSIGN_OP expr SEMICOLON
-    (45) block -> . LEFT_BRACE statement_list RIGHT_BRACE
+    (52) return_statement -> . RETURN expr
+    (32) var_decl -> . IDENTIFIER COLON data_type ASSIGN_OP expr
+    (55) var_reassign -> . IDENTIFIER ASSIGN_OP expr
+    (48) if_statement -> . IF LEFT_PAREN expr RIGHT_PAREN block
+    (49) if_statement -> . IF LEFT_PAREN expr RIGHT_PAREN block ELSE block
+    (50) while_statement -> . WHILE LEFT_PAREN expr RIGHT_PAREN block
+    (51) for_statement -> . FOR IDENTIFIER IN IDENTIFIER block
+    (53) func_decl -> . FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block
+    (47) block -> . LEFT_BRACE statement_list RIGHT_BRACE
     (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
     (10) factor -> . IDENTIFIER
     (11) factor -> . INT
@@ -209,39 +218,43 @@ state 2
     (24) factor -> . expr OR expr
 
     $end            reduce using rule 1 (program -> statement_list .)
-    IF              shift and go to state 13
-    WHILE           shift and go to state 15
-    FOR             shift and go to state 16
-    RETURN          shift and go to state 18
-    IDENTIFIER      shift and go to state 17
-    LEFT_BRACE      shift and go to state 19
-    LEFT_PAREN      shift and go to state 14
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    RETURN          shift and go to state 15
+    IDENTIFIER      shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    FUNCTION        shift and go to state 21
+    LEFT_BRACE      shift and go to state 22
+    LEFT_PAREN      shift and go to state 18
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
     statement                      shift and go to state 4
     expr                           shift and go to state 5
-    if_statement                   shift and go to state 6
-    while_statement                shift and go to state 7
-    for_statement                  shift and go to state 8
-    return_statement               shift and go to state 9
-    var_decl                       shift and go to state 10
-    block                          shift and go to state 11
-    factor                         shift and go to state 12
+    return_statement               shift and go to state 6
+    var_decl                       shift and go to state 7
+    var_reassign                   shift and go to state 8
+    if_statement                   shift and go to state 9
+    while_statement                shift and go to state 10
+    for_statement                  shift and go to state 11
+    func_decl                      shift and go to state 12
+    block                          shift and go to state 13
+    factor                         shift and go to state 14
 
 state 3
 
     (37) statement_list -> empty .
 
+    RETURN          reduce using rule 37 (statement_list -> empty .)
+    IDENTIFIER      reduce using rule 37 (statement_list -> empty .)
     IF              reduce using rule 37 (statement_list -> empty .)
     WHILE           reduce using rule 37 (statement_list -> empty .)
     FOR             reduce using rule 37 (statement_list -> empty .)
-    RETURN          reduce using rule 37 (statement_list -> empty .)
-    IDENTIFIER      reduce using rule 37 (statement_list -> empty .)
+    FUNCTION        reduce using rule 37 (statement_list -> empty .)
     LEFT_BRACE      reduce using rule 37 (statement_list -> empty .)
     LEFT_PAREN      reduce using rule 37 (statement_list -> empty .)
     INT             reduce using rule 37 (statement_list -> empty .)
@@ -258,11 +271,12 @@ state 4
 
     (36) statement_list -> statement_list statement .
 
+    RETURN          reduce using rule 36 (statement_list -> statement_list statement .)
+    IDENTIFIER      reduce using rule 36 (statement_list -> statement_list statement .)
     IF              reduce using rule 36 (statement_list -> statement_list statement .)
     WHILE           reduce using rule 36 (statement_list -> statement_list statement .)
     FOR             reduce using rule 36 (statement_list -> statement_list statement .)
-    RETURN          reduce using rule 36 (statement_list -> statement_list statement .)
-    IDENTIFIER      reduce using rule 36 (statement_list -> statement_list statement .)
+    FUNCTION        reduce using rule 36 (statement_list -> statement_list statement .)
     LEFT_BRACE      reduce using rule 36 (statement_list -> statement_list statement .)
     LEFT_PAREN      reduce using rule 36 (statement_list -> statement_list statement .)
     INT             reduce using rule 36 (statement_list -> statement_list statement .)
@@ -293,136 +307,155 @@ state 5
     (23) factor -> expr . AND expr
     (24) factor -> expr . OR expr
 
-    SEMICOLON       shift and go to state 26
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
-    COMPARISON      shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    GREATER_THAN    shift and go to state 35
-    LESS_EQUAL      shift and go to state 36
-    GREATER_EQUAL   shift and go to state 37
-    NOT_EQUAL       shift and go to state 38
-    AND             shift and go to state 39
-    OR              shift and go to state 40
+    SEMICOLON       shift and go to state 29
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
+    AND             shift and go to state 42
+    OR              shift and go to state 43
 
 
 state 6
 
-    (39) statement -> if_statement .
+    (39) statement -> return_statement . SEMICOLON
 
-    IF              reduce using rule 39 (statement -> if_statement .)
-    WHILE           reduce using rule 39 (statement -> if_statement .)
-    FOR             reduce using rule 39 (statement -> if_statement .)
-    RETURN          reduce using rule 39 (statement -> if_statement .)
-    IDENTIFIER      reduce using rule 39 (statement -> if_statement .)
-    LEFT_BRACE      reduce using rule 39 (statement -> if_statement .)
-    LEFT_PAREN      reduce using rule 39 (statement -> if_statement .)
-    INT             reduce using rule 39 (statement -> if_statement .)
-    FLOAT           reduce using rule 39 (statement -> if_statement .)
-    DOUBLE          reduce using rule 39 (statement -> if_statement .)
-    STRING          reduce using rule 39 (statement -> if_statement .)
-    BOOL            reduce using rule 39 (statement -> if_statement .)
-    NOT             reduce using rule 39 (statement -> if_statement .)
-    $end            reduce using rule 39 (statement -> if_statement .)
-    RIGHT_BRACE     reduce using rule 39 (statement -> if_statement .)
+    SEMICOLON       shift and go to state 44
 
 
 state 7
 
-    (40) statement -> while_statement .
+    (40) statement -> var_decl . SEMICOLON
 
-    IF              reduce using rule 40 (statement -> while_statement .)
-    WHILE           reduce using rule 40 (statement -> while_statement .)
-    FOR             reduce using rule 40 (statement -> while_statement .)
-    RETURN          reduce using rule 40 (statement -> while_statement .)
-    IDENTIFIER      reduce using rule 40 (statement -> while_statement .)
-    LEFT_BRACE      reduce using rule 40 (statement -> while_statement .)
-    LEFT_PAREN      reduce using rule 40 (statement -> while_statement .)
-    INT             reduce using rule 40 (statement -> while_statement .)
-    FLOAT           reduce using rule 40 (statement -> while_statement .)
-    DOUBLE          reduce using rule 40 (statement -> while_statement .)
-    STRING          reduce using rule 40 (statement -> while_statement .)
-    BOOL            reduce using rule 40 (statement -> while_statement .)
-    NOT             reduce using rule 40 (statement -> while_statement .)
-    $end            reduce using rule 40 (statement -> while_statement .)
-    RIGHT_BRACE     reduce using rule 40 (statement -> while_statement .)
+    SEMICOLON       shift and go to state 45
 
 
 state 8
 
-    (41) statement -> for_statement .
+    (41) statement -> var_reassign . SEMICOLON
 
-    IF              reduce using rule 41 (statement -> for_statement .)
-    WHILE           reduce using rule 41 (statement -> for_statement .)
-    FOR             reduce using rule 41 (statement -> for_statement .)
-    RETURN          reduce using rule 41 (statement -> for_statement .)
-    IDENTIFIER      reduce using rule 41 (statement -> for_statement .)
-    LEFT_BRACE      reduce using rule 41 (statement -> for_statement .)
-    LEFT_PAREN      reduce using rule 41 (statement -> for_statement .)
-    INT             reduce using rule 41 (statement -> for_statement .)
-    FLOAT           reduce using rule 41 (statement -> for_statement .)
-    DOUBLE          reduce using rule 41 (statement -> for_statement .)
-    STRING          reduce using rule 41 (statement -> for_statement .)
-    BOOL            reduce using rule 41 (statement -> for_statement .)
-    NOT             reduce using rule 41 (statement -> for_statement .)
-    $end            reduce using rule 41 (statement -> for_statement .)
-    RIGHT_BRACE     reduce using rule 41 (statement -> for_statement .)
+    SEMICOLON       shift and go to state 46
 
 
 state 9
 
-    (42) statement -> return_statement .
+    (42) statement -> if_statement .
 
-    IF              reduce using rule 42 (statement -> return_statement .)
-    WHILE           reduce using rule 42 (statement -> return_statement .)
-    FOR             reduce using rule 42 (statement -> return_statement .)
-    RETURN          reduce using rule 42 (statement -> return_statement .)
-    IDENTIFIER      reduce using rule 42 (statement -> return_statement .)
-    LEFT_BRACE      reduce using rule 42 (statement -> return_statement .)
-    LEFT_PAREN      reduce using rule 42 (statement -> return_statement .)
-    INT             reduce using rule 42 (statement -> return_statement .)
-    FLOAT           reduce using rule 42 (statement -> return_statement .)
-    DOUBLE          reduce using rule 42 (statement -> return_statement .)
-    STRING          reduce using rule 42 (statement -> return_statement .)
-    BOOL            reduce using rule 42 (statement -> return_statement .)
-    NOT             reduce using rule 42 (statement -> return_statement .)
-    $end            reduce using rule 42 (statement -> return_statement .)
-    RIGHT_BRACE     reduce using rule 42 (statement -> return_statement .)
+    RETURN          reduce using rule 42 (statement -> if_statement .)
+    IDENTIFIER      reduce using rule 42 (statement -> if_statement .)
+    IF              reduce using rule 42 (statement -> if_statement .)
+    WHILE           reduce using rule 42 (statement -> if_statement .)
+    FOR             reduce using rule 42 (statement -> if_statement .)
+    FUNCTION        reduce using rule 42 (statement -> if_statement .)
+    LEFT_BRACE      reduce using rule 42 (statement -> if_statement .)
+    LEFT_PAREN      reduce using rule 42 (statement -> if_statement .)
+    INT             reduce using rule 42 (statement -> if_statement .)
+    FLOAT           reduce using rule 42 (statement -> if_statement .)
+    DOUBLE          reduce using rule 42 (statement -> if_statement .)
+    STRING          reduce using rule 42 (statement -> if_statement .)
+    BOOL            reduce using rule 42 (statement -> if_statement .)
+    NOT             reduce using rule 42 (statement -> if_statement .)
+    $end            reduce using rule 42 (statement -> if_statement .)
+    RIGHT_BRACE     reduce using rule 42 (statement -> if_statement .)
 
 
 state 10
 
-    (43) statement -> var_decl . SEMICOLON
+    (43) statement -> while_statement .
 
-    SEMICOLON       shift and go to state 41
+    RETURN          reduce using rule 43 (statement -> while_statement .)
+    IDENTIFIER      reduce using rule 43 (statement -> while_statement .)
+    IF              reduce using rule 43 (statement -> while_statement .)
+    WHILE           reduce using rule 43 (statement -> while_statement .)
+    FOR             reduce using rule 43 (statement -> while_statement .)
+    FUNCTION        reduce using rule 43 (statement -> while_statement .)
+    LEFT_BRACE      reduce using rule 43 (statement -> while_statement .)
+    LEFT_PAREN      reduce using rule 43 (statement -> while_statement .)
+    INT             reduce using rule 43 (statement -> while_statement .)
+    FLOAT           reduce using rule 43 (statement -> while_statement .)
+    DOUBLE          reduce using rule 43 (statement -> while_statement .)
+    STRING          reduce using rule 43 (statement -> while_statement .)
+    BOOL            reduce using rule 43 (statement -> while_statement .)
+    NOT             reduce using rule 43 (statement -> while_statement .)
+    $end            reduce using rule 43 (statement -> while_statement .)
+    RIGHT_BRACE     reduce using rule 43 (statement -> while_statement .)
 
 
 state 11
 
-    (44) statement -> block .
+    (44) statement -> for_statement .
 
-    IF              reduce using rule 44 (statement -> block .)
-    WHILE           reduce using rule 44 (statement -> block .)
-    FOR             reduce using rule 44 (statement -> block .)
-    RETURN          reduce using rule 44 (statement -> block .)
-    IDENTIFIER      reduce using rule 44 (statement -> block .)
-    LEFT_BRACE      reduce using rule 44 (statement -> block .)
-    LEFT_PAREN      reduce using rule 44 (statement -> block .)
-    INT             reduce using rule 44 (statement -> block .)
-    FLOAT           reduce using rule 44 (statement -> block .)
-    DOUBLE          reduce using rule 44 (statement -> block .)
-    STRING          reduce using rule 44 (statement -> block .)
-    BOOL            reduce using rule 44 (statement -> block .)
-    NOT             reduce using rule 44 (statement -> block .)
-    $end            reduce using rule 44 (statement -> block .)
-    RIGHT_BRACE     reduce using rule 44 (statement -> block .)
+    RETURN          reduce using rule 44 (statement -> for_statement .)
+    IDENTIFIER      reduce using rule 44 (statement -> for_statement .)
+    IF              reduce using rule 44 (statement -> for_statement .)
+    WHILE           reduce using rule 44 (statement -> for_statement .)
+    FOR             reduce using rule 44 (statement -> for_statement .)
+    FUNCTION        reduce using rule 44 (statement -> for_statement .)
+    LEFT_BRACE      reduce using rule 44 (statement -> for_statement .)
+    LEFT_PAREN      reduce using rule 44 (statement -> for_statement .)
+    INT             reduce using rule 44 (statement -> for_statement .)
+    FLOAT           reduce using rule 44 (statement -> for_statement .)
+    DOUBLE          reduce using rule 44 (statement -> for_statement .)
+    STRING          reduce using rule 44 (statement -> for_statement .)
+    BOOL            reduce using rule 44 (statement -> for_statement .)
+    NOT             reduce using rule 44 (statement -> for_statement .)
+    $end            reduce using rule 44 (statement -> for_statement .)
+    RIGHT_BRACE     reduce using rule 44 (statement -> for_statement .)
 
 
 state 12
+
+    (45) statement -> func_decl .
+
+    RETURN          reduce using rule 45 (statement -> func_decl .)
+    IDENTIFIER      reduce using rule 45 (statement -> func_decl .)
+    IF              reduce using rule 45 (statement -> func_decl .)
+    WHILE           reduce using rule 45 (statement -> func_decl .)
+    FOR             reduce using rule 45 (statement -> func_decl .)
+    FUNCTION        reduce using rule 45 (statement -> func_decl .)
+    LEFT_BRACE      reduce using rule 45 (statement -> func_decl .)
+    LEFT_PAREN      reduce using rule 45 (statement -> func_decl .)
+    INT             reduce using rule 45 (statement -> func_decl .)
+    FLOAT           reduce using rule 45 (statement -> func_decl .)
+    DOUBLE          reduce using rule 45 (statement -> func_decl .)
+    STRING          reduce using rule 45 (statement -> func_decl .)
+    BOOL            reduce using rule 45 (statement -> func_decl .)
+    NOT             reduce using rule 45 (statement -> func_decl .)
+    $end            reduce using rule 45 (statement -> func_decl .)
+    RIGHT_BRACE     reduce using rule 45 (statement -> func_decl .)
+
+
+state 13
+
+    (46) statement -> block .
+
+    RETURN          reduce using rule 46 (statement -> block .)
+    IDENTIFIER      reduce using rule 46 (statement -> block .)
+    IF              reduce using rule 46 (statement -> block .)
+    WHILE           reduce using rule 46 (statement -> block .)
+    FOR             reduce using rule 46 (statement -> block .)
+    FUNCTION        reduce using rule 46 (statement -> block .)
+    LEFT_BRACE      reduce using rule 46 (statement -> block .)
+    LEFT_PAREN      reduce using rule 46 (statement -> block .)
+    INT             reduce using rule 46 (statement -> block .)
+    FLOAT           reduce using rule 46 (statement -> block .)
+    DOUBLE          reduce using rule 46 (statement -> block .)
+    STRING          reduce using rule 46 (statement -> block .)
+    BOOL            reduce using rule 46 (statement -> block .)
+    NOT             reduce using rule 46 (statement -> block .)
+    $end            reduce using rule 46 (statement -> block .)
+    RIGHT_BRACE     reduce using rule 46 (statement -> block .)
+
+
+state 14
 
     (31) expr -> factor .
 
@@ -444,15 +477,79 @@ state 12
     RIGHT_PAREN     reduce using rule 31 (expr -> factor .)
 
 
-state 13
+state 15
 
-    (46) if_statement -> IF . LEFT_PAREN expr RIGHT_PAREN block
-    (47) if_statement -> IF . LEFT_PAREN expr RIGHT_PAREN block ELSE block
+    (52) return_statement -> RETURN . expr
+    (25) expr -> . expr PLUS factor
+    (26) expr -> . expr MINUS factor
+    (27) expr -> . expr TIMES factor
+    (28) expr -> . expr DIVIDE factor
+    (29) expr -> . expr MODULO factor
+    (30) expr -> . expr POWER factor
+    (31) expr -> . factor
+    (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
+    (10) factor -> . IDENTIFIER
+    (11) factor -> . INT
+    (12) factor -> . FLOAT
+    (13) factor -> . DOUBLE
+    (14) factor -> . STRING
+    (15) factor -> . BOOL
+    (16) factor -> . NOT expr
+    (17) factor -> . expr COMPARISON expr
+    (18) factor -> . expr LESS_THAN expr
+    (19) factor -> . expr GREATER_THAN expr
+    (20) factor -> . expr LESS_EQUAL expr
+    (21) factor -> . expr GREATER_EQUAL expr
+    (22) factor -> . expr NOT_EQUAL expr
+    (23) factor -> . expr AND expr
+    (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 42
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
+
+    expr                           shift and go to state 47
+    factor                         shift and go to state 14
+
+state 16
+
+    (32) var_decl -> IDENTIFIER . COLON data_type ASSIGN_OP expr
+    (55) var_reassign -> IDENTIFIER . ASSIGN_OP expr
+    (10) factor -> IDENTIFIER .
+
+    COLON           shift and go to state 49
+    ASSIGN_OP       shift and go to state 50
+    SEMICOLON       reduce using rule 10 (factor -> IDENTIFIER .)
+    PLUS            reduce using rule 10 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 10 (factor -> IDENTIFIER .)
+    TIMES           reduce using rule 10 (factor -> IDENTIFIER .)
+    DIVIDE          reduce using rule 10 (factor -> IDENTIFIER .)
+    MODULO          reduce using rule 10 (factor -> IDENTIFIER .)
+    POWER           reduce using rule 10 (factor -> IDENTIFIER .)
+    COMPARISON      reduce using rule 10 (factor -> IDENTIFIER .)
+    LESS_THAN       reduce using rule 10 (factor -> IDENTIFIER .)
+    GREATER_THAN    reduce using rule 10 (factor -> IDENTIFIER .)
+    LESS_EQUAL      reduce using rule 10 (factor -> IDENTIFIER .)
+    GREATER_EQUAL   reduce using rule 10 (factor -> IDENTIFIER .)
+    NOT_EQUAL       reduce using rule 10 (factor -> IDENTIFIER .)
+    AND             reduce using rule 10 (factor -> IDENTIFIER .)
+    OR              reduce using rule 10 (factor -> IDENTIFIER .)
 
 
-state 14
+state 17
+
+    (48) if_statement -> IF . LEFT_PAREN expr RIGHT_PAREN block
+    (49) if_statement -> IF . LEFT_PAREN expr RIGHT_PAREN block ELSE block
+
+    LEFT_PAREN      shift and go to state 51
+
+
+state 18
 
     (9) factor -> LEFT_PAREN . expr RIGHT_PAREN
     (25) expr -> . expr PLUS factor
@@ -479,120 +576,66 @@ state 14
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 43
-    factor                         shift and go to state 12
-
-state 15
-
-    (48) while_statement -> WHILE . LEFT_PAREN expr RIGHT_PAREN block
-
-    LEFT_PAREN      shift and go to state 45
-
-
-state 16
-
-    (49) for_statement -> FOR . IDENTIFIER IN IDENTIFIER block
-
-    IDENTIFIER      shift and go to state 46
-
-
-state 17
-
-    (32) var_decl -> IDENTIFIER . COLON data_type ASSIGN_OP expr SEMICOLON
-    (10) factor -> IDENTIFIER .
-
-    COLON           shift and go to state 47
-    SEMICOLON       reduce using rule 10 (factor -> IDENTIFIER .)
-    PLUS            reduce using rule 10 (factor -> IDENTIFIER .)
-    MINUS           reduce using rule 10 (factor -> IDENTIFIER .)
-    TIMES           reduce using rule 10 (factor -> IDENTIFIER .)
-    DIVIDE          reduce using rule 10 (factor -> IDENTIFIER .)
-    MODULO          reduce using rule 10 (factor -> IDENTIFIER .)
-    POWER           reduce using rule 10 (factor -> IDENTIFIER .)
-    COMPARISON      reduce using rule 10 (factor -> IDENTIFIER .)
-    LESS_THAN       reduce using rule 10 (factor -> IDENTIFIER .)
-    GREATER_THAN    reduce using rule 10 (factor -> IDENTIFIER .)
-    LESS_EQUAL      reduce using rule 10 (factor -> IDENTIFIER .)
-    GREATER_EQUAL   reduce using rule 10 (factor -> IDENTIFIER .)
-    NOT_EQUAL       reduce using rule 10 (factor -> IDENTIFIER .)
-    AND             reduce using rule 10 (factor -> IDENTIFIER .)
-    OR              reduce using rule 10 (factor -> IDENTIFIER .)
-
-
-state 18
-
-    (50) return_statement -> RETURN . expr SEMICOLON
-    (25) expr -> . expr PLUS factor
-    (26) expr -> . expr MINUS factor
-    (27) expr -> . expr TIMES factor
-    (28) expr -> . expr DIVIDE factor
-    (29) expr -> . expr MODULO factor
-    (30) expr -> . expr POWER factor
-    (31) expr -> . factor
-    (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
-    (10) factor -> . IDENTIFIER
-    (11) factor -> . INT
-    (12) factor -> . FLOAT
-    (13) factor -> . DOUBLE
-    (14) factor -> . STRING
-    (15) factor -> . BOOL
-    (16) factor -> . NOT expr
-    (17) factor -> . expr COMPARISON expr
-    (18) factor -> . expr LESS_THAN expr
-    (19) factor -> . expr GREATER_THAN expr
-    (20) factor -> . expr LESS_EQUAL expr
-    (21) factor -> . expr GREATER_EQUAL expr
-    (22) factor -> . expr NOT_EQUAL expr
-    (23) factor -> . expr AND expr
-    (24) factor -> . expr OR expr
-
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
-
-    expr                           shift and go to state 48
-    factor                         shift and go to state 12
+    expr                           shift and go to state 52
+    factor                         shift and go to state 14
 
 state 19
 
-    (45) block -> LEFT_BRACE . statement_list RIGHT_BRACE
-    (36) statement_list -> . statement_list statement
-    (37) statement_list -> . empty
-    (52) empty -> .
+    (50) while_statement -> WHILE . LEFT_PAREN expr RIGHT_PAREN block
 
-    RIGHT_BRACE     reduce using rule 52 (empty -> .)
-    IF              reduce using rule 52 (empty -> .)
-    WHILE           reduce using rule 52 (empty -> .)
-    FOR             reduce using rule 52 (empty -> .)
-    RETURN          reduce using rule 52 (empty -> .)
-    IDENTIFIER      reduce using rule 52 (empty -> .)
-    LEFT_BRACE      reduce using rule 52 (empty -> .)
-    LEFT_PAREN      reduce using rule 52 (empty -> .)
-    INT             reduce using rule 52 (empty -> .)
-    FLOAT           reduce using rule 52 (empty -> .)
-    DOUBLE          reduce using rule 52 (empty -> .)
-    STRING          reduce using rule 52 (empty -> .)
-    BOOL            reduce using rule 52 (empty -> .)
-    NOT             reduce using rule 52 (empty -> .)
+    LEFT_PAREN      shift and go to state 53
 
-    statement_list                 shift and go to state 49
-    empty                          shift and go to state 3
 
 state 20
+
+    (51) for_statement -> FOR . IDENTIFIER IN IDENTIFIER block
+
+    IDENTIFIER      shift and go to state 54
+
+
+state 21
+
+    (53) func_decl -> FUNCTION . IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block
+
+    IDENTIFIER      shift and go to state 55
+
+
+state 22
+
+    (47) block -> LEFT_BRACE . statement_list RIGHT_BRACE
+    (36) statement_list -> . statement_list statement
+    (37) statement_list -> . empty
+    (54) empty -> .
+
+    RIGHT_BRACE     reduce using rule 54 (empty -> .)
+    RETURN          reduce using rule 54 (empty -> .)
+    IDENTIFIER      reduce using rule 54 (empty -> .)
+    IF              reduce using rule 54 (empty -> .)
+    WHILE           reduce using rule 54 (empty -> .)
+    FOR             reduce using rule 54 (empty -> .)
+    FUNCTION        reduce using rule 54 (empty -> .)
+    LEFT_BRACE      reduce using rule 54 (empty -> .)
+    LEFT_PAREN      reduce using rule 54 (empty -> .)
+    INT             reduce using rule 54 (empty -> .)
+    FLOAT           reduce using rule 54 (empty -> .)
+    DOUBLE          reduce using rule 54 (empty -> .)
+    STRING          reduce using rule 54 (empty -> .)
+    BOOL            reduce using rule 54 (empty -> .)
+    NOT             reduce using rule 54 (empty -> .)
+
+    statement_list                 shift and go to state 56
+    empty                          shift and go to state 3
+
+state 23
 
     (11) factor -> INT .
 
@@ -614,7 +657,7 @@ state 20
     RIGHT_PAREN     reduce using rule 11 (factor -> INT .)
 
 
-state 21
+state 24
 
     (12) factor -> FLOAT .
 
@@ -636,7 +679,7 @@ state 21
     RIGHT_PAREN     reduce using rule 12 (factor -> FLOAT .)
 
 
-state 22
+state 25
 
     (13) factor -> DOUBLE .
 
@@ -658,7 +701,7 @@ state 22
     RIGHT_PAREN     reduce using rule 13 (factor -> DOUBLE .)
 
 
-state 23
+state 26
 
     (14) factor -> STRING .
 
@@ -680,7 +723,7 @@ state 23
     RIGHT_PAREN     reduce using rule 14 (factor -> STRING .)
 
 
-state 24
+state 27
 
     (15) factor -> BOOL .
 
@@ -702,7 +745,7 @@ state 24
     RIGHT_PAREN     reduce using rule 15 (factor -> BOOL .)
 
 
-state 25
+state 28
 
     (16) factor -> NOT . expr
     (25) expr -> . expr PLUS factor
@@ -729,27 +772,28 @@ state 25
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 50
-    factor                         shift and go to state 12
+    expr                           shift and go to state 57
+    factor                         shift and go to state 14
 
-state 26
+state 29
 
     (38) statement -> expr SEMICOLON .
 
+    RETURN          reduce using rule 38 (statement -> expr SEMICOLON .)
+    IDENTIFIER      reduce using rule 38 (statement -> expr SEMICOLON .)
     IF              reduce using rule 38 (statement -> expr SEMICOLON .)
     WHILE           reduce using rule 38 (statement -> expr SEMICOLON .)
     FOR             reduce using rule 38 (statement -> expr SEMICOLON .)
-    RETURN          reduce using rule 38 (statement -> expr SEMICOLON .)
-    IDENTIFIER      reduce using rule 38 (statement -> expr SEMICOLON .)
+    FUNCTION        reduce using rule 38 (statement -> expr SEMICOLON .)
     LEFT_BRACE      reduce using rule 38 (statement -> expr SEMICOLON .)
     LEFT_PAREN      reduce using rule 38 (statement -> expr SEMICOLON .)
     INT             reduce using rule 38 (statement -> expr SEMICOLON .)
@@ -762,7 +806,7 @@ state 26
     RIGHT_BRACE     reduce using rule 38 (statement -> expr SEMICOLON .)
 
 
-state 27
+state 30
 
     (25) expr -> expr PLUS . factor
     (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
@@ -789,19 +833,19 @@ state 27
     (30) expr -> . expr POWER factor
     (31) expr -> . factor
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 51
-    factor                         shift and go to state 52
+    expr                           shift and go to state 58
+    factor                         shift and go to state 59
 
-state 28
+state 31
 
     (26) expr -> expr MINUS . factor
     (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
@@ -828,19 +872,19 @@ state 28
     (30) expr -> . expr POWER factor
     (31) expr -> . factor
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 51
-    factor                         shift and go to state 53
+    expr                           shift and go to state 58
+    factor                         shift and go to state 60
 
-state 29
+state 32
 
     (27) expr -> expr TIMES . factor
     (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
@@ -867,19 +911,19 @@ state 29
     (30) expr -> . expr POWER factor
     (31) expr -> . factor
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 51
-    factor                         shift and go to state 54
+    expr                           shift and go to state 58
+    factor                         shift and go to state 61
 
-state 30
+state 33
 
     (28) expr -> expr DIVIDE . factor
     (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
@@ -906,19 +950,19 @@ state 30
     (30) expr -> . expr POWER factor
     (31) expr -> . factor
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 51
-    factor                         shift and go to state 55
+    expr                           shift and go to state 58
+    factor                         shift and go to state 62
 
-state 31
+state 34
 
     (29) expr -> expr MODULO . factor
     (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
@@ -945,19 +989,19 @@ state 31
     (30) expr -> . expr POWER factor
     (31) expr -> . factor
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 51
-    factor                         shift and go to state 56
+    expr                           shift and go to state 58
+    factor                         shift and go to state 63
 
-state 32
+state 35
 
     (30) expr -> expr POWER . factor
     (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
@@ -984,19 +1028,19 @@ state 32
     (30) expr -> . expr POWER factor
     (31) expr -> . factor
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 51
-    factor                         shift and go to state 57
+    expr                           shift and go to state 58
+    factor                         shift and go to state 64
 
-state 33
+state 36
 
     (17) factor -> expr COMPARISON . expr
     (25) expr -> . expr PLUS factor
@@ -1023,19 +1067,19 @@ state 33
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 58
-    factor                         shift and go to state 12
+    expr                           shift and go to state 65
+    factor                         shift and go to state 14
 
-state 34
+state 37
 
     (18) factor -> expr LESS_THAN . expr
     (25) expr -> . expr PLUS factor
@@ -1062,19 +1106,19 @@ state 34
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 59
-    factor                         shift and go to state 12
+    expr                           shift and go to state 66
+    factor                         shift and go to state 14
 
-state 35
+state 38
 
     (19) factor -> expr GREATER_THAN . expr
     (25) expr -> . expr PLUS factor
@@ -1101,19 +1145,19 @@ state 35
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 60
-    factor                         shift and go to state 12
+    expr                           shift and go to state 67
+    factor                         shift and go to state 14
 
-state 36
+state 39
 
     (20) factor -> expr LESS_EQUAL . expr
     (25) expr -> . expr PLUS factor
@@ -1140,19 +1184,19 @@ state 36
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 61
-    factor                         shift and go to state 12
+    expr                           shift and go to state 68
+    factor                         shift and go to state 14
 
-state 37
+state 40
 
     (21) factor -> expr GREATER_EQUAL . expr
     (25) expr -> . expr PLUS factor
@@ -1179,19 +1223,19 @@ state 37
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 62
-    factor                         shift and go to state 12
+    expr                           shift and go to state 69
+    factor                         shift and go to state 14
 
-state 38
+state 41
 
     (22) factor -> expr NOT_EQUAL . expr
     (25) expr -> . expr PLUS factor
@@ -1218,19 +1262,19 @@ state 38
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 63
-    factor                         shift and go to state 12
+    expr                           shift and go to state 70
+    factor                         shift and go to state 14
 
-state 39
+state 42
 
     (23) factor -> expr AND . expr
     (25) expr -> . expr PLUS factor
@@ -1257,19 +1301,19 @@ state 39
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 64
-    factor                         shift and go to state 12
+    expr                           shift and go to state 71
+    factor                         shift and go to state 14
 
-state 40
+state 43
 
     (24) factor -> expr OR . expr
     (25) expr -> . expr PLUS factor
@@ -1296,43 +1340,165 @@ state 40
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 65
-    factor                         shift and go to state 12
+    expr                           shift and go to state 72
+    factor                         shift and go to state 14
 
-state 41
+state 44
 
-    (43) statement -> var_decl SEMICOLON .
+    (39) statement -> return_statement SEMICOLON .
 
-    IF              reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    WHILE           reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    FOR             reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    RETURN          reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    IDENTIFIER      reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    LEFT_BRACE      reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    LEFT_PAREN      reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    INT             reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    FLOAT           reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    DOUBLE          reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    STRING          reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    BOOL            reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    NOT             reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    $end            reduce using rule 43 (statement -> var_decl SEMICOLON .)
-    RIGHT_BRACE     reduce using rule 43 (statement -> var_decl SEMICOLON .)
+    RETURN          reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    IDENTIFIER      reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    IF              reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    WHILE           reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    FOR             reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    FUNCTION        reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    LEFT_BRACE      reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    LEFT_PAREN      reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    INT             reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    FLOAT           reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    DOUBLE          reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    STRING          reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    BOOL            reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    NOT             reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    $end            reduce using rule 39 (statement -> return_statement SEMICOLON .)
+    RIGHT_BRACE     reduce using rule 39 (statement -> return_statement SEMICOLON .)
 
 
-state 42
+state 45
 
-    (46) if_statement -> IF LEFT_PAREN . expr RIGHT_PAREN block
-    (47) if_statement -> IF LEFT_PAREN . expr RIGHT_PAREN block ELSE block
+    (40) statement -> var_decl SEMICOLON .
+
+    RETURN          reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    IDENTIFIER      reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    IF              reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    WHILE           reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    FOR             reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    FUNCTION        reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    LEFT_BRACE      reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    LEFT_PAREN      reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    INT             reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    FLOAT           reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    DOUBLE          reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    STRING          reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    BOOL            reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    NOT             reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    $end            reduce using rule 40 (statement -> var_decl SEMICOLON .)
+    RIGHT_BRACE     reduce using rule 40 (statement -> var_decl SEMICOLON .)
+
+
+state 46
+
+    (41) statement -> var_reassign SEMICOLON .
+
+    RETURN          reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    IDENTIFIER      reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    IF              reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    WHILE           reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    FOR             reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    FUNCTION        reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    LEFT_BRACE      reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    LEFT_PAREN      reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    INT             reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    FLOAT           reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    DOUBLE          reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    STRING          reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    BOOL            reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    NOT             reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    $end            reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+    RIGHT_BRACE     reduce using rule 41 (statement -> var_reassign SEMICOLON .)
+
+
+state 47
+
+    (52) return_statement -> RETURN expr .
+    (25) expr -> expr . PLUS factor
+    (26) expr -> expr . MINUS factor
+    (27) expr -> expr . TIMES factor
+    (28) expr -> expr . DIVIDE factor
+    (29) expr -> expr . MODULO factor
+    (30) expr -> expr . POWER factor
+    (17) factor -> expr . COMPARISON expr
+    (18) factor -> expr . LESS_THAN expr
+    (19) factor -> expr . GREATER_THAN expr
+    (20) factor -> expr . LESS_EQUAL expr
+    (21) factor -> expr . GREATER_EQUAL expr
+    (22) factor -> expr . NOT_EQUAL expr
+    (23) factor -> expr . AND expr
+    (24) factor -> expr . OR expr
+
+    SEMICOLON       reduce using rule 52 (return_statement -> RETURN expr .)
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
+    AND             shift and go to state 42
+    OR              shift and go to state 43
+
+
+state 48
+
+    (10) factor -> IDENTIFIER .
+
+    PLUS            reduce using rule 10 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 10 (factor -> IDENTIFIER .)
+    TIMES           reduce using rule 10 (factor -> IDENTIFIER .)
+    DIVIDE          reduce using rule 10 (factor -> IDENTIFIER .)
+    MODULO          reduce using rule 10 (factor -> IDENTIFIER .)
+    POWER           reduce using rule 10 (factor -> IDENTIFIER .)
+    COMPARISON      reduce using rule 10 (factor -> IDENTIFIER .)
+    LESS_THAN       reduce using rule 10 (factor -> IDENTIFIER .)
+    GREATER_THAN    reduce using rule 10 (factor -> IDENTIFIER .)
+    LESS_EQUAL      reduce using rule 10 (factor -> IDENTIFIER .)
+    GREATER_EQUAL   reduce using rule 10 (factor -> IDENTIFIER .)
+    NOT_EQUAL       reduce using rule 10 (factor -> IDENTIFIER .)
+    AND             reduce using rule 10 (factor -> IDENTIFIER .)
+    OR              reduce using rule 10 (factor -> IDENTIFIER .)
+    SEMICOLON       reduce using rule 10 (factor -> IDENTIFIER .)
+    RIGHT_PAREN     reduce using rule 10 (factor -> IDENTIFIER .)
+
+
+state 49
+
+    (32) var_decl -> IDENTIFIER COLON . data_type ASSIGN_OP expr
+    (2) data_type -> . TYPE_INTEGER
+    (3) data_type -> . TYPE_STRING
+    (4) data_type -> . TYPE_FLOAT
+    (5) data_type -> . TYPE_DOUBLE
+    (6) data_type -> . TYPE_BOOL
+    (7) data_type -> . TYPE_VOID
+    (8) data_type -> . TYPE_NULL
+
+    TYPE_INTEGER    shift and go to state 74
+    TYPE_STRING     shift and go to state 75
+    TYPE_FLOAT      shift and go to state 76
+    TYPE_DOUBLE     shift and go to state 77
+    TYPE_BOOL       shift and go to state 78
+    TYPE_VOID       shift and go to state 79
+    TYPE_NULL       shift and go to state 80
+
+    data_type                      shift and go to state 73
+
+state 50
+
+    (55) var_reassign -> IDENTIFIER ASSIGN_OP . expr
     (25) expr -> . expr PLUS factor
     (26) expr -> . expr MINUS factor
     (27) expr -> . expr TIMES factor
@@ -1357,19 +1523,59 @@ state 42
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 66
-    factor                         shift and go to state 12
+    expr                           shift and go to state 81
+    factor                         shift and go to state 14
 
-state 43
+state 51
+
+    (48) if_statement -> IF LEFT_PAREN . expr RIGHT_PAREN block
+    (49) if_statement -> IF LEFT_PAREN . expr RIGHT_PAREN block ELSE block
+    (25) expr -> . expr PLUS factor
+    (26) expr -> . expr MINUS factor
+    (27) expr -> . expr TIMES factor
+    (28) expr -> . expr DIVIDE factor
+    (29) expr -> . expr MODULO factor
+    (30) expr -> . expr POWER factor
+    (31) expr -> . factor
+    (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
+    (10) factor -> . IDENTIFIER
+    (11) factor -> . INT
+    (12) factor -> . FLOAT
+    (13) factor -> . DOUBLE
+    (14) factor -> . STRING
+    (15) factor -> . BOOL
+    (16) factor -> . NOT expr
+    (17) factor -> . expr COMPARISON expr
+    (18) factor -> . expr LESS_THAN expr
+    (19) factor -> . expr GREATER_THAN expr
+    (20) factor -> . expr LESS_EQUAL expr
+    (21) factor -> . expr GREATER_EQUAL expr
+    (22) factor -> . expr NOT_EQUAL expr
+    (23) factor -> . expr AND expr
+    (24) factor -> . expr OR expr
+
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
+
+    expr                           shift and go to state 82
+    factor                         shift and go to state 14
+
+state 52
 
     (9) factor -> LEFT_PAREN expr . RIGHT_PAREN
     (25) expr -> expr . PLUS factor
@@ -1387,48 +1593,26 @@ state 43
     (23) factor -> expr . AND expr
     (24) factor -> expr . OR expr
 
-    RIGHT_PAREN     shift and go to state 67
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
-    COMPARISON      shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    GREATER_THAN    shift and go to state 35
-    LESS_EQUAL      shift and go to state 36
-    GREATER_EQUAL   shift and go to state 37
-    NOT_EQUAL       shift and go to state 38
-    AND             shift and go to state 39
-    OR              shift and go to state 40
+    RIGHT_PAREN     shift and go to state 83
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
+    AND             shift and go to state 42
+    OR              shift and go to state 43
 
 
-state 44
+state 53
 
-    (10) factor -> IDENTIFIER .
-
-    RIGHT_PAREN     reduce using rule 10 (factor -> IDENTIFIER .)
-    PLUS            reduce using rule 10 (factor -> IDENTIFIER .)
-    MINUS           reduce using rule 10 (factor -> IDENTIFIER .)
-    TIMES           reduce using rule 10 (factor -> IDENTIFIER .)
-    DIVIDE          reduce using rule 10 (factor -> IDENTIFIER .)
-    MODULO          reduce using rule 10 (factor -> IDENTIFIER .)
-    POWER           reduce using rule 10 (factor -> IDENTIFIER .)
-    COMPARISON      reduce using rule 10 (factor -> IDENTIFIER .)
-    LESS_THAN       reduce using rule 10 (factor -> IDENTIFIER .)
-    GREATER_THAN    reduce using rule 10 (factor -> IDENTIFIER .)
-    LESS_EQUAL      reduce using rule 10 (factor -> IDENTIFIER .)
-    GREATER_EQUAL   reduce using rule 10 (factor -> IDENTIFIER .)
-    NOT_EQUAL       reduce using rule 10 (factor -> IDENTIFIER .)
-    AND             reduce using rule 10 (factor -> IDENTIFIER .)
-    OR              reduce using rule 10 (factor -> IDENTIFIER .)
-    SEMICOLON       reduce using rule 10 (factor -> IDENTIFIER .)
-
-
-state 45
-
-    (48) while_statement -> WHILE LEFT_PAREN . expr RIGHT_PAREN block
+    (50) while_statement -> WHILE LEFT_PAREN . expr RIGHT_PAREN block
     (25) expr -> . expr PLUS factor
     (26) expr -> . expr MINUS factor
     (27) expr -> . expr TIMES factor
@@ -1453,92 +1637,45 @@ state 45
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 68
-    factor                         shift and go to state 12
+    expr                           shift and go to state 84
+    factor                         shift and go to state 14
 
-state 46
+state 54
 
-    (49) for_statement -> FOR IDENTIFIER . IN IDENTIFIER block
+    (51) for_statement -> FOR IDENTIFIER . IN IDENTIFIER block
 
-    IN              shift and go to state 69
-
-
-state 47
-
-    (32) var_decl -> IDENTIFIER COLON . data_type ASSIGN_OP expr SEMICOLON
-    (2) data_type -> . TYPE_INTEGER
-    (3) data_type -> . TYPE_STRING
-    (4) data_type -> . TYPE_FLOAT
-    (5) data_type -> . TYPE_DOUBLE
-    (6) data_type -> . TYPE_BOOL
-    (7) data_type -> . TYPE_VOID
-    (8) data_type -> . TYPE_NULL
-
-    TYPE_INTEGER    shift and go to state 71
-    TYPE_STRING     shift and go to state 72
-    TYPE_FLOAT      shift and go to state 73
-    TYPE_DOUBLE     shift and go to state 74
-    TYPE_BOOL       shift and go to state 75
-    TYPE_VOID       shift and go to state 76
-    TYPE_NULL       shift and go to state 77
-
-    data_type                      shift and go to state 70
-
-state 48
-
-    (50) return_statement -> RETURN expr . SEMICOLON
-    (25) expr -> expr . PLUS factor
-    (26) expr -> expr . MINUS factor
-    (27) expr -> expr . TIMES factor
-    (28) expr -> expr . DIVIDE factor
-    (29) expr -> expr . MODULO factor
-    (30) expr -> expr . POWER factor
-    (17) factor -> expr . COMPARISON expr
-    (18) factor -> expr . LESS_THAN expr
-    (19) factor -> expr . GREATER_THAN expr
-    (20) factor -> expr . LESS_EQUAL expr
-    (21) factor -> expr . GREATER_EQUAL expr
-    (22) factor -> expr . NOT_EQUAL expr
-    (23) factor -> expr . AND expr
-    (24) factor -> expr . OR expr
-
-    SEMICOLON       shift and go to state 78
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
-    COMPARISON      shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    GREATER_THAN    shift and go to state 35
-    LESS_EQUAL      shift and go to state 36
-    GREATER_EQUAL   shift and go to state 37
-    NOT_EQUAL       shift and go to state 38
-    AND             shift and go to state 39
-    OR              shift and go to state 40
+    IN              shift and go to state 85
 
 
-state 49
+state 55
 
-    (45) block -> LEFT_BRACE statement_list . RIGHT_BRACE
+    (53) func_decl -> FUNCTION IDENTIFIER . LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block
+
+    LEFT_PAREN      shift and go to state 86
+
+
+state 56
+
+    (47) block -> LEFT_BRACE statement_list . RIGHT_BRACE
     (36) statement_list -> statement_list . statement
     (38) statement -> . expr SEMICOLON
-    (39) statement -> . if_statement
-    (40) statement -> . while_statement
-    (41) statement -> . for_statement
-    (42) statement -> . return_statement
-    (43) statement -> . var_decl SEMICOLON
-    (44) statement -> . block
+    (39) statement -> . return_statement SEMICOLON
+    (40) statement -> . var_decl SEMICOLON
+    (41) statement -> . var_reassign SEMICOLON
+    (42) statement -> . if_statement
+    (43) statement -> . while_statement
+    (44) statement -> . for_statement
+    (45) statement -> . func_decl
+    (46) statement -> . block
     (25) expr -> . expr PLUS factor
     (26) expr -> . expr MINUS factor
     (27) expr -> . expr TIMES factor
@@ -1546,13 +1683,15 @@ state 49
     (29) expr -> . expr MODULO factor
     (30) expr -> . expr POWER factor
     (31) expr -> . factor
-    (46) if_statement -> . IF LEFT_PAREN expr RIGHT_PAREN block
-    (47) if_statement -> . IF LEFT_PAREN expr RIGHT_PAREN block ELSE block
-    (48) while_statement -> . WHILE LEFT_PAREN expr RIGHT_PAREN block
-    (49) for_statement -> . FOR IDENTIFIER IN IDENTIFIER block
-    (50) return_statement -> . RETURN expr SEMICOLON
-    (32) var_decl -> . IDENTIFIER COLON data_type ASSIGN_OP expr SEMICOLON
-    (45) block -> . LEFT_BRACE statement_list RIGHT_BRACE
+    (52) return_statement -> . RETURN expr
+    (32) var_decl -> . IDENTIFIER COLON data_type ASSIGN_OP expr
+    (55) var_reassign -> . IDENTIFIER ASSIGN_OP expr
+    (48) if_statement -> . IF LEFT_PAREN expr RIGHT_PAREN block
+    (49) if_statement -> . IF LEFT_PAREN expr RIGHT_PAREN block ELSE block
+    (50) while_statement -> . WHILE LEFT_PAREN expr RIGHT_PAREN block
+    (51) for_statement -> . FOR IDENTIFIER IN IDENTIFIER block
+    (53) func_decl -> . FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block
+    (47) block -> . LEFT_BRACE statement_list RIGHT_BRACE
     (9) factor -> . LEFT_PAREN expr RIGHT_PAREN
     (10) factor -> . IDENTIFIER
     (11) factor -> . INT
@@ -1570,32 +1709,35 @@ state 49
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    RIGHT_BRACE     shift and go to state 79
-    IF              shift and go to state 13
-    WHILE           shift and go to state 15
-    FOR             shift and go to state 16
-    RETURN          shift and go to state 18
-    IDENTIFIER      shift and go to state 17
-    LEFT_BRACE      shift and go to state 19
-    LEFT_PAREN      shift and go to state 14
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    RIGHT_BRACE     shift and go to state 87
+    RETURN          shift and go to state 15
+    IDENTIFIER      shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    FUNCTION        shift and go to state 21
+    LEFT_BRACE      shift and go to state 22
+    LEFT_PAREN      shift and go to state 18
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
     statement                      shift and go to state 4
     expr                           shift and go to state 5
-    if_statement                   shift and go to state 6
-    while_statement                shift and go to state 7
-    for_statement                  shift and go to state 8
-    return_statement               shift and go to state 9
-    var_decl                       shift and go to state 10
-    block                          shift and go to state 11
-    factor                         shift and go to state 12
+    return_statement               shift and go to state 6
+    var_decl                       shift and go to state 7
+    var_reassign                   shift and go to state 8
+    if_statement                   shift and go to state 9
+    while_statement                shift and go to state 10
+    for_statement                  shift and go to state 11
+    func_decl                      shift and go to state 12
+    block                          shift and go to state 13
+    factor                         shift and go to state 14
 
-state 50
+state 57
 
     (16) factor -> NOT expr .
     (25) expr -> expr . PLUS factor
@@ -1630,23 +1772,23 @@ state 50
     OR              reduce using rule 16 (factor -> NOT expr .)
     RIGHT_PAREN     reduce using rule 16 (factor -> NOT expr .)
 
-  ! PLUS            [ shift and go to state 27 ]
-  ! MINUS           [ shift and go to state 28 ]
-  ! TIMES           [ shift and go to state 29 ]
-  ! DIVIDE          [ shift and go to state 30 ]
-  ! MODULO          [ shift and go to state 31 ]
-  ! POWER           [ shift and go to state 32 ]
-  ! COMPARISON      [ shift and go to state 33 ]
-  ! LESS_THAN       [ shift and go to state 34 ]
-  ! GREATER_THAN    [ shift and go to state 35 ]
-  ! LESS_EQUAL      [ shift and go to state 36 ]
-  ! GREATER_EQUAL   [ shift and go to state 37 ]
-  ! NOT_EQUAL       [ shift and go to state 38 ]
-  ! AND             [ shift and go to state 39 ]
-  ! OR              [ shift and go to state 40 ]
+  ! PLUS            [ shift and go to state 30 ]
+  ! MINUS           [ shift and go to state 31 ]
+  ! TIMES           [ shift and go to state 32 ]
+  ! DIVIDE          [ shift and go to state 33 ]
+  ! MODULO          [ shift and go to state 34 ]
+  ! POWER           [ shift and go to state 35 ]
+  ! COMPARISON      [ shift and go to state 36 ]
+  ! LESS_THAN       [ shift and go to state 37 ]
+  ! GREATER_THAN    [ shift and go to state 38 ]
+  ! LESS_EQUAL      [ shift and go to state 39 ]
+  ! GREATER_EQUAL   [ shift and go to state 40 ]
+  ! NOT_EQUAL       [ shift and go to state 41 ]
+  ! AND             [ shift and go to state 42 ]
+  ! OR              [ shift and go to state 43 ]
 
 
-state 51
+state 58
 
     (17) factor -> expr . COMPARISON expr
     (18) factor -> expr . LESS_THAN expr
@@ -1663,23 +1805,23 @@ state 51
     (29) expr -> expr . MODULO factor
     (30) expr -> expr . POWER factor
 
-    COMPARISON      shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    GREATER_THAN    shift and go to state 35
-    LESS_EQUAL      shift and go to state 36
-    GREATER_EQUAL   shift and go to state 37
-    NOT_EQUAL       shift and go to state 38
-    AND             shift and go to state 39
-    OR              shift and go to state 40
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
+    AND             shift and go to state 42
+    OR              shift and go to state 43
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
 
 
-state 52
+state 59
 
     (25) expr -> expr PLUS factor .
     (31) expr -> factor .
@@ -1731,7 +1873,7 @@ state 52
   ! POWER           [ reduce using rule 31 (expr -> factor .) ]
 
 
-state 53
+state 60
 
     (26) expr -> expr MINUS factor .
     (31) expr -> factor .
@@ -1783,7 +1925,7 @@ state 53
   ! POWER           [ reduce using rule 31 (expr -> factor .) ]
 
 
-state 54
+state 61
 
     (27) expr -> expr TIMES factor .
     (31) expr -> factor .
@@ -1835,7 +1977,7 @@ state 54
   ! POWER           [ reduce using rule 31 (expr -> factor .) ]
 
 
-state 55
+state 62
 
     (28) expr -> expr DIVIDE factor .
     (31) expr -> factor .
@@ -1887,7 +2029,7 @@ state 55
   ! POWER           [ reduce using rule 31 (expr -> factor .) ]
 
 
-state 56
+state 63
 
     (29) expr -> expr MODULO factor .
     (31) expr -> factor .
@@ -1939,7 +2081,7 @@ state 56
   ! POWER           [ reduce using rule 31 (expr -> factor .) ]
 
 
-state 57
+state 64
 
     (30) expr -> expr POWER factor .
     (31) expr -> factor .
@@ -1991,7 +2133,7 @@ state 57
   ! POWER           [ reduce using rule 31 (expr -> factor .) ]
 
 
-state 58
+state 65
 
     (17) factor -> expr COMPARISON expr .
     (25) expr -> expr . PLUS factor
@@ -2019,12 +2161,12 @@ state 58
     AND             reduce using rule 17 (factor -> expr COMPARISON expr .)
     OR              reduce using rule 17 (factor -> expr COMPARISON expr .)
     RIGHT_PAREN     reduce using rule 17 (factor -> expr COMPARISON expr .)
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
 
   ! PLUS            [ reduce using rule 17 (factor -> expr COMPARISON expr .) ]
   ! MINUS           [ reduce using rule 17 (factor -> expr COMPARISON expr .) ]
@@ -2032,17 +2174,17 @@ state 58
   ! DIVIDE          [ reduce using rule 17 (factor -> expr COMPARISON expr .) ]
   ! MODULO          [ reduce using rule 17 (factor -> expr COMPARISON expr .) ]
   ! POWER           [ reduce using rule 17 (factor -> expr COMPARISON expr .) ]
-  ! COMPARISON      [ shift and go to state 33 ]
-  ! LESS_THAN       [ shift and go to state 34 ]
-  ! GREATER_THAN    [ shift and go to state 35 ]
-  ! LESS_EQUAL      [ shift and go to state 36 ]
-  ! GREATER_EQUAL   [ shift and go to state 37 ]
-  ! NOT_EQUAL       [ shift and go to state 38 ]
-  ! AND             [ shift and go to state 39 ]
-  ! OR              [ shift and go to state 40 ]
+  ! COMPARISON      [ shift and go to state 36 ]
+  ! LESS_THAN       [ shift and go to state 37 ]
+  ! GREATER_THAN    [ shift and go to state 38 ]
+  ! LESS_EQUAL      [ shift and go to state 39 ]
+  ! GREATER_EQUAL   [ shift and go to state 40 ]
+  ! NOT_EQUAL       [ shift and go to state 41 ]
+  ! AND             [ shift and go to state 42 ]
+  ! OR              [ shift and go to state 43 ]
 
 
-state 59
+state 66
 
     (18) factor -> expr LESS_THAN expr .
     (25) expr -> expr . PLUS factor
@@ -2070,12 +2212,12 @@ state 59
     AND             reduce using rule 18 (factor -> expr LESS_THAN expr .)
     OR              reduce using rule 18 (factor -> expr LESS_THAN expr .)
     RIGHT_PAREN     reduce using rule 18 (factor -> expr LESS_THAN expr .)
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
 
   ! PLUS            [ reduce using rule 18 (factor -> expr LESS_THAN expr .) ]
   ! MINUS           [ reduce using rule 18 (factor -> expr LESS_THAN expr .) ]
@@ -2083,17 +2225,17 @@ state 59
   ! DIVIDE          [ reduce using rule 18 (factor -> expr LESS_THAN expr .) ]
   ! MODULO          [ reduce using rule 18 (factor -> expr LESS_THAN expr .) ]
   ! POWER           [ reduce using rule 18 (factor -> expr LESS_THAN expr .) ]
-  ! COMPARISON      [ shift and go to state 33 ]
-  ! LESS_THAN       [ shift and go to state 34 ]
-  ! GREATER_THAN    [ shift and go to state 35 ]
-  ! LESS_EQUAL      [ shift and go to state 36 ]
-  ! GREATER_EQUAL   [ shift and go to state 37 ]
-  ! NOT_EQUAL       [ shift and go to state 38 ]
-  ! AND             [ shift and go to state 39 ]
-  ! OR              [ shift and go to state 40 ]
+  ! COMPARISON      [ shift and go to state 36 ]
+  ! LESS_THAN       [ shift and go to state 37 ]
+  ! GREATER_THAN    [ shift and go to state 38 ]
+  ! LESS_EQUAL      [ shift and go to state 39 ]
+  ! GREATER_EQUAL   [ shift and go to state 40 ]
+  ! NOT_EQUAL       [ shift and go to state 41 ]
+  ! AND             [ shift and go to state 42 ]
+  ! OR              [ shift and go to state 43 ]
 
 
-state 60
+state 67
 
     (19) factor -> expr GREATER_THAN expr .
     (25) expr -> expr . PLUS factor
@@ -2121,12 +2263,12 @@ state 60
     AND             reduce using rule 19 (factor -> expr GREATER_THAN expr .)
     OR              reduce using rule 19 (factor -> expr GREATER_THAN expr .)
     RIGHT_PAREN     reduce using rule 19 (factor -> expr GREATER_THAN expr .)
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
 
   ! PLUS            [ reduce using rule 19 (factor -> expr GREATER_THAN expr .) ]
   ! MINUS           [ reduce using rule 19 (factor -> expr GREATER_THAN expr .) ]
@@ -2134,17 +2276,17 @@ state 60
   ! DIVIDE          [ reduce using rule 19 (factor -> expr GREATER_THAN expr .) ]
   ! MODULO          [ reduce using rule 19 (factor -> expr GREATER_THAN expr .) ]
   ! POWER           [ reduce using rule 19 (factor -> expr GREATER_THAN expr .) ]
-  ! COMPARISON      [ shift and go to state 33 ]
-  ! LESS_THAN       [ shift and go to state 34 ]
-  ! GREATER_THAN    [ shift and go to state 35 ]
-  ! LESS_EQUAL      [ shift and go to state 36 ]
-  ! GREATER_EQUAL   [ shift and go to state 37 ]
-  ! NOT_EQUAL       [ shift and go to state 38 ]
-  ! AND             [ shift and go to state 39 ]
-  ! OR              [ shift and go to state 40 ]
+  ! COMPARISON      [ shift and go to state 36 ]
+  ! LESS_THAN       [ shift and go to state 37 ]
+  ! GREATER_THAN    [ shift and go to state 38 ]
+  ! LESS_EQUAL      [ shift and go to state 39 ]
+  ! GREATER_EQUAL   [ shift and go to state 40 ]
+  ! NOT_EQUAL       [ shift and go to state 41 ]
+  ! AND             [ shift and go to state 42 ]
+  ! OR              [ shift and go to state 43 ]
 
 
-state 61
+state 68
 
     (20) factor -> expr LESS_EQUAL expr .
     (25) expr -> expr . PLUS factor
@@ -2172,12 +2314,12 @@ state 61
     AND             reduce using rule 20 (factor -> expr LESS_EQUAL expr .)
     OR              reduce using rule 20 (factor -> expr LESS_EQUAL expr .)
     RIGHT_PAREN     reduce using rule 20 (factor -> expr LESS_EQUAL expr .)
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
 
   ! PLUS            [ reduce using rule 20 (factor -> expr LESS_EQUAL expr .) ]
   ! MINUS           [ reduce using rule 20 (factor -> expr LESS_EQUAL expr .) ]
@@ -2185,17 +2327,17 @@ state 61
   ! DIVIDE          [ reduce using rule 20 (factor -> expr LESS_EQUAL expr .) ]
   ! MODULO          [ reduce using rule 20 (factor -> expr LESS_EQUAL expr .) ]
   ! POWER           [ reduce using rule 20 (factor -> expr LESS_EQUAL expr .) ]
-  ! COMPARISON      [ shift and go to state 33 ]
-  ! LESS_THAN       [ shift and go to state 34 ]
-  ! GREATER_THAN    [ shift and go to state 35 ]
-  ! LESS_EQUAL      [ shift and go to state 36 ]
-  ! GREATER_EQUAL   [ shift and go to state 37 ]
-  ! NOT_EQUAL       [ shift and go to state 38 ]
-  ! AND             [ shift and go to state 39 ]
-  ! OR              [ shift and go to state 40 ]
+  ! COMPARISON      [ shift and go to state 36 ]
+  ! LESS_THAN       [ shift and go to state 37 ]
+  ! GREATER_THAN    [ shift and go to state 38 ]
+  ! LESS_EQUAL      [ shift and go to state 39 ]
+  ! GREATER_EQUAL   [ shift and go to state 40 ]
+  ! NOT_EQUAL       [ shift and go to state 41 ]
+  ! AND             [ shift and go to state 42 ]
+  ! OR              [ shift and go to state 43 ]
 
 
-state 62
+state 69
 
     (21) factor -> expr GREATER_EQUAL expr .
     (25) expr -> expr . PLUS factor
@@ -2223,12 +2365,12 @@ state 62
     AND             reduce using rule 21 (factor -> expr GREATER_EQUAL expr .)
     OR              reduce using rule 21 (factor -> expr GREATER_EQUAL expr .)
     RIGHT_PAREN     reduce using rule 21 (factor -> expr GREATER_EQUAL expr .)
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
 
   ! PLUS            [ reduce using rule 21 (factor -> expr GREATER_EQUAL expr .) ]
   ! MINUS           [ reduce using rule 21 (factor -> expr GREATER_EQUAL expr .) ]
@@ -2236,17 +2378,17 @@ state 62
   ! DIVIDE          [ reduce using rule 21 (factor -> expr GREATER_EQUAL expr .) ]
   ! MODULO          [ reduce using rule 21 (factor -> expr GREATER_EQUAL expr .) ]
   ! POWER           [ reduce using rule 21 (factor -> expr GREATER_EQUAL expr .) ]
-  ! COMPARISON      [ shift and go to state 33 ]
-  ! LESS_THAN       [ shift and go to state 34 ]
-  ! GREATER_THAN    [ shift and go to state 35 ]
-  ! LESS_EQUAL      [ shift and go to state 36 ]
-  ! GREATER_EQUAL   [ shift and go to state 37 ]
-  ! NOT_EQUAL       [ shift and go to state 38 ]
-  ! AND             [ shift and go to state 39 ]
-  ! OR              [ shift and go to state 40 ]
+  ! COMPARISON      [ shift and go to state 36 ]
+  ! LESS_THAN       [ shift and go to state 37 ]
+  ! GREATER_THAN    [ shift and go to state 38 ]
+  ! LESS_EQUAL      [ shift and go to state 39 ]
+  ! GREATER_EQUAL   [ shift and go to state 40 ]
+  ! NOT_EQUAL       [ shift and go to state 41 ]
+  ! AND             [ shift and go to state 42 ]
+  ! OR              [ shift and go to state 43 ]
 
 
-state 63
+state 70
 
     (22) factor -> expr NOT_EQUAL expr .
     (25) expr -> expr . PLUS factor
@@ -2274,12 +2416,12 @@ state 63
     AND             reduce using rule 22 (factor -> expr NOT_EQUAL expr .)
     OR              reduce using rule 22 (factor -> expr NOT_EQUAL expr .)
     RIGHT_PAREN     reduce using rule 22 (factor -> expr NOT_EQUAL expr .)
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
 
   ! PLUS            [ reduce using rule 22 (factor -> expr NOT_EQUAL expr .) ]
   ! MINUS           [ reduce using rule 22 (factor -> expr NOT_EQUAL expr .) ]
@@ -2287,17 +2429,17 @@ state 63
   ! DIVIDE          [ reduce using rule 22 (factor -> expr NOT_EQUAL expr .) ]
   ! MODULO          [ reduce using rule 22 (factor -> expr NOT_EQUAL expr .) ]
   ! POWER           [ reduce using rule 22 (factor -> expr NOT_EQUAL expr .) ]
-  ! COMPARISON      [ shift and go to state 33 ]
-  ! LESS_THAN       [ shift and go to state 34 ]
-  ! GREATER_THAN    [ shift and go to state 35 ]
-  ! LESS_EQUAL      [ shift and go to state 36 ]
-  ! GREATER_EQUAL   [ shift and go to state 37 ]
-  ! NOT_EQUAL       [ shift and go to state 38 ]
-  ! AND             [ shift and go to state 39 ]
-  ! OR              [ shift and go to state 40 ]
+  ! COMPARISON      [ shift and go to state 36 ]
+  ! LESS_THAN       [ shift and go to state 37 ]
+  ! GREATER_THAN    [ shift and go to state 38 ]
+  ! LESS_EQUAL      [ shift and go to state 39 ]
+  ! GREATER_EQUAL   [ shift and go to state 40 ]
+  ! NOT_EQUAL       [ shift and go to state 41 ]
+  ! AND             [ shift and go to state 42 ]
+  ! OR              [ shift and go to state 43 ]
 
 
-state 64
+state 71
 
     (23) factor -> expr AND expr .
     (25) expr -> expr . PLUS factor
@@ -2319,18 +2461,18 @@ state 64
     AND             reduce using rule 23 (factor -> expr AND expr .)
     OR              reduce using rule 23 (factor -> expr AND expr .)
     RIGHT_PAREN     reduce using rule 23 (factor -> expr AND expr .)
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
-    COMPARISON      shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    GREATER_THAN    shift and go to state 35
-    LESS_EQUAL      shift and go to state 36
-    GREATER_EQUAL   shift and go to state 37
-    NOT_EQUAL       shift and go to state 38
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
 
   ! PLUS            [ reduce using rule 23 (factor -> expr AND expr .) ]
   ! MINUS           [ reduce using rule 23 (factor -> expr AND expr .) ]
@@ -2344,11 +2486,11 @@ state 64
   ! LESS_EQUAL      [ reduce using rule 23 (factor -> expr AND expr .) ]
   ! GREATER_EQUAL   [ reduce using rule 23 (factor -> expr AND expr .) ]
   ! NOT_EQUAL       [ reduce using rule 23 (factor -> expr AND expr .) ]
-  ! AND             [ shift and go to state 39 ]
-  ! OR              [ shift and go to state 40 ]
+  ! AND             [ shift and go to state 42 ]
+  ! OR              [ shift and go to state 43 ]
 
 
-state 65
+state 72
 
     (24) factor -> expr OR expr .
     (25) expr -> expr . PLUS factor
@@ -2369,19 +2511,19 @@ state 65
     SEMICOLON       reduce using rule 24 (factor -> expr OR expr .)
     OR              reduce using rule 24 (factor -> expr OR expr .)
     RIGHT_PAREN     reduce using rule 24 (factor -> expr OR expr .)
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
-    COMPARISON      shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    GREATER_THAN    shift and go to state 35
-    LESS_EQUAL      shift and go to state 36
-    GREATER_EQUAL   shift and go to state 37
-    NOT_EQUAL       shift and go to state 38
-    AND             shift and go to state 39
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
+    AND             shift and go to state 42
 
   ! PLUS            [ reduce using rule 24 (factor -> expr OR expr .) ]
   ! MINUS           [ reduce using rule 24 (factor -> expr OR expr .) ]
@@ -2396,13 +2538,89 @@ state 65
   ! GREATER_EQUAL   [ reduce using rule 24 (factor -> expr OR expr .) ]
   ! NOT_EQUAL       [ reduce using rule 24 (factor -> expr OR expr .) ]
   ! AND             [ reduce using rule 24 (factor -> expr OR expr .) ]
-  ! OR              [ shift and go to state 40 ]
+  ! OR              [ shift and go to state 43 ]
 
 
-state 66
+state 73
 
-    (46) if_statement -> IF LEFT_PAREN expr . RIGHT_PAREN block
-    (47) if_statement -> IF LEFT_PAREN expr . RIGHT_PAREN block ELSE block
+    (32) var_decl -> IDENTIFIER COLON data_type . ASSIGN_OP expr
+
+    ASSIGN_OP       shift and go to state 88
+
+
+state 74
+
+    (2) data_type -> TYPE_INTEGER .
+
+    ASSIGN_OP       reduce using rule 2 (data_type -> TYPE_INTEGER .)
+    RIGHT_PAREN     reduce using rule 2 (data_type -> TYPE_INTEGER .)
+    COMMA           reduce using rule 2 (data_type -> TYPE_INTEGER .)
+    LEFT_BRACE      reduce using rule 2 (data_type -> TYPE_INTEGER .)
+
+
+state 75
+
+    (3) data_type -> TYPE_STRING .
+
+    ASSIGN_OP       reduce using rule 3 (data_type -> TYPE_STRING .)
+    RIGHT_PAREN     reduce using rule 3 (data_type -> TYPE_STRING .)
+    COMMA           reduce using rule 3 (data_type -> TYPE_STRING .)
+    LEFT_BRACE      reduce using rule 3 (data_type -> TYPE_STRING .)
+
+
+state 76
+
+    (4) data_type -> TYPE_FLOAT .
+
+    ASSIGN_OP       reduce using rule 4 (data_type -> TYPE_FLOAT .)
+    RIGHT_PAREN     reduce using rule 4 (data_type -> TYPE_FLOAT .)
+    COMMA           reduce using rule 4 (data_type -> TYPE_FLOAT .)
+    LEFT_BRACE      reduce using rule 4 (data_type -> TYPE_FLOAT .)
+
+
+state 77
+
+    (5) data_type -> TYPE_DOUBLE .
+
+    ASSIGN_OP       reduce using rule 5 (data_type -> TYPE_DOUBLE .)
+    RIGHT_PAREN     reduce using rule 5 (data_type -> TYPE_DOUBLE .)
+    COMMA           reduce using rule 5 (data_type -> TYPE_DOUBLE .)
+    LEFT_BRACE      reduce using rule 5 (data_type -> TYPE_DOUBLE .)
+
+
+state 78
+
+    (6) data_type -> TYPE_BOOL .
+
+    ASSIGN_OP       reduce using rule 6 (data_type -> TYPE_BOOL .)
+    RIGHT_PAREN     reduce using rule 6 (data_type -> TYPE_BOOL .)
+    COMMA           reduce using rule 6 (data_type -> TYPE_BOOL .)
+    LEFT_BRACE      reduce using rule 6 (data_type -> TYPE_BOOL .)
+
+
+state 79
+
+    (7) data_type -> TYPE_VOID .
+
+    ASSIGN_OP       reduce using rule 7 (data_type -> TYPE_VOID .)
+    RIGHT_PAREN     reduce using rule 7 (data_type -> TYPE_VOID .)
+    COMMA           reduce using rule 7 (data_type -> TYPE_VOID .)
+    LEFT_BRACE      reduce using rule 7 (data_type -> TYPE_VOID .)
+
+
+state 80
+
+    (8) data_type -> TYPE_NULL .
+
+    ASSIGN_OP       reduce using rule 8 (data_type -> TYPE_NULL .)
+    RIGHT_PAREN     reduce using rule 8 (data_type -> TYPE_NULL .)
+    COMMA           reduce using rule 8 (data_type -> TYPE_NULL .)
+    LEFT_BRACE      reduce using rule 8 (data_type -> TYPE_NULL .)
+
+
+state 81
+
+    (55) var_reassign -> IDENTIFIER ASSIGN_OP expr .
     (25) expr -> expr . PLUS factor
     (26) expr -> expr . MINUS factor
     (27) expr -> expr . TIMES factor
@@ -2418,24 +2636,60 @@ state 66
     (23) factor -> expr . AND expr
     (24) factor -> expr . OR expr
 
-    RIGHT_PAREN     shift and go to state 80
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
-    COMPARISON      shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    GREATER_THAN    shift and go to state 35
-    LESS_EQUAL      shift and go to state 36
-    GREATER_EQUAL   shift and go to state 37
-    NOT_EQUAL       shift and go to state 38
-    AND             shift and go to state 39
-    OR              shift and go to state 40
+    SEMICOLON       reduce using rule 55 (var_reassign -> IDENTIFIER ASSIGN_OP expr .)
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
+    AND             shift and go to state 42
+    OR              shift and go to state 43
 
 
-state 67
+state 82
+
+    (48) if_statement -> IF LEFT_PAREN expr . RIGHT_PAREN block
+    (49) if_statement -> IF LEFT_PAREN expr . RIGHT_PAREN block ELSE block
+    (25) expr -> expr . PLUS factor
+    (26) expr -> expr . MINUS factor
+    (27) expr -> expr . TIMES factor
+    (28) expr -> expr . DIVIDE factor
+    (29) expr -> expr . MODULO factor
+    (30) expr -> expr . POWER factor
+    (17) factor -> expr . COMPARISON expr
+    (18) factor -> expr . LESS_THAN expr
+    (19) factor -> expr . GREATER_THAN expr
+    (20) factor -> expr . LESS_EQUAL expr
+    (21) factor -> expr . GREATER_EQUAL expr
+    (22) factor -> expr . NOT_EQUAL expr
+    (23) factor -> expr . AND expr
+    (24) factor -> expr . OR expr
+
+    RIGHT_PAREN     shift and go to state 89
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
+    AND             shift and go to state 42
+    OR              shift and go to state 43
+
+
+state 83
 
     (9) factor -> LEFT_PAREN expr RIGHT_PAREN .
 
@@ -2457,9 +2711,9 @@ state 67
     RIGHT_PAREN     reduce using rule 9 (factor -> LEFT_PAREN expr RIGHT_PAREN .)
 
 
-state 68
+state 84
 
-    (48) while_statement -> WHILE LEFT_PAREN expr . RIGHT_PAREN block
+    (50) while_statement -> WHILE LEFT_PAREN expr . RIGHT_PAREN block
     (25) expr -> expr . PLUS factor
     (26) expr -> expr . MINUS factor
     (27) expr -> expr . TIMES factor
@@ -2475,160 +2729,71 @@ state 68
     (23) factor -> expr . AND expr
     (24) factor -> expr . OR expr
 
-    RIGHT_PAREN     shift and go to state 81
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
-    COMPARISON      shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    GREATER_THAN    shift and go to state 35
-    LESS_EQUAL      shift and go to state 36
-    GREATER_EQUAL   shift and go to state 37
-    NOT_EQUAL       shift and go to state 38
-    AND             shift and go to state 39
-    OR              shift and go to state 40
+    RIGHT_PAREN     shift and go to state 90
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
+    AND             shift and go to state 42
+    OR              shift and go to state 43
 
 
-state 69
+state 85
 
-    (49) for_statement -> FOR IDENTIFIER IN . IDENTIFIER block
+    (51) for_statement -> FOR IDENTIFIER IN . IDENTIFIER block
 
-    IDENTIFIER      shift and go to state 82
-
-
-state 70
-
-    (32) var_decl -> IDENTIFIER COLON data_type . ASSIGN_OP expr SEMICOLON
-
-    ASSIGN_OP       shift and go to state 83
+    IDENTIFIER      shift and go to state 91
 
 
-state 71
+state 86
 
-    (2) data_type -> TYPE_INTEGER .
+    (53) func_decl -> FUNCTION IDENTIFIER LEFT_PAREN . param_list RIGHT_PAREN ARROW data_type block
+    (33) param_list -> . param_list COMMA IDENTIFIER COLON data_type
+    (34) param_list -> . IDENTIFIER COLON data_type
+    (35) param_list -> . empty
+    (54) empty -> .
 
-    ASSIGN_OP       reduce using rule 2 (data_type -> TYPE_INTEGER .)
+    IDENTIFIER      shift and go to state 92
+    RIGHT_PAREN     reduce using rule 54 (empty -> .)
+    COMMA           reduce using rule 54 (empty -> .)
 
+    param_list                     shift and go to state 93
+    empty                          shift and go to state 94
 
-state 72
+state 87
 
-    (3) data_type -> TYPE_STRING .
+    (47) block -> LEFT_BRACE statement_list RIGHT_BRACE .
 
-    ASSIGN_OP       reduce using rule 3 (data_type -> TYPE_STRING .)
-
-
-state 73
-
-    (4) data_type -> TYPE_FLOAT .
-
-    ASSIGN_OP       reduce using rule 4 (data_type -> TYPE_FLOAT .)
-
-
-state 74
-
-    (5) data_type -> TYPE_DOUBLE .
-
-    ASSIGN_OP       reduce using rule 5 (data_type -> TYPE_DOUBLE .)
-
-
-state 75
-
-    (6) data_type -> TYPE_BOOL .
-
-    ASSIGN_OP       reduce using rule 6 (data_type -> TYPE_BOOL .)
-
-
-state 76
-
-    (7) data_type -> TYPE_VOID .
-
-    ASSIGN_OP       reduce using rule 7 (data_type -> TYPE_VOID .)
+    RETURN          reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    IDENTIFIER      reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    IF              reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    WHILE           reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    FOR             reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    FUNCTION        reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    LEFT_BRACE      reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    LEFT_PAREN      reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    INT             reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    FLOAT           reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    DOUBLE          reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    STRING          reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    BOOL            reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    NOT             reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    $end            reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    RIGHT_BRACE     reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
+    ELSE            reduce using rule 47 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
 
 
-state 77
+state 88
 
-    (8) data_type -> TYPE_NULL .
-
-    ASSIGN_OP       reduce using rule 8 (data_type -> TYPE_NULL .)
-
-
-state 78
-
-    (50) return_statement -> RETURN expr SEMICOLON .
-
-    IF              reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    WHILE           reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    FOR             reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    RETURN          reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    IDENTIFIER      reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    LEFT_BRACE      reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    LEFT_PAREN      reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    INT             reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    FLOAT           reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    DOUBLE          reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    STRING          reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    BOOL            reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    NOT             reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    $end            reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-    RIGHT_BRACE     reduce using rule 50 (return_statement -> RETURN expr SEMICOLON .)
-
-
-state 79
-
-    (45) block -> LEFT_BRACE statement_list RIGHT_BRACE .
-
-    IF              reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    WHILE           reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    FOR             reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    RETURN          reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    IDENTIFIER      reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    LEFT_BRACE      reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    LEFT_PAREN      reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    INT             reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    FLOAT           reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    DOUBLE          reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    STRING          reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    BOOL            reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    NOT             reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    $end            reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    RIGHT_BRACE     reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-    ELSE            reduce using rule 45 (block -> LEFT_BRACE statement_list RIGHT_BRACE .)
-
-
-state 80
-
-    (46) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN . block
-    (47) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN . block ELSE block
-    (45) block -> . LEFT_BRACE statement_list RIGHT_BRACE
-
-    LEFT_BRACE      shift and go to state 19
-
-    block                          shift and go to state 84
-
-state 81
-
-    (48) while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN . block
-    (45) block -> . LEFT_BRACE statement_list RIGHT_BRACE
-
-    LEFT_BRACE      shift and go to state 19
-
-    block                          shift and go to state 85
-
-state 82
-
-    (49) for_statement -> FOR IDENTIFIER IN IDENTIFIER . block
-    (45) block -> . LEFT_BRACE statement_list RIGHT_BRACE
-
-    LEFT_BRACE      shift and go to state 19
-
-    block                          shift and go to state 86
-
-state 83
-
-    (32) var_decl -> IDENTIFIER COLON data_type ASSIGN_OP . expr SEMICOLON
+    (32) var_decl -> IDENTIFIER COLON data_type ASSIGN_OP . expr
     (25) expr -> . expr PLUS factor
     (26) expr -> . expr MINUS factor
     (27) expr -> . expr TIMES factor
@@ -2653,86 +2818,73 @@ state 83
     (23) factor -> . expr AND expr
     (24) factor -> . expr OR expr
 
-    LEFT_PAREN      shift and go to state 14
-    IDENTIFIER      shift and go to state 44
-    INT             shift and go to state 20
-    FLOAT           shift and go to state 21
-    DOUBLE          shift and go to state 22
-    STRING          shift and go to state 23
-    BOOL            shift and go to state 24
-    NOT             shift and go to state 25
+    LEFT_PAREN      shift and go to state 18
+    IDENTIFIER      shift and go to state 48
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    DOUBLE          shift and go to state 25
+    STRING          shift and go to state 26
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
 
-    expr                           shift and go to state 87
-    factor                         shift and go to state 12
+    expr                           shift and go to state 95
+    factor                         shift and go to state 14
 
-state 84
+state 89
 
-    (46) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .
-    (47) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block . ELSE block
+    (48) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN . block
+    (49) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN . block ELSE block
+    (47) block -> . LEFT_BRACE statement_list RIGHT_BRACE
 
-    IF              reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    WHILE           reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    FOR             reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    RETURN          reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    IDENTIFIER      reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    LEFT_BRACE      reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    LEFT_PAREN      reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    INT             reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    FLOAT           reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    DOUBLE          reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    STRING          reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    BOOL            reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    NOT             reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    $end            reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    RIGHT_BRACE     reduce using rule 46 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
-    ELSE            shift and go to state 88
+    LEFT_BRACE      shift and go to state 22
 
+    block                          shift and go to state 96
 
-state 85
+state 90
 
-    (48) while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .
+    (50) while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN . block
+    (47) block -> . LEFT_BRACE statement_list RIGHT_BRACE
 
-    IF              reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    WHILE           reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    FOR             reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    RETURN          reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    IDENTIFIER      reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    LEFT_BRACE      reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    LEFT_PAREN      reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    INT             reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    FLOAT           reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    DOUBLE          reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    STRING          reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    BOOL            reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    NOT             reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    $end            reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
-    RIGHT_BRACE     reduce using rule 48 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    LEFT_BRACE      shift and go to state 22
+
+    block                          shift and go to state 97
+
+state 91
+
+    (51) for_statement -> FOR IDENTIFIER IN IDENTIFIER . block
+    (47) block -> . LEFT_BRACE statement_list RIGHT_BRACE
+
+    LEFT_BRACE      shift and go to state 22
+
+    block                          shift and go to state 98
+
+state 92
+
+    (34) param_list -> IDENTIFIER . COLON data_type
+
+    COLON           shift and go to state 99
 
 
-state 86
+state 93
 
-    (49) for_statement -> FOR IDENTIFIER IN IDENTIFIER block .
+    (53) func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list . RIGHT_PAREN ARROW data_type block
+    (33) param_list -> param_list . COMMA IDENTIFIER COLON data_type
 
-    IF              reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    WHILE           reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    FOR             reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    RETURN          reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    IDENTIFIER      reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    LEFT_BRACE      reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    LEFT_PAREN      reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    INT             reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    FLOAT           reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    DOUBLE          reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    STRING          reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    BOOL            reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    NOT             reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    $end            reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
-    RIGHT_BRACE     reduce using rule 49 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    RIGHT_PAREN     shift and go to state 100
+    COMMA           shift and go to state 101
 
 
-state 87
+state 94
 
-    (32) var_decl -> IDENTIFIER COLON data_type ASSIGN_OP expr . SEMICOLON
+    (35) param_list -> empty .
+
+    RIGHT_PAREN     reduce using rule 35 (param_list -> empty .)
+    COMMA           reduce using rule 35 (param_list -> empty .)
+
+
+state 95
+
+    (32) var_decl -> IDENTIFIER COLON data_type ASSIGN_OP expr .
     (25) expr -> expr . PLUS factor
     (26) expr -> expr . MINUS factor
     (27) expr -> expr . TIMES factor
@@ -2748,71 +2900,264 @@ state 87
     (23) factor -> expr . AND expr
     (24) factor -> expr . OR expr
 
-    SEMICOLON       shift and go to state 89
-    PLUS            shift and go to state 27
-    MINUS           shift and go to state 28
-    TIMES           shift and go to state 29
-    DIVIDE          shift and go to state 30
-    MODULO          shift and go to state 31
-    POWER           shift and go to state 32
-    COMPARISON      shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    GREATER_THAN    shift and go to state 35
-    LESS_EQUAL      shift and go to state 36
-    GREATER_EQUAL   shift and go to state 37
-    NOT_EQUAL       shift and go to state 38
-    AND             shift and go to state 39
-    OR              shift and go to state 40
+    SEMICOLON       reduce using rule 32 (var_decl -> IDENTIFIER COLON data_type ASSIGN_OP expr .)
+    PLUS            shift and go to state 30
+    MINUS           shift and go to state 31
+    TIMES           shift and go to state 32
+    DIVIDE          shift and go to state 33
+    MODULO          shift and go to state 34
+    POWER           shift and go to state 35
+    COMPARISON      shift and go to state 36
+    LESS_THAN       shift and go to state 37
+    GREATER_THAN    shift and go to state 38
+    LESS_EQUAL      shift and go to state 39
+    GREATER_EQUAL   shift and go to state 40
+    NOT_EQUAL       shift and go to state 41
+    AND             shift and go to state 42
+    OR              shift and go to state 43
 
 
-state 88
+state 96
 
-    (47) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE . block
-    (45) block -> . LEFT_BRACE statement_list RIGHT_BRACE
+    (48) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .
+    (49) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block . ELSE block
 
-    LEFT_BRACE      shift and go to state 19
+    RETURN          reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    IDENTIFIER      reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    IF              reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    WHILE           reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    FOR             reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    FUNCTION        reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    LEFT_BRACE      reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    LEFT_PAREN      reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    INT             reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    FLOAT           reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    DOUBLE          reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    STRING          reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    BOOL            reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    NOT             reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    $end            reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    RIGHT_BRACE     reduce using rule 48 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block .)
+    ELSE            shift and go to state 102
 
-    block                          shift and go to state 90
 
-state 89
+state 97
 
-    (32) var_decl -> IDENTIFIER COLON data_type ASSIGN_OP expr SEMICOLON .
+    (50) while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .
 
-    SEMICOLON       reduce using rule 32 (var_decl -> IDENTIFIER COLON data_type ASSIGN_OP expr SEMICOLON .)
+    RETURN          reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    IDENTIFIER      reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    IF              reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    WHILE           reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    FOR             reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    FUNCTION        reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    LEFT_BRACE      reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    LEFT_PAREN      reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    INT             reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    FLOAT           reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    DOUBLE          reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    STRING          reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    BOOL            reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    NOT             reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    $end            reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
+    RIGHT_BRACE     reduce using rule 50 (while_statement -> WHILE LEFT_PAREN expr RIGHT_PAREN block .)
 
 
-state 90
+state 98
 
-    (47) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .
+    (51) for_statement -> FOR IDENTIFIER IN IDENTIFIER block .
 
-    IF              reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    WHILE           reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    FOR             reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    RETURN          reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    IDENTIFIER      reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    LEFT_BRACE      reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    LEFT_PAREN      reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    INT             reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    FLOAT           reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    DOUBLE          reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    STRING          reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    BOOL            reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    NOT             reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    $end            reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
-    RIGHT_BRACE     reduce using rule 47 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    RETURN          reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    IDENTIFIER      reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    IF              reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    WHILE           reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    FOR             reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    FUNCTION        reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    LEFT_BRACE      reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    LEFT_PAREN      reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    INT             reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    FLOAT           reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    DOUBLE          reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    STRING          reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    BOOL            reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    NOT             reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    $end            reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+    RIGHT_BRACE     reduce using rule 51 (for_statement -> FOR IDENTIFIER IN IDENTIFIER block .)
+
+
+state 99
+
+    (34) param_list -> IDENTIFIER COLON . data_type
+    (2) data_type -> . TYPE_INTEGER
+    (3) data_type -> . TYPE_STRING
+    (4) data_type -> . TYPE_FLOAT
+    (5) data_type -> . TYPE_DOUBLE
+    (6) data_type -> . TYPE_BOOL
+    (7) data_type -> . TYPE_VOID
+    (8) data_type -> . TYPE_NULL
+
+    TYPE_INTEGER    shift and go to state 74
+    TYPE_STRING     shift and go to state 75
+    TYPE_FLOAT      shift and go to state 76
+    TYPE_DOUBLE     shift and go to state 77
+    TYPE_BOOL       shift and go to state 78
+    TYPE_VOID       shift and go to state 79
+    TYPE_NULL       shift and go to state 80
+
+    data_type                      shift and go to state 103
+
+state 100
+
+    (53) func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN . ARROW data_type block
+
+    ARROW           shift and go to state 104
+
+
+state 101
+
+    (33) param_list -> param_list COMMA . IDENTIFIER COLON data_type
+
+    IDENTIFIER      shift and go to state 105
+
+
+state 102
+
+    (49) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE . block
+    (47) block -> . LEFT_BRACE statement_list RIGHT_BRACE
+
+    LEFT_BRACE      shift and go to state 22
+
+    block                          shift and go to state 106
+
+state 103
+
+    (34) param_list -> IDENTIFIER COLON data_type .
+
+    RIGHT_PAREN     reduce using rule 34 (param_list -> IDENTIFIER COLON data_type .)
+    COMMA           reduce using rule 34 (param_list -> IDENTIFIER COLON data_type .)
+
+
+state 104
+
+    (53) func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW . data_type block
+    (2) data_type -> . TYPE_INTEGER
+    (3) data_type -> . TYPE_STRING
+    (4) data_type -> . TYPE_FLOAT
+    (5) data_type -> . TYPE_DOUBLE
+    (6) data_type -> . TYPE_BOOL
+    (7) data_type -> . TYPE_VOID
+    (8) data_type -> . TYPE_NULL
+
+    TYPE_INTEGER    shift and go to state 74
+    TYPE_STRING     shift and go to state 75
+    TYPE_FLOAT      shift and go to state 76
+    TYPE_DOUBLE     shift and go to state 77
+    TYPE_BOOL       shift and go to state 78
+    TYPE_VOID       shift and go to state 79
+    TYPE_NULL       shift and go to state 80
+
+    data_type                      shift and go to state 107
+
+state 105
+
+    (33) param_list -> param_list COMMA IDENTIFIER . COLON data_type
+
+    COLON           shift and go to state 108
+
+
+state 106
+
+    (49) if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .
+
+    RETURN          reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    IDENTIFIER      reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    IF              reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    WHILE           reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    FOR             reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    FUNCTION        reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    LEFT_BRACE      reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    LEFT_PAREN      reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    INT             reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    FLOAT           reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    DOUBLE          reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    STRING          reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    BOOL            reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    NOT             reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    $end            reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+    RIGHT_BRACE     reduce using rule 49 (if_statement -> IF LEFT_PAREN expr RIGHT_PAREN block ELSE block .)
+
+
+state 107
+
+    (53) func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type . block
+    (47) block -> . LEFT_BRACE statement_list RIGHT_BRACE
+
+    LEFT_BRACE      shift and go to state 22
+
+    block                          shift and go to state 109
+
+state 108
+
+    (33) param_list -> param_list COMMA IDENTIFIER COLON . data_type
+    (2) data_type -> . TYPE_INTEGER
+    (3) data_type -> . TYPE_STRING
+    (4) data_type -> . TYPE_FLOAT
+    (5) data_type -> . TYPE_DOUBLE
+    (6) data_type -> . TYPE_BOOL
+    (7) data_type -> . TYPE_VOID
+    (8) data_type -> . TYPE_NULL
+
+    TYPE_INTEGER    shift and go to state 74
+    TYPE_STRING     shift and go to state 75
+    TYPE_FLOAT      shift and go to state 76
+    TYPE_DOUBLE     shift and go to state 77
+    TYPE_BOOL       shift and go to state 78
+    TYPE_VOID       shift and go to state 79
+    TYPE_NULL       shift and go to state 80
+
+    data_type                      shift and go to state 110
+
+state 109
+
+    (53) func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .
+
+    RETURN          reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    IDENTIFIER      reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    IF              reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    WHILE           reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    FOR             reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    FUNCTION        reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    LEFT_BRACE      reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    LEFT_PAREN      reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    INT             reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    FLOAT           reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    DOUBLE          reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    STRING          reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    BOOL            reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    NOT             reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    $end            reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+    RIGHT_BRACE     reduce using rule 53 (func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block .)
+
+
+state 110
+
+    (33) param_list -> param_list COMMA IDENTIFIER COLON data_type .
+
+    RIGHT_PAREN     reduce using rule 33 (param_list -> param_list COMMA IDENTIFIER COLON data_type .)
+    COMMA           reduce using rule 33 (param_list -> param_list COMMA IDENTIFIER COLON data_type .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: reduce/reduce conflict in state 52 resolved using rule (expr -> expr PLUS factor)
-WARNING: rejected rule (expr -> factor) in state 52
-WARNING: reduce/reduce conflict in state 53 resolved using rule (expr -> expr MINUS factor)
-WARNING: rejected rule (expr -> factor) in state 53
-WARNING: reduce/reduce conflict in state 54 resolved using rule (expr -> expr TIMES factor)
-WARNING: rejected rule (expr -> factor) in state 54
-WARNING: reduce/reduce conflict in state 55 resolved using rule (expr -> expr DIVIDE factor)
-WARNING: rejected rule (expr -> factor) in state 55
-WARNING: reduce/reduce conflict in state 56 resolved using rule (expr -> expr MODULO factor)
-WARNING: rejected rule (expr -> factor) in state 56
-WARNING: reduce/reduce conflict in state 57 resolved using rule (expr -> expr POWER factor)
-WARNING: rejected rule (expr -> factor) in state 57
+WARNING: reduce/reduce conflict in state 59 resolved using rule (expr -> expr PLUS factor)
+WARNING: rejected rule (expr -> factor) in state 59
+WARNING: reduce/reduce conflict in state 60 resolved using rule (expr -> expr MINUS factor)
+WARNING: rejected rule (expr -> factor) in state 60
+WARNING: reduce/reduce conflict in state 61 resolved using rule (expr -> expr TIMES factor)
+WARNING: rejected rule (expr -> factor) in state 61
+WARNING: reduce/reduce conflict in state 62 resolved using rule (expr -> expr DIVIDE factor)
+WARNING: rejected rule (expr -> factor) in state 62
+WARNING: reduce/reduce conflict in state 63 resolved using rule (expr -> expr MODULO factor)
+WARNING: rejected rule (expr -> factor) in state 63
+WARNING: reduce/reduce conflict in state 64 resolved using rule (expr -> expr POWER factor)
+WARNING: rejected rule (expr -> factor) in state 64
