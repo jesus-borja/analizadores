@@ -1,0 +1,1829 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    COMMENT_END
+    COMMENT_START
+    DOT
+    LEFT_BRACE
+    NEWLINE
+    RIGHT_BRACE
+    SPACE
+
+Grammar
+
+Rule 0     S' -> F
+Rule 1     F -> LEFT_PAREN E RIGHT_PAREN
+Rule 2     F -> IDENTIFIER
+Rule 3     F -> INT
+Rule 4     F -> FLOAT
+Rule 5     F -> DOUBLE
+Rule 6     F -> STRING
+Rule 7     F -> BOOL
+Rule 8     F -> NOT E
+Rule 9     F -> E COMPARISON E
+Rule 10    F -> E LESS_THAN E
+Rule 11    F -> E GREATER_THAN E
+Rule 12    F -> E LESS_EQUAL E
+Rule 13    F -> E GREATER_EQUAL E
+Rule 14    F -> E NOT_EQUAL E
+Rule 15    F -> E AND E
+Rule 16    F -> E OR E
+Rule 17    E -> F
+Rule 18    E -> E PLUS E
+Rule 19    E -> E MINUS E
+Rule 20    E -> E TIMES E
+Rule 21    E -> E DIVIDE E
+Rule 22    E -> E MODULO E
+Rule 23    E -> E POWER E
+Rule 24    VD -> IDENTIFIER COLON TD ASSIGN_OP E
+Rule 25    TD -> TYPE_BOOL
+Rule 26    TD -> TYPE_DOUBLE
+Rule 27    TD -> TYPE_FLOAT
+Rule 28    TD -> TYPE_INTEGER
+Rule 29    TD -> TYPE_NULL
+Rule 30    TD -> TYPE_STRING
+Rule 31    TD -> TYPE_VOID
+Rule 32    FD -> FUNCTION IDENTIFIER LEFT_PAREN PL RIGHT_PAREN ARROW TD B
+Rule 33    S -> E SEMICOLON
+Rule 34    S -> IfS
+Rule 35    S -> WS
+Rule 36    S -> FS
+Rule 37    S -> RS
+Rule 38    S -> VD SEMICOLON
+Rule 39    B -> LEFT_BRACKET SL RIGHT_BRACKET
+Rule 40    SL -> S
+Rule 41    SL -> SL S
+Rule 42    PL -> PL COMMA IDENTIFIER COLON TD
+Rule 43    PL -> IDENTIFIER COLON TD
+Rule 44    IfS -> IF LEFT_PAREN E RIGHT_PAREN B
+Rule 45    IfS -> IF LEFT_PAREN E RIGHT_PAREN B ELSE B
+Rule 46    WS -> WHILE LEFT_PAREN E RIGHT_PAREN B
+Rule 47    FS -> FOR IDENTIFIER IN IDENTIFIER LEFT_BRACKET SL RIGHT_BRACKET
+Rule 48    RS -> RETURN E SEMICOLON
+
+Terminals, with rules where they appear
+
+AND                  : 15
+ARROW                : 32
+ASSIGN_OP            : 24
+BOOL                 : 7
+COLON                : 24 42 43
+COMMA                : 42
+COMMENT_END          : 
+COMMENT_START        : 
+COMPARISON           : 9
+DIVIDE               : 21
+DOT                  : 
+DOUBLE               : 5
+ELSE                 : 45
+FLOAT                : 4
+FOR                  : 47
+FUNCTION             : 32
+GREATER_EQUAL        : 13
+GREATER_THAN         : 11
+IDENTIFIER           : 2 24 32 42 43 47 47
+IF                   : 44 45
+IN                   : 47
+INT                  : 3
+LEFT_BRACE           : 
+LEFT_BRACKET         : 39 47
+LEFT_PAREN           : 1 32 44 45 46
+LESS_EQUAL           : 12
+LESS_THAN            : 10
+MINUS                : 19
+MODULO               : 22
+NEWLINE              : 
+NOT                  : 8
+NOT_EQUAL            : 14
+OR                   : 16
+PLUS                 : 18
+POWER                : 23
+RETURN               : 48
+RIGHT_BRACE          : 
+RIGHT_BRACKET        : 39 47
+RIGHT_PAREN          : 1 32 44 45 46
+SEMICOLON            : 33 38 48
+SPACE                : 
+STRING               : 6
+TIMES                : 20
+TYPE_BOOL            : 25
+TYPE_DOUBLE          : 26
+TYPE_FLOAT           : 27
+TYPE_INTEGER         : 28
+TYPE_NULL            : 29
+TYPE_STRING          : 30
+TYPE_VOID            : 31
+WHILE                : 46
+error                : 
+
+Nonterminals, with rules where they appear
+
+B                    : 32 44 45 45 46
+E                    : 1 8 9 9 10 10 11 11 12 12 13 13 14 14 15 15 16 16 18 18 19 19 20 20 21 21 22 22 23 23 24 33 44 45 46 48
+F                    : 17 0
+FD                   : 
+FS                   : 36
+IfS                  : 34
+PL                   : 32 42
+RS                   : 37
+S                    : 40 41
+SL                   : 39 41 47
+TD                   : 24 32 42 43
+VD                   : 38
+WS                   : 35
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . F
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    F                              shift and go to state 1
+    E                              shift and go to state 3
+
+state 1
+
+    (0) S' -> F .
+    (17) E -> F .
+
+    COMPARISON      reduce using rule 17 (E -> F .)
+    LESS_THAN       reduce using rule 17 (E -> F .)
+    GREATER_THAN    reduce using rule 17 (E -> F .)
+    LESS_EQUAL      reduce using rule 17 (E -> F .)
+    GREATER_EQUAL   reduce using rule 17 (E -> F .)
+    NOT_EQUAL       reduce using rule 17 (E -> F .)
+    AND             reduce using rule 17 (E -> F .)
+    OR              reduce using rule 17 (E -> F .)
+    PLUS            reduce using rule 17 (E -> F .)
+    MINUS           reduce using rule 17 (E -> F .)
+    TIMES           reduce using rule 17 (E -> F .)
+    DIVIDE          reduce using rule 17 (E -> F .)
+    MODULO          reduce using rule 17 (E -> F .)
+    POWER           reduce using rule 17 (E -> F .)
+
+
+state 2
+
+    (1) F -> LEFT_PAREN . E RIGHT_PAREN
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 11
+    F                              shift and go to state 12
+
+state 3
+
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+
+    COMPARISON      shift and go to state 13
+    LESS_THAN       shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_EQUAL      shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    NOT_EQUAL       shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+    PLUS            shift and go to state 21
+    MINUS           shift and go to state 22
+    TIMES           shift and go to state 23
+    DIVIDE          shift and go to state 24
+    MODULO          shift and go to state 25
+    POWER           shift and go to state 26
+
+
+state 4
+
+    (2) F -> IDENTIFIER .
+
+    $end            reduce using rule 2 (F -> IDENTIFIER .)
+    COMPARISON      reduce using rule 2 (F -> IDENTIFIER .)
+    LESS_THAN       reduce using rule 2 (F -> IDENTIFIER .)
+    GREATER_THAN    reduce using rule 2 (F -> IDENTIFIER .)
+    LESS_EQUAL      reduce using rule 2 (F -> IDENTIFIER .)
+    GREATER_EQUAL   reduce using rule 2 (F -> IDENTIFIER .)
+    NOT_EQUAL       reduce using rule 2 (F -> IDENTIFIER .)
+    AND             reduce using rule 2 (F -> IDENTIFIER .)
+    OR              reduce using rule 2 (F -> IDENTIFIER .)
+    PLUS            reduce using rule 2 (F -> IDENTIFIER .)
+    MINUS           reduce using rule 2 (F -> IDENTIFIER .)
+    TIMES           reduce using rule 2 (F -> IDENTIFIER .)
+    DIVIDE          reduce using rule 2 (F -> IDENTIFIER .)
+    MODULO          reduce using rule 2 (F -> IDENTIFIER .)
+    POWER           reduce using rule 2 (F -> IDENTIFIER .)
+    RIGHT_PAREN     reduce using rule 2 (F -> IDENTIFIER .)
+
+
+state 5
+
+    (3) F -> INT .
+
+    $end            reduce using rule 3 (F -> INT .)
+    COMPARISON      reduce using rule 3 (F -> INT .)
+    LESS_THAN       reduce using rule 3 (F -> INT .)
+    GREATER_THAN    reduce using rule 3 (F -> INT .)
+    LESS_EQUAL      reduce using rule 3 (F -> INT .)
+    GREATER_EQUAL   reduce using rule 3 (F -> INT .)
+    NOT_EQUAL       reduce using rule 3 (F -> INT .)
+    AND             reduce using rule 3 (F -> INT .)
+    OR              reduce using rule 3 (F -> INT .)
+    PLUS            reduce using rule 3 (F -> INT .)
+    MINUS           reduce using rule 3 (F -> INT .)
+    TIMES           reduce using rule 3 (F -> INT .)
+    DIVIDE          reduce using rule 3 (F -> INT .)
+    MODULO          reduce using rule 3 (F -> INT .)
+    POWER           reduce using rule 3 (F -> INT .)
+    RIGHT_PAREN     reduce using rule 3 (F -> INT .)
+
+
+state 6
+
+    (4) F -> FLOAT .
+
+    $end            reduce using rule 4 (F -> FLOAT .)
+    COMPARISON      reduce using rule 4 (F -> FLOAT .)
+    LESS_THAN       reduce using rule 4 (F -> FLOAT .)
+    GREATER_THAN    reduce using rule 4 (F -> FLOAT .)
+    LESS_EQUAL      reduce using rule 4 (F -> FLOAT .)
+    GREATER_EQUAL   reduce using rule 4 (F -> FLOAT .)
+    NOT_EQUAL       reduce using rule 4 (F -> FLOAT .)
+    AND             reduce using rule 4 (F -> FLOAT .)
+    OR              reduce using rule 4 (F -> FLOAT .)
+    PLUS            reduce using rule 4 (F -> FLOAT .)
+    MINUS           reduce using rule 4 (F -> FLOAT .)
+    TIMES           reduce using rule 4 (F -> FLOAT .)
+    DIVIDE          reduce using rule 4 (F -> FLOAT .)
+    MODULO          reduce using rule 4 (F -> FLOAT .)
+    POWER           reduce using rule 4 (F -> FLOAT .)
+    RIGHT_PAREN     reduce using rule 4 (F -> FLOAT .)
+
+
+state 7
+
+    (5) F -> DOUBLE .
+
+    $end            reduce using rule 5 (F -> DOUBLE .)
+    COMPARISON      reduce using rule 5 (F -> DOUBLE .)
+    LESS_THAN       reduce using rule 5 (F -> DOUBLE .)
+    GREATER_THAN    reduce using rule 5 (F -> DOUBLE .)
+    LESS_EQUAL      reduce using rule 5 (F -> DOUBLE .)
+    GREATER_EQUAL   reduce using rule 5 (F -> DOUBLE .)
+    NOT_EQUAL       reduce using rule 5 (F -> DOUBLE .)
+    AND             reduce using rule 5 (F -> DOUBLE .)
+    OR              reduce using rule 5 (F -> DOUBLE .)
+    PLUS            reduce using rule 5 (F -> DOUBLE .)
+    MINUS           reduce using rule 5 (F -> DOUBLE .)
+    TIMES           reduce using rule 5 (F -> DOUBLE .)
+    DIVIDE          reduce using rule 5 (F -> DOUBLE .)
+    MODULO          reduce using rule 5 (F -> DOUBLE .)
+    POWER           reduce using rule 5 (F -> DOUBLE .)
+    RIGHT_PAREN     reduce using rule 5 (F -> DOUBLE .)
+
+
+state 8
+
+    (6) F -> STRING .
+
+    $end            reduce using rule 6 (F -> STRING .)
+    COMPARISON      reduce using rule 6 (F -> STRING .)
+    LESS_THAN       reduce using rule 6 (F -> STRING .)
+    GREATER_THAN    reduce using rule 6 (F -> STRING .)
+    LESS_EQUAL      reduce using rule 6 (F -> STRING .)
+    GREATER_EQUAL   reduce using rule 6 (F -> STRING .)
+    NOT_EQUAL       reduce using rule 6 (F -> STRING .)
+    AND             reduce using rule 6 (F -> STRING .)
+    OR              reduce using rule 6 (F -> STRING .)
+    PLUS            reduce using rule 6 (F -> STRING .)
+    MINUS           reduce using rule 6 (F -> STRING .)
+    TIMES           reduce using rule 6 (F -> STRING .)
+    DIVIDE          reduce using rule 6 (F -> STRING .)
+    MODULO          reduce using rule 6 (F -> STRING .)
+    POWER           reduce using rule 6 (F -> STRING .)
+    RIGHT_PAREN     reduce using rule 6 (F -> STRING .)
+
+
+state 9
+
+    (7) F -> BOOL .
+
+    $end            reduce using rule 7 (F -> BOOL .)
+    COMPARISON      reduce using rule 7 (F -> BOOL .)
+    LESS_THAN       reduce using rule 7 (F -> BOOL .)
+    GREATER_THAN    reduce using rule 7 (F -> BOOL .)
+    LESS_EQUAL      reduce using rule 7 (F -> BOOL .)
+    GREATER_EQUAL   reduce using rule 7 (F -> BOOL .)
+    NOT_EQUAL       reduce using rule 7 (F -> BOOL .)
+    AND             reduce using rule 7 (F -> BOOL .)
+    OR              reduce using rule 7 (F -> BOOL .)
+    PLUS            reduce using rule 7 (F -> BOOL .)
+    MINUS           reduce using rule 7 (F -> BOOL .)
+    TIMES           reduce using rule 7 (F -> BOOL .)
+    DIVIDE          reduce using rule 7 (F -> BOOL .)
+    MODULO          reduce using rule 7 (F -> BOOL .)
+    POWER           reduce using rule 7 (F -> BOOL .)
+    RIGHT_PAREN     reduce using rule 7 (F -> BOOL .)
+
+
+state 10
+
+    (8) F -> NOT . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 27
+    F                              shift and go to state 12
+
+state 11
+
+    (1) F -> LEFT_PAREN E . RIGHT_PAREN
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    RIGHT_PAREN     shift and go to state 28
+    PLUS            shift and go to state 21
+    MINUS           shift and go to state 22
+    TIMES           shift and go to state 23
+    DIVIDE          shift and go to state 24
+    MODULO          shift and go to state 25
+    POWER           shift and go to state 26
+    COMPARISON      shift and go to state 13
+    LESS_THAN       shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_EQUAL      shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    NOT_EQUAL       shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+
+state 12
+
+    (17) E -> F .
+
+    RIGHT_PAREN     reduce using rule 17 (E -> F .)
+    PLUS            reduce using rule 17 (E -> F .)
+    MINUS           reduce using rule 17 (E -> F .)
+    TIMES           reduce using rule 17 (E -> F .)
+    DIVIDE          reduce using rule 17 (E -> F .)
+    MODULO          reduce using rule 17 (E -> F .)
+    POWER           reduce using rule 17 (E -> F .)
+    COMPARISON      reduce using rule 17 (E -> F .)
+    LESS_THAN       reduce using rule 17 (E -> F .)
+    GREATER_THAN    reduce using rule 17 (E -> F .)
+    LESS_EQUAL      reduce using rule 17 (E -> F .)
+    GREATER_EQUAL   reduce using rule 17 (E -> F .)
+    NOT_EQUAL       reduce using rule 17 (E -> F .)
+    AND             reduce using rule 17 (E -> F .)
+    OR              reduce using rule 17 (E -> F .)
+    $end            reduce using rule 17 (E -> F .)
+
+
+state 13
+
+    (9) F -> E COMPARISON . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 29
+    F                              shift and go to state 12
+
+state 14
+
+    (10) F -> E LESS_THAN . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 30
+    F                              shift and go to state 12
+
+state 15
+
+    (11) F -> E GREATER_THAN . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 31
+    F                              shift and go to state 12
+
+state 16
+
+    (12) F -> E LESS_EQUAL . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 32
+    F                              shift and go to state 12
+
+state 17
+
+    (13) F -> E GREATER_EQUAL . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 33
+    F                              shift and go to state 12
+
+state 18
+
+    (14) F -> E NOT_EQUAL . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 34
+    F                              shift and go to state 12
+
+state 19
+
+    (15) F -> E AND . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 35
+    F                              shift and go to state 12
+
+state 20
+
+    (16) F -> E OR . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 36
+    F                              shift and go to state 12
+
+state 21
+
+    (18) E -> E PLUS . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 37
+    F                              shift and go to state 12
+
+state 22
+
+    (19) E -> E MINUS . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 38
+    F                              shift and go to state 12
+
+state 23
+
+    (20) E -> E TIMES . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 39
+    F                              shift and go to state 12
+
+state 24
+
+    (21) E -> E DIVIDE . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 40
+    F                              shift and go to state 12
+
+state 25
+
+    (22) E -> E MODULO . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 41
+    F                              shift and go to state 12
+
+state 26
+
+    (23) E -> E POWER . E
+    (17) E -> . F
+    (18) E -> . E PLUS E
+    (19) E -> . E MINUS E
+    (20) E -> . E TIMES E
+    (21) E -> . E DIVIDE E
+    (22) E -> . E MODULO E
+    (23) E -> . E POWER E
+    (1) F -> . LEFT_PAREN E RIGHT_PAREN
+    (2) F -> . IDENTIFIER
+    (3) F -> . INT
+    (4) F -> . FLOAT
+    (5) F -> . DOUBLE
+    (6) F -> . STRING
+    (7) F -> . BOOL
+    (8) F -> . NOT E
+    (9) F -> . E COMPARISON E
+    (10) F -> . E LESS_THAN E
+    (11) F -> . E GREATER_THAN E
+    (12) F -> . E LESS_EQUAL E
+    (13) F -> . E GREATER_EQUAL E
+    (14) F -> . E NOT_EQUAL E
+    (15) F -> . E AND E
+    (16) F -> . E OR E
+
+    LEFT_PAREN      shift and go to state 2
+    IDENTIFIER      shift and go to state 4
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    DOUBLE          shift and go to state 7
+    STRING          shift and go to state 8
+    BOOL            shift and go to state 9
+    NOT             shift and go to state 10
+
+    E                              shift and go to state 42
+    F                              shift and go to state 12
+
+state 27
+
+    (8) F -> NOT E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    $end            reduce using rule 8 (F -> NOT E .)
+    COMPARISON      reduce using rule 8 (F -> NOT E .)
+    LESS_THAN       reduce using rule 8 (F -> NOT E .)
+    GREATER_THAN    reduce using rule 8 (F -> NOT E .)
+    LESS_EQUAL      reduce using rule 8 (F -> NOT E .)
+    GREATER_EQUAL   reduce using rule 8 (F -> NOT E .)
+    NOT_EQUAL       reduce using rule 8 (F -> NOT E .)
+    PLUS            reduce using rule 8 (F -> NOT E .)
+    MINUS           reduce using rule 8 (F -> NOT E .)
+    TIMES           reduce using rule 8 (F -> NOT E .)
+    DIVIDE          reduce using rule 8 (F -> NOT E .)
+    MODULO          reduce using rule 8 (F -> NOT E .)
+    POWER           reduce using rule 8 (F -> NOT E .)
+    RIGHT_PAREN     reduce using rule 8 (F -> NOT E .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! AND             [ reduce using rule 8 (F -> NOT E .) ]
+  ! OR              [ reduce using rule 8 (F -> NOT E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+  ! POWER           [ shift and go to state 26 ]
+  ! COMPARISON      [ shift and go to state 13 ]
+  ! LESS_THAN       [ shift and go to state 14 ]
+  ! GREATER_THAN    [ shift and go to state 15 ]
+  ! LESS_EQUAL      [ shift and go to state 16 ]
+  ! GREATER_EQUAL   [ shift and go to state 17 ]
+  ! NOT_EQUAL       [ shift and go to state 18 ]
+
+
+state 28
+
+    (1) F -> LEFT_PAREN E RIGHT_PAREN .
+
+    $end            reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    COMPARISON      reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    LESS_THAN       reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    GREATER_THAN    reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    LESS_EQUAL      reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    GREATER_EQUAL   reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    NOT_EQUAL       reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    AND             reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    OR              reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    PLUS            reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    MINUS           reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    TIMES           reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    DIVIDE          reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    MODULO          reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    POWER           reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+    RIGHT_PAREN     reduce using rule 1 (F -> LEFT_PAREN E RIGHT_PAREN .)
+
+
+state 29
+
+    (9) F -> E COMPARISON E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    $end            reduce using rule 9 (F -> E COMPARISON E .)
+    COMPARISON      reduce using rule 9 (F -> E COMPARISON E .)
+    LESS_THAN       reduce using rule 9 (F -> E COMPARISON E .)
+    GREATER_THAN    reduce using rule 9 (F -> E COMPARISON E .)
+    LESS_EQUAL      reduce using rule 9 (F -> E COMPARISON E .)
+    GREATER_EQUAL   reduce using rule 9 (F -> E COMPARISON E .)
+    NOT_EQUAL       reduce using rule 9 (F -> E COMPARISON E .)
+    PLUS            reduce using rule 9 (F -> E COMPARISON E .)
+    MINUS           reduce using rule 9 (F -> E COMPARISON E .)
+    TIMES           reduce using rule 9 (F -> E COMPARISON E .)
+    DIVIDE          reduce using rule 9 (F -> E COMPARISON E .)
+    MODULO          reduce using rule 9 (F -> E COMPARISON E .)
+    POWER           reduce using rule 9 (F -> E COMPARISON E .)
+    RIGHT_PAREN     reduce using rule 9 (F -> E COMPARISON E .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! AND             [ reduce using rule 9 (F -> E COMPARISON E .) ]
+  ! OR              [ reduce using rule 9 (F -> E COMPARISON E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+  ! POWER           [ shift and go to state 26 ]
+  ! COMPARISON      [ shift and go to state 13 ]
+  ! LESS_THAN       [ shift and go to state 14 ]
+  ! GREATER_THAN    [ shift and go to state 15 ]
+  ! LESS_EQUAL      [ shift and go to state 16 ]
+  ! GREATER_EQUAL   [ shift and go to state 17 ]
+  ! NOT_EQUAL       [ shift and go to state 18 ]
+
+
+state 30
+
+    (10) F -> E LESS_THAN E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    $end            reduce using rule 10 (F -> E LESS_THAN E .)
+    COMPARISON      reduce using rule 10 (F -> E LESS_THAN E .)
+    LESS_THAN       reduce using rule 10 (F -> E LESS_THAN E .)
+    GREATER_THAN    reduce using rule 10 (F -> E LESS_THAN E .)
+    LESS_EQUAL      reduce using rule 10 (F -> E LESS_THAN E .)
+    GREATER_EQUAL   reduce using rule 10 (F -> E LESS_THAN E .)
+    NOT_EQUAL       reduce using rule 10 (F -> E LESS_THAN E .)
+    PLUS            reduce using rule 10 (F -> E LESS_THAN E .)
+    MINUS           reduce using rule 10 (F -> E LESS_THAN E .)
+    TIMES           reduce using rule 10 (F -> E LESS_THAN E .)
+    DIVIDE          reduce using rule 10 (F -> E LESS_THAN E .)
+    MODULO          reduce using rule 10 (F -> E LESS_THAN E .)
+    POWER           reduce using rule 10 (F -> E LESS_THAN E .)
+    RIGHT_PAREN     reduce using rule 10 (F -> E LESS_THAN E .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! AND             [ reduce using rule 10 (F -> E LESS_THAN E .) ]
+  ! OR              [ reduce using rule 10 (F -> E LESS_THAN E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+  ! POWER           [ shift and go to state 26 ]
+  ! COMPARISON      [ shift and go to state 13 ]
+  ! LESS_THAN       [ shift and go to state 14 ]
+  ! GREATER_THAN    [ shift and go to state 15 ]
+  ! LESS_EQUAL      [ shift and go to state 16 ]
+  ! GREATER_EQUAL   [ shift and go to state 17 ]
+  ! NOT_EQUAL       [ shift and go to state 18 ]
+
+
+state 31
+
+    (11) F -> E GREATER_THAN E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    $end            reduce using rule 11 (F -> E GREATER_THAN E .)
+    COMPARISON      reduce using rule 11 (F -> E GREATER_THAN E .)
+    LESS_THAN       reduce using rule 11 (F -> E GREATER_THAN E .)
+    GREATER_THAN    reduce using rule 11 (F -> E GREATER_THAN E .)
+    LESS_EQUAL      reduce using rule 11 (F -> E GREATER_THAN E .)
+    GREATER_EQUAL   reduce using rule 11 (F -> E GREATER_THAN E .)
+    NOT_EQUAL       reduce using rule 11 (F -> E GREATER_THAN E .)
+    PLUS            reduce using rule 11 (F -> E GREATER_THAN E .)
+    MINUS           reduce using rule 11 (F -> E GREATER_THAN E .)
+    TIMES           reduce using rule 11 (F -> E GREATER_THAN E .)
+    DIVIDE          reduce using rule 11 (F -> E GREATER_THAN E .)
+    MODULO          reduce using rule 11 (F -> E GREATER_THAN E .)
+    POWER           reduce using rule 11 (F -> E GREATER_THAN E .)
+    RIGHT_PAREN     reduce using rule 11 (F -> E GREATER_THAN E .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! AND             [ reduce using rule 11 (F -> E GREATER_THAN E .) ]
+  ! OR              [ reduce using rule 11 (F -> E GREATER_THAN E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+  ! POWER           [ shift and go to state 26 ]
+  ! COMPARISON      [ shift and go to state 13 ]
+  ! LESS_THAN       [ shift and go to state 14 ]
+  ! GREATER_THAN    [ shift and go to state 15 ]
+  ! LESS_EQUAL      [ shift and go to state 16 ]
+  ! GREATER_EQUAL   [ shift and go to state 17 ]
+  ! NOT_EQUAL       [ shift and go to state 18 ]
+
+
+state 32
+
+    (12) F -> E LESS_EQUAL E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    $end            reduce using rule 12 (F -> E LESS_EQUAL E .)
+    COMPARISON      reduce using rule 12 (F -> E LESS_EQUAL E .)
+    LESS_THAN       reduce using rule 12 (F -> E LESS_EQUAL E .)
+    GREATER_THAN    reduce using rule 12 (F -> E LESS_EQUAL E .)
+    LESS_EQUAL      reduce using rule 12 (F -> E LESS_EQUAL E .)
+    GREATER_EQUAL   reduce using rule 12 (F -> E LESS_EQUAL E .)
+    NOT_EQUAL       reduce using rule 12 (F -> E LESS_EQUAL E .)
+    PLUS            reduce using rule 12 (F -> E LESS_EQUAL E .)
+    MINUS           reduce using rule 12 (F -> E LESS_EQUAL E .)
+    TIMES           reduce using rule 12 (F -> E LESS_EQUAL E .)
+    DIVIDE          reduce using rule 12 (F -> E LESS_EQUAL E .)
+    MODULO          reduce using rule 12 (F -> E LESS_EQUAL E .)
+    POWER           reduce using rule 12 (F -> E LESS_EQUAL E .)
+    RIGHT_PAREN     reduce using rule 12 (F -> E LESS_EQUAL E .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! AND             [ reduce using rule 12 (F -> E LESS_EQUAL E .) ]
+  ! OR              [ reduce using rule 12 (F -> E LESS_EQUAL E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+  ! POWER           [ shift and go to state 26 ]
+  ! COMPARISON      [ shift and go to state 13 ]
+  ! LESS_THAN       [ shift and go to state 14 ]
+  ! GREATER_THAN    [ shift and go to state 15 ]
+  ! LESS_EQUAL      [ shift and go to state 16 ]
+  ! GREATER_EQUAL   [ shift and go to state 17 ]
+  ! NOT_EQUAL       [ shift and go to state 18 ]
+
+
+state 33
+
+    (13) F -> E GREATER_EQUAL E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    $end            reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    COMPARISON      reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    LESS_THAN       reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    GREATER_THAN    reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    LESS_EQUAL      reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    GREATER_EQUAL   reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    NOT_EQUAL       reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    PLUS            reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    MINUS           reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    TIMES           reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    DIVIDE          reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    MODULO          reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    POWER           reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    RIGHT_PAREN     reduce using rule 13 (F -> E GREATER_EQUAL E .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! AND             [ reduce using rule 13 (F -> E GREATER_EQUAL E .) ]
+  ! OR              [ reduce using rule 13 (F -> E GREATER_EQUAL E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+  ! POWER           [ shift and go to state 26 ]
+  ! COMPARISON      [ shift and go to state 13 ]
+  ! LESS_THAN       [ shift and go to state 14 ]
+  ! GREATER_THAN    [ shift and go to state 15 ]
+  ! LESS_EQUAL      [ shift and go to state 16 ]
+  ! GREATER_EQUAL   [ shift and go to state 17 ]
+  ! NOT_EQUAL       [ shift and go to state 18 ]
+
+
+state 34
+
+    (14) F -> E NOT_EQUAL E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    $end            reduce using rule 14 (F -> E NOT_EQUAL E .)
+    COMPARISON      reduce using rule 14 (F -> E NOT_EQUAL E .)
+    LESS_THAN       reduce using rule 14 (F -> E NOT_EQUAL E .)
+    GREATER_THAN    reduce using rule 14 (F -> E NOT_EQUAL E .)
+    LESS_EQUAL      reduce using rule 14 (F -> E NOT_EQUAL E .)
+    GREATER_EQUAL   reduce using rule 14 (F -> E NOT_EQUAL E .)
+    NOT_EQUAL       reduce using rule 14 (F -> E NOT_EQUAL E .)
+    PLUS            reduce using rule 14 (F -> E NOT_EQUAL E .)
+    MINUS           reduce using rule 14 (F -> E NOT_EQUAL E .)
+    TIMES           reduce using rule 14 (F -> E NOT_EQUAL E .)
+    DIVIDE          reduce using rule 14 (F -> E NOT_EQUAL E .)
+    MODULO          reduce using rule 14 (F -> E NOT_EQUAL E .)
+    POWER           reduce using rule 14 (F -> E NOT_EQUAL E .)
+    RIGHT_PAREN     reduce using rule 14 (F -> E NOT_EQUAL E .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! AND             [ reduce using rule 14 (F -> E NOT_EQUAL E .) ]
+  ! OR              [ reduce using rule 14 (F -> E NOT_EQUAL E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+  ! POWER           [ shift and go to state 26 ]
+  ! COMPARISON      [ shift and go to state 13 ]
+  ! LESS_THAN       [ shift and go to state 14 ]
+  ! GREATER_THAN    [ shift and go to state 15 ]
+  ! LESS_EQUAL      [ shift and go to state 16 ]
+  ! GREATER_EQUAL   [ shift and go to state 17 ]
+  ! NOT_EQUAL       [ shift and go to state 18 ]
+
+
+state 35
+
+    (15) F -> E AND E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    $end            reduce using rule 15 (F -> E AND E .)
+    COMPARISON      reduce using rule 15 (F -> E AND E .)
+    LESS_THAN       reduce using rule 15 (F -> E AND E .)
+    GREATER_THAN    reduce using rule 15 (F -> E AND E .)
+    LESS_EQUAL      reduce using rule 15 (F -> E AND E .)
+    GREATER_EQUAL   reduce using rule 15 (F -> E AND E .)
+    NOT_EQUAL       reduce using rule 15 (F -> E AND E .)
+    AND             reduce using rule 15 (F -> E AND E .)
+    OR              reduce using rule 15 (F -> E AND E .)
+    PLUS            reduce using rule 15 (F -> E AND E .)
+    MINUS           reduce using rule 15 (F -> E AND E .)
+    TIMES           reduce using rule 15 (F -> E AND E .)
+    DIVIDE          reduce using rule 15 (F -> E AND E .)
+    MODULO          reduce using rule 15 (F -> E AND E .)
+    POWER           reduce using rule 15 (F -> E AND E .)
+    RIGHT_PAREN     reduce using rule 15 (F -> E AND E .)
+
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+  ! POWER           [ shift and go to state 26 ]
+  ! COMPARISON      [ shift and go to state 13 ]
+  ! LESS_THAN       [ shift and go to state 14 ]
+  ! GREATER_THAN    [ shift and go to state 15 ]
+  ! LESS_EQUAL      [ shift and go to state 16 ]
+  ! GREATER_EQUAL   [ shift and go to state 17 ]
+  ! NOT_EQUAL       [ shift and go to state 18 ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+
+
+state 36
+
+    (16) F -> E OR E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    $end            reduce using rule 16 (F -> E OR E .)
+    COMPARISON      reduce using rule 16 (F -> E OR E .)
+    LESS_THAN       reduce using rule 16 (F -> E OR E .)
+    GREATER_THAN    reduce using rule 16 (F -> E OR E .)
+    LESS_EQUAL      reduce using rule 16 (F -> E OR E .)
+    GREATER_EQUAL   reduce using rule 16 (F -> E OR E .)
+    NOT_EQUAL       reduce using rule 16 (F -> E OR E .)
+    AND             reduce using rule 16 (F -> E OR E .)
+    OR              reduce using rule 16 (F -> E OR E .)
+    PLUS            reduce using rule 16 (F -> E OR E .)
+    MINUS           reduce using rule 16 (F -> E OR E .)
+    TIMES           reduce using rule 16 (F -> E OR E .)
+    DIVIDE          reduce using rule 16 (F -> E OR E .)
+    MODULO          reduce using rule 16 (F -> E OR E .)
+    POWER           reduce using rule 16 (F -> E OR E .)
+    RIGHT_PAREN     reduce using rule 16 (F -> E OR E .)
+
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+  ! POWER           [ shift and go to state 26 ]
+  ! COMPARISON      [ shift and go to state 13 ]
+  ! LESS_THAN       [ shift and go to state 14 ]
+  ! GREATER_THAN    [ shift and go to state 15 ]
+  ! LESS_EQUAL      [ shift and go to state 16 ]
+  ! GREATER_EQUAL   [ shift and go to state 17 ]
+  ! NOT_EQUAL       [ shift and go to state 18 ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+
+
+state 37
+
+    (18) E -> E PLUS E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    PLUS            reduce using rule 18 (E -> E PLUS E .)
+    MINUS           reduce using rule 18 (E -> E PLUS E .)
+    RIGHT_PAREN     reduce using rule 18 (E -> E PLUS E .)
+    $end            reduce using rule 18 (E -> E PLUS E .)
+    TIMES           shift and go to state 23
+    DIVIDE          shift and go to state 24
+    MODULO          shift and go to state 25
+    POWER           shift and go to state 26
+    COMPARISON      shift and go to state 13
+    LESS_THAN       shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_EQUAL      shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    NOT_EQUAL       shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! COMPARISON      [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! LESS_THAN       [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! GREATER_THAN    [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! LESS_EQUAL      [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! GREATER_EQUAL   [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! NOT_EQUAL       [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! AND             [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! OR              [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! TIMES           [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! DIVIDE          [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! MODULO          [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! POWER           [ reduce using rule 18 (E -> E PLUS E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+
+
+state 38
+
+    (19) E -> E MINUS E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    PLUS            reduce using rule 19 (E -> E MINUS E .)
+    MINUS           reduce using rule 19 (E -> E MINUS E .)
+    RIGHT_PAREN     reduce using rule 19 (E -> E MINUS E .)
+    $end            reduce using rule 19 (E -> E MINUS E .)
+    TIMES           shift and go to state 23
+    DIVIDE          shift and go to state 24
+    MODULO          shift and go to state 25
+    POWER           shift and go to state 26
+    COMPARISON      shift and go to state 13
+    LESS_THAN       shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_EQUAL      shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    NOT_EQUAL       shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! COMPARISON      [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! LESS_THAN       [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! GREATER_THAN    [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! LESS_EQUAL      [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! GREATER_EQUAL   [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! NOT_EQUAL       [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! AND             [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! OR              [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! TIMES           [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! DIVIDE          [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! MODULO          [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! POWER           [ reduce using rule 19 (E -> E MINUS E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+
+
+state 39
+
+    (20) E -> E TIMES E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    PLUS            reduce using rule 20 (E -> E TIMES E .)
+    MINUS           reduce using rule 20 (E -> E TIMES E .)
+    TIMES           reduce using rule 20 (E -> E TIMES E .)
+    DIVIDE          reduce using rule 20 (E -> E TIMES E .)
+    MODULO          reduce using rule 20 (E -> E TIMES E .)
+    RIGHT_PAREN     reduce using rule 20 (E -> E TIMES E .)
+    $end            reduce using rule 20 (E -> E TIMES E .)
+    POWER           shift and go to state 26
+    COMPARISON      shift and go to state 13
+    LESS_THAN       shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_EQUAL      shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    NOT_EQUAL       shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! COMPARISON      [ reduce using rule 20 (E -> E TIMES E .) ]
+  ! LESS_THAN       [ reduce using rule 20 (E -> E TIMES E .) ]
+  ! GREATER_THAN    [ reduce using rule 20 (E -> E TIMES E .) ]
+  ! LESS_EQUAL      [ reduce using rule 20 (E -> E TIMES E .) ]
+  ! GREATER_EQUAL   [ reduce using rule 20 (E -> E TIMES E .) ]
+  ! NOT_EQUAL       [ reduce using rule 20 (E -> E TIMES E .) ]
+  ! AND             [ reduce using rule 20 (E -> E TIMES E .) ]
+  ! OR              [ reduce using rule 20 (E -> E TIMES E .) ]
+  ! POWER           [ reduce using rule 20 (E -> E TIMES E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+
+
+state 40
+
+    (21) E -> E DIVIDE E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    PLUS            reduce using rule 21 (E -> E DIVIDE E .)
+    MINUS           reduce using rule 21 (E -> E DIVIDE E .)
+    TIMES           reduce using rule 21 (E -> E DIVIDE E .)
+    DIVIDE          reduce using rule 21 (E -> E DIVIDE E .)
+    MODULO          reduce using rule 21 (E -> E DIVIDE E .)
+    RIGHT_PAREN     reduce using rule 21 (E -> E DIVIDE E .)
+    $end            reduce using rule 21 (E -> E DIVIDE E .)
+    POWER           shift and go to state 26
+    COMPARISON      shift and go to state 13
+    LESS_THAN       shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_EQUAL      shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    NOT_EQUAL       shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! COMPARISON      [ reduce using rule 21 (E -> E DIVIDE E .) ]
+  ! LESS_THAN       [ reduce using rule 21 (E -> E DIVIDE E .) ]
+  ! GREATER_THAN    [ reduce using rule 21 (E -> E DIVIDE E .) ]
+  ! LESS_EQUAL      [ reduce using rule 21 (E -> E DIVIDE E .) ]
+  ! GREATER_EQUAL   [ reduce using rule 21 (E -> E DIVIDE E .) ]
+  ! NOT_EQUAL       [ reduce using rule 21 (E -> E DIVIDE E .) ]
+  ! AND             [ reduce using rule 21 (E -> E DIVIDE E .) ]
+  ! OR              [ reduce using rule 21 (E -> E DIVIDE E .) ]
+  ! POWER           [ reduce using rule 21 (E -> E DIVIDE E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+
+
+state 41
+
+    (22) E -> E MODULO E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    PLUS            reduce using rule 22 (E -> E MODULO E .)
+    MINUS           reduce using rule 22 (E -> E MODULO E .)
+    TIMES           reduce using rule 22 (E -> E MODULO E .)
+    DIVIDE          reduce using rule 22 (E -> E MODULO E .)
+    MODULO          reduce using rule 22 (E -> E MODULO E .)
+    RIGHT_PAREN     reduce using rule 22 (E -> E MODULO E .)
+    $end            reduce using rule 22 (E -> E MODULO E .)
+    POWER           shift and go to state 26
+    COMPARISON      shift and go to state 13
+    LESS_THAN       shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_EQUAL      shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    NOT_EQUAL       shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! COMPARISON      [ reduce using rule 22 (E -> E MODULO E .) ]
+  ! LESS_THAN       [ reduce using rule 22 (E -> E MODULO E .) ]
+  ! GREATER_THAN    [ reduce using rule 22 (E -> E MODULO E .) ]
+  ! LESS_EQUAL      [ reduce using rule 22 (E -> E MODULO E .) ]
+  ! GREATER_EQUAL   [ reduce using rule 22 (E -> E MODULO E .) ]
+  ! NOT_EQUAL       [ reduce using rule 22 (E -> E MODULO E .) ]
+  ! AND             [ reduce using rule 22 (E -> E MODULO E .) ]
+  ! OR              [ reduce using rule 22 (E -> E MODULO E .) ]
+  ! POWER           [ reduce using rule 22 (E -> E MODULO E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+
+
+state 42
+
+    (23) E -> E POWER E .
+    (18) E -> E . PLUS E
+    (19) E -> E . MINUS E
+    (20) E -> E . TIMES E
+    (21) E -> E . DIVIDE E
+    (22) E -> E . MODULO E
+    (23) E -> E . POWER E
+    (9) F -> E . COMPARISON E
+    (10) F -> E . LESS_THAN E
+    (11) F -> E . GREATER_THAN E
+    (12) F -> E . LESS_EQUAL E
+    (13) F -> E . GREATER_EQUAL E
+    (14) F -> E . NOT_EQUAL E
+    (15) F -> E . AND E
+    (16) F -> E . OR E
+
+    PLUS            reduce using rule 23 (E -> E POWER E .)
+    MINUS           reduce using rule 23 (E -> E POWER E .)
+    TIMES           reduce using rule 23 (E -> E POWER E .)
+    DIVIDE          reduce using rule 23 (E -> E POWER E .)
+    MODULO          reduce using rule 23 (E -> E POWER E .)
+    RIGHT_PAREN     reduce using rule 23 (E -> E POWER E .)
+    $end            reduce using rule 23 (E -> E POWER E .)
+    POWER           shift and go to state 26
+    COMPARISON      shift and go to state 13
+    LESS_THAN       shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_EQUAL      shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    NOT_EQUAL       shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! COMPARISON      [ reduce using rule 23 (E -> E POWER E .) ]
+  ! LESS_THAN       [ reduce using rule 23 (E -> E POWER E .) ]
+  ! GREATER_THAN    [ reduce using rule 23 (E -> E POWER E .) ]
+  ! LESS_EQUAL      [ reduce using rule 23 (E -> E POWER E .) ]
+  ! GREATER_EQUAL   [ reduce using rule 23 (E -> E POWER E .) ]
+  ! NOT_EQUAL       [ reduce using rule 23 (E -> E POWER E .) ]
+  ! AND             [ reduce using rule 23 (E -> E POWER E .) ]
+  ! OR              [ reduce using rule 23 (E -> E POWER E .) ]
+  ! POWER           [ reduce using rule 23 (E -> E POWER E .) ]
+  ! PLUS            [ shift and go to state 21 ]
+  ! MINUS           [ shift and go to state 22 ]
+  ! TIMES           [ shift and go to state 23 ]
+  ! DIVIDE          [ shift and go to state 24 ]
+  ! MODULO          [ shift and go to state 25 ]
+

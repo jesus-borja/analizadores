@@ -5,14 +5,16 @@ from analizador_lexico import tokens, analizador
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE', 'MODULO'),
-    ('left', 'POWER'),
+    ('right', 'POWER'),
     ('left', 'COMPARISON', 'LESS_THAN', 'GREATER_THAN', 'GREATER_EQUAL', 'LESS_EQUAL', 'NOT_EQUAL'),
-    ('left', 'NOT'),
+    ('right', 'NOT'),
     ('left', 'AND', 'OR'),
 )
 
 # Diccionario para almacenar los valores de las variables
 variables = {}
+resultado_gramatica = []
+
 
 # Definir las funciones correspondientes a cada regla de producción
 
@@ -62,6 +64,7 @@ def p_F(p):
 
 def p_E(p):
     '''E : F'''
+    p[0] = p[1]
 
 def p_expression_plus(p):
     'E : E PLUS E'
@@ -89,10 +92,8 @@ def p_expression_power(p):
   
 def p_VD(p):
     'VD : IDENTIFIER COLON TD ASSIGN_OP E'
-    variable_name = p[1]
-    data_type = p[3]
-    value = p[5]
-    variables[variable_name] = value
+    variables[p[1]] = p[5]  # Almacena el valor de la variable en el diccionario
+
 
 def p_TD(p):
     '''TD : TYPE_BOOL 
@@ -105,7 +106,9 @@ def p_TD(p):
     p[0] = p[1]
 
 def p_FD(p):
-    '''FD : FUNCTION IDENTIFIER LEFT_PAREN PL RIGHT_PAREN ARROW TD B'''
+    'FD : FUNCTION IDENTIFIER LEFT_PAREN PL RIGHT_PAREN ARROW TD B'
+    # Define una función para esta producción
+    pass
 
 def p_S(p):
     '''S : E SEMICOLON
@@ -139,14 +142,20 @@ def p_FS(p):
 def p_RS(p):
     'RS : RETURN E SEMICOLON'
 
-def p_error(p):
-    if p:
-        print("Error sintáctico en línea {}, posición {}")
+def p_error(t):
+    global resultado_gramatica
+    if t:
+        resultado = "Error sintactico de tipo {} en el valor {}".format( str(t.type),str(t.value))
+        print(resultado)
+    else:
+        resultado = "Error sintactico {}".format(t)
+        print(resultado)
+    resultado_gramatica.append(resultado)
 
 parser = yacc.yacc()
 
 # Ahora puedes utilizar el parser para analizar tu entrada
-entrada = """x: int = 10;"""
+entrada = "x: int = 5;"
 resultado = parser.parse(entrada, lexer=analizador)
 print(resultado)
 print(variables)
