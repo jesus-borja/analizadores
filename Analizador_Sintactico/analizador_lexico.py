@@ -31,7 +31,6 @@ tokens = [
     "LEFT_BRACE", "RIGHT_BRACE", "SEMICOLON", "COMMA", "DOT", "COLON", "ARROW",
 ] + list(keywords.values())
 
-# Expresiones regulares para tokens simples
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -61,8 +60,8 @@ t_ARROW = r'->'
 
 # Tipos de datos y literales
 def t_FLOAT(t):
-    r'\d+\.\d+'
-    t.value = float(t.value)
+    r'\d+\.\d+f'
+    t.value = float(t.value[:-1]) # elimina la 'f' del final para tomar el valor del decimal
     return t
 
 def t_DOUBLE(t):
@@ -77,13 +76,13 @@ def t_INT(t):
 
 
 def t_STRING(t):
-    r'\"([^\\\n]|(\\.))*?\"'
-    t.value = str(t.value)
+    r'\'[^\']*\''
+    t.value = t.value[1:-1] # Eliminar las comillas del principio y del final
     return t
 
 def t_BOOL(t):
-    r'\btrue\b|\bfalse\b'
-    t.value = (t.value == 'true')
+    r'(true|false)'
+    t.value = bool(t.value)
     return t
 
 

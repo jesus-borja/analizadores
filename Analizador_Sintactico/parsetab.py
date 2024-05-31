@@ -81,5 +81,5 @@ _lr_productions = [
   ('return_statement -> RETURN expr','return_statement',2,'p_return_statement','analizador_sintactico.py',140),
   ('func_decl -> FUNCTION IDENTIFIER LEFT_PAREN param_list RIGHT_PAREN ARROW data_type block','func_decl',8,'p_func_decl','analizador_sintactico.py',145),
   ('empty -> <empty>','empty',0,'p_empty','analizador_sintactico.py',150),
-  ('var_reassign -> IDENTIFIER ASSIGN_OP expr','var_reassign',3,'p_var_reassign','analizador_sintactico.py',154),
+  ('var_reassign -> IDENTIFIER ASSIGN_OP expr','var_reassign',3,'p_var_reassign','analizador_sintactico.py',155),
 ]
