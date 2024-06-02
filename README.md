@@ -1,15 +1,27 @@
-# Descripción
-El analizador léxico es una herramienta esencial en la construcción de compiladores y analizadores de lenguajes de programación. En este proyecto, hemos desarrollado un analizador léxico para un lenguaje de programación creado por nosotros, donde hemos definido la sintaxis y las reglas de análisis.
+# Lenguajes y Autómatas I
 
-Este lenguaje de programación incluye una variedad de características comunes encontradas en otros lenguajes de programación, como palabras clave, operadores matemáticos y lógicos, tipos de datos, estructuras de control y más. 
+## Bienvenidos
 
-El objetivo de este analizador léxico es escanear y analizar el código fuente escrito en nuestro lenguaje de programación, identificando y clasificando cada elemento léxico, como identificadores, números, operadores, paréntesis, etc.
+Este repositorio ha sido creado para la materia de Lenguajes y Autómatas I. Su propósito es almacenar y gestionar las tareas y proyectos desarrollados a lo largo del curso, proporcionando un recurso centralizado y organizado para facilitar el acceso y la colaboración.
 
-En este repositorio, presentamos la especificación de los tokens y las reglas de análisis utilizadas, detallando una tabla de tokens y los patrones de coincidencia utilizados para identificarlos en el código fuente. Además, proporcionamos documentación e implementación del analizador lexico.
+## Estructura del Repositorio
 
-# Integrantes del equipo
-- Barrios Yáñez Angel Rodrigo  - 21200581
-- Borja Hernández Jesús - 21200584
-- Christopher Vladimir Moreno Hernández - 21200620
-- Ochoa Gonzáles Jhonathan Emir - 21200988
-- Téllez Pérez Agustín Ezequiel - 21200633
+El repositorio está organizado de la siguiente manera:
+
+- **Analizador_Lexico**: Contiene los archivos y documentación relacionados con el Tema 4: Análisis Léxico.
+  - **Tarea 4.1**: Tabla de Tokens para Analizador Léxico
+  - **Tarea 4.2**: Documentación de Expresiones Regulares (ER) y Autómatas Finitos (AF) para Analizador Léxico
+  - **Proyecto 4.3**: Implementación del Proyecto de Analizador Léxico
+
+- **Analizador_Sintactico**: Contiene los archivos y documentación relacionados con el Tema 5: Análisis Sintáctico.
+  - **Tarea 5.1**: Requerimiento de la Gramática
+  - **Proyecto 5.2**: Implementación del Proyecto de Analizador Sintáctico
+
+## Integrantes del Equipo
+
+- **Barrios Yáñez Angel Rodrigo** - Matrícula: 21200581
+- **Borja Hernández Jesús** - Matrícula: 21200584
+- **Christopher Vladimir Moreno Hernández** - Matrícula: 21200620
+- **Ochoa González Jhonathan Emir** - Matrícula: 21200988
+- **Téllez Pérez Agustín Ezequiel** - Matrícula: 21200633
+
